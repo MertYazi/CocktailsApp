@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".drink_list.presentation.FavoritesFragment">
+
+    <ImageView
+        android:id="@+id/iv_favorites_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:id="@+id/tv_favorites_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:textColor="@color/colorWhite"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_below="@id/iv_favorites_fragment"
+        android:background="@color/colorTab"
+        android:layout_marginTop="-80dp"
+        android:layout_marginBottom="30dp"/>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/iv_favorites_fragment"
+        android:layout_marginTop="-30dp"
+        android:layout_marginBottom="-26dp"
+        app:cardBackgroundColor="#1a0000"
+        app:cardCornerRadius="30dp"
+        app:cardElevation="4dp">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_favorites_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="26dp" />
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>
