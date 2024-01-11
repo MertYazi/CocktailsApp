@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cocktails_nav"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.cocktailsapp.home.presentation.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_drinkListFragment"
+            app:destination="@id/drinkListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.example.cocktailsapp.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" />
+    <fragment
+        android:id="@+id/favoritesFragment"
+        android:name="com.example.cocktailsapp.favorites.presentation.FavoritesFragment"
+        android:label="fragment_favorites"
+        tools:layout="@layout/fragment_favorites" >
+        <argument
+            android:name="myId"
+            app:argType="string"
+            app:nullable="false" />
+        <action
+            android:id="@+id/action_favoritesFragment_to_drinkDetailsFragment"
+            app:destination="@id/drinkDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/shoppingFragment"
+        android:name="com.example.cocktailsapp.ShoppingFragment"
+        android:label="fragment_shopping"
+        tools:layout="@layout/fragment_shopping" />
+    <fragment
+        android:id="@+id/drinkListFragment"
+        android:name="com.example.cocktailsapp.drink_list.presentation.DrinkListFragment"
+        android:label="fragment_drink_list"
+        tools:layout="@layout/fragment_drink_list">
+        <argument
+            android:name="myCategory"
+            app:argType="string"
+            app:nullable="false" />
+        <argument
+            android:name="myGlass"
+            app:argType="string"
+            app:nullable="false" />
+        <argument
+            android:name="myIngredient"
+            app:argType="string"
+            app:nullable="false" />
+        <argument
+            android:name="myAlcohol"
+            app:argType="string"
+            app:nullable="false" />
+        <argument
+            android:name="myImage"
+            app:argType="string"
+            app:nullable="false" />
+        <action
+            android:id="@+id/action_drinkListFragment_to_drinkDetailsFragment"
+            app:destination="@id/drinkDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/drinkDetailsFragment"
+        android:name="com.example.cocktailsapp.drink_details.presentation.DrinkDetailsFragment"
+        android:label="fragment_drink_details"
+        tools:layout="@layout/fragment_drink_details">
+        <argument
+            android:name="myDrinkId"
+            app:argType="string"
+            app:nullable="false" />
+    </fragment>
+</navigation>

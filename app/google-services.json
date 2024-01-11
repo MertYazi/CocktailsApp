@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "434556918884",
+    "project_id": "cocktailsapp-b55cd",
+    "storage_bucket": "cocktailsapp-b55cd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:434556918884:android:ea840c620256fd3ed65371",
+        "android_client_info": {
+          "package_name": "com.example.cocktailsapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYdaXnicPC8OpYmfFRJfX4ovTl0ViQ4WE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
