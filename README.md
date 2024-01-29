@@ -1,4 +1,4 @@
-                                                                        # CocktailsApp
+# CocktailsApp
 
 It's a demo project to prepare your dream cocktails. Users can browse cocktails, sort them by category, glass, ingredient and to be alcoholic. They can add cocktails to favorites. Ingredients can be added to shopping list, so they can know which cocktail they wanna prepare and which ingredients needed they do not have at the moment.<br /><br />
 Project is written in Kotlin.💯
@@ -14,11 +14,11 @@ Project is written in Kotlin.💯
 
 | Favorites | Search | Details | Shopping |
 |------|------|------|------|
-| <img src="screenshots/favorites_dark_portrait.jpg" width="205"> | <img src="screenshots/search_dark_portrait.jpg" width="205"> | <img src="screenshots/details_dark_portrait.jpg" width="205">   | <img src="screenshots/shopping_dark_portrait.jpg" width="205"> |
+| <img src="screenshots/favorites_dark_portrait.jpg" width="205"> | <img src="screenshots/search_dark_portrait.jpg" width="205"> | <img src="screenshots/details_dark_portrait.jpg" width="205">   | <img src="screenshots/shopping_list_dark_portrait.jpg" width="205"> |
 
 <br />
 
-It's recommended to use in dark mode but light mode alternative also presented.
+*It's recommended to use in dark mode but light mode alternative also presented.
 
 <br />
 
