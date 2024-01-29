@@ -21,7 +21,7 @@ class CategoryListAdapter(
 
     private val differCallback = object: DiffUtil.ItemCallback<CategoryItem>() {
         override fun areItemsTheSame(oldItem: CategoryItem, newItem: CategoryItem): Boolean {
-            return oldItem.strCategory == newItem.strCategory
+            return oldItem.name == newItem.name
         }
 
         override fun areContentsTheSame(oldItem: CategoryItem, newItem: CategoryItem): Boolean {
@@ -48,18 +48,18 @@ class CategoryListAdapter(
         val category = differ.currentList[position]
         holder.apply {
             Glide.with(fragment)
-                .load(category.imgCategory)
+                .load(category.image)
                 .into(categoryImage)
-            categoryName.text = category.strCategory
+            categoryName.text = category.name
 
             itemView.setOnClickListener {
                 fragment.findNavController().navigate(
                     HomeFragmentDirections.actionHomeFragmentToDrinkListFragment(
-                        category.strCategory,
+                        category.name,
                         "",
                         "",
                         "",
-                        category.imgCategory
+                        category.image
                     )
                 )
             }

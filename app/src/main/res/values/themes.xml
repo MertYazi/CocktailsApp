@@ -9,13 +9,16 @@
         <item name="colorSecondaryVariant">@color/secondaryDarkColor</item>
         <item name="colorOnSecondary">@color/colorWhite</item>
 
-        <item name="colorError">@color/colorError</item>
-        <item name="colorOnError">@color/colorOnError</item>
-
         <item name="android:textColor">@color/colorText</item>
         <item name="android:textColorPrimary">@color/colorText</item>
 
-        <item name="android:statusBarColor">@color/primaryDarkColor</item>
+        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.App.BottomSheetDialog</item>
+
+        <item name="cardViewStyle">@style/Widget.App.CardView</item>
+
+        <item name="android:navigationBarColor">@color/colorBackground</item>
+
+        <item name="android:statusBarColor">@color/colorDarkGrey</item>
 
     </style>
 
@@ -26,4 +29,21 @@
     </style>
 
     <style name="Theme.CocktailsApp" parent="Base.Theme.CocktailsApp" />
+
+    <style name="ThemeOverlay.App.BottomSheetDialog" parent="ThemeOverlay.MaterialComponents.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/ModalBottomSheetDialog</item>
+        <item name="behavior_halfExpandedRatio">0.8</item>
+    </style>
+
+    <style name="Widget.App.CardView" parent="Widget.MaterialComponents.CardView">
+        <item name="cardBackgroundColor">@color/colorBackground</item>
+    </style>
+
+    <style name="SearchViewTheme" parent="Widget.AppCompat.SearchView">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColorPrimary">@color/colorRed</item>
+        <item name="android:textColorHint">@color/colorRed</item>
+        <item name="iconifiedByDefault">false</item>
+    </style>
+
 </resources>

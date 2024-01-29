@@ -9,26 +9,16 @@
     <color name="secondaryLightColor">#52c7b8</color>
     <color name="secondaryDarkColor">#00675b</color>
 
-    <color name="colorError">#d50000</color>
-    <color name="colorOnError">#ffffff</color>
+    <color name="colorText">#a6a6a6</color>
 
-    <color name="colorText">#2B2D42</color>
-    <color name="colorSubText">#8D99AE</color>
-    <color name="colorSliderText">#c1c1c1</color>
+    <color name="colorBackground">#d9d9d9</color>
 
     <color name="colorBlack">#FF000000</color>
     <color name="colorWhite">#FFFFFFFF</color>
-
-    <color name="colorImdbDot">#E6B91E</color>
-    <color name="colorImdbPoints">#ADB5BD</color>
-
-    <color name="colorDivider">#ffcdd2</color>
-
-    <color name="colorNavBar">#FFFFFFFF</color>
-
-    <color name="colorTab">#70000000</color>
-
-    <color name="indicatorSelected">#FFFFFF</color>
-    <color name="indicatorUnselected">#B2B2B2</color>
+    <color name="colorLightGrey">#bfbfbf</color>
+    <color name="colorDarkGrey">#404040</color>
+    <color name="colorRed">#990000</color>
+    <color name="colorOrange">#ffb833</color>
+    <color name="colorAppName">#cc0000</color>
 
 </resources>

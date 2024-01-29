@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.cocktailsapp.databinding.FragmentIngredientBinding
 import com.example.cocktailsapp.home.business.IngredientItem
@@ -15,6 +16,8 @@ class IngredientFragment : Fragment() {
 
     private var _binding: FragmentIngredientBinding? = null
     private val binding get() = _binding!!
+
+    private val viewModel: HomeViewModel by viewModels()
 
     private lateinit var adapter: IngredientListAdapter
 
@@ -28,13 +31,30 @@ class IngredientFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        arguments.let {
-            val ingredientList = it!!.getSerializable("myIngredientList") as List<IngredientItem>
-            adapter = IngredientListAdapter(this@IngredientFragment)
-            adapter.differ.submitList(ingredientList)
-            binding.rvIngredientFragment.adapter = adapter
-            binding.rvIngredientFragment.layoutManager = GridLayoutManager(activity, 3)
+
+        setupRecyclerViewAdapter()
+
+        viewModel.viewStateIngredient.observe(viewLifecycleOwner) { ingredientsList ->
+            when(ingredientsList) {
+                is HomeViewState.ContentIngredient -> {
+                    binding.loader.visibility = View.GONE
+                    adapter.differ.submitList(ingredientsList.ingredients.drinks)
+                }
+                is HomeViewState.Error -> {
+                    binding.loader.visibility = View.GONE
+                }
+                is HomeViewState.Loading -> {
+                    binding.loader.visibility = View.VISIBLE
+                }
+                else -> { }
+            }
         }
+    }
+
+    private fun setupRecyclerViewAdapter() {
+        adapter = IngredientListAdapter(this@IngredientFragment)
+        binding.rvIngredientFragment.adapter = adapter
+        binding.rvIngredientFragment.layoutManager = GridLayoutManager(activity, 3)
     }
 
     override fun onDestroyView() {

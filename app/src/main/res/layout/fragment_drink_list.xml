@@ -9,30 +9,48 @@
     <ImageView
         android:id="@+id/iv_drink_list_fragment"
         android:layout_width="match_parent"
-        android:layout_height="240dp"
+        android:layout_height="260dp"
+        tools:src="@drawable/cocktails_search"
         android:scaleType="centerCrop" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="260dp"
+        android:background="@color/colorBlack"
+        android:alpha="0.7" />
 
     <TextView
         android:id="@+id/tv_drink_list_fragment"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:gravity="center"
-        android:textColor="@color/colorWhite"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_below="@id/iv_drink_list_fragment"
-        android:background="@color/colorTab"
-        android:layout_marginTop="-80dp"
-        android:layout_marginBottom="30dp"/>
+        android:textSize="44sp"
+        android:fontFamily="@font/drink_title"
+        tools:text="Ordinary Drink"
+        android:singleLine="true"
+        android:layout_marginBottom="8dp"
+        android:layout_above="@id/tv_count_drink_list_fragment" />
+
+    <TextView
+        android:id="@+id/tv_count_drink_list_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="24sp"
+        android:fontFamily="@font/drink_category"
+        tools:text="37 Cocktails"
+        android:singleLine="true"
+        android:layout_above="@id/cv_drink_list"
+        android:layout_marginBottom="92dp" />
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cv_drink_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/iv_drink_list_fragment"
         android:layout_marginTop="-30dp"
         android:layout_marginBottom="-26dp"
-        app:cardBackgroundColor="#1a0000"
-        app:cardCornerRadius="30dp"
+        app:cardCornerRadius="20dp"
         app:cardElevation="4dp">
 
         <androidx.recyclerview.widget.RecyclerView
@@ -42,6 +60,13 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="26dp" />
+
+        <ProgressBar
+            android:id="@+id/loader"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:indeterminateTint="@color/colorRed"
+            android:layout_gravity="center"/>
 
     </androidx.cardview.widget.CardView>
 
