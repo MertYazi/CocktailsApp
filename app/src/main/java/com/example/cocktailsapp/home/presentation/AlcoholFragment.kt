@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.cocktailsapp.databinding.FragmentAlcoholBinding
 import com.example.cocktailsapp.home.business.AlcoholItem
@@ -15,6 +16,8 @@ class AlcoholFragment : Fragment() {
 
     private var _binding: FragmentAlcoholBinding? = null
     private val binding get() = _binding!!
+
+    private val viewModel: HomeViewModel by viewModels()
 
     private lateinit var adapter: AlcoholListAdapter
 
@@ -28,13 +31,30 @@ class AlcoholFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        arguments.let {
-            val alcoholList = it!!.getSerializable("myAlcoholList") as List<AlcoholItem>
-            adapter = AlcoholListAdapter(this@AlcoholFragment)
-            adapter.differ.submitList(alcoholList)
-            binding.rvAlcoholFragment.adapter = adapter
-            binding.rvAlcoholFragment.layoutManager = LinearLayoutManager(activity)
+
+        setupRecyclerViewAdapter()
+
+        viewModel.viewStateAlcohol.observe(viewLifecycleOwner) { alcoholsList ->
+            when(alcoholsList) {
+                is HomeViewState.ContentAlcohol -> {
+                    binding.loader.visibility = View.GONE
+                    adapter.differ.submitList(alcoholsList.alcohols.drinks)
+                }
+                is HomeViewState.Error -> {
+                    binding.loader.visibility = View.GONE
+                }
+                is HomeViewState.Loading -> {
+                    binding.loader.visibility = View.VISIBLE
+                }
+                else -> { }
+            }
         }
+    }
+
+    private fun setupRecyclerViewAdapter() {
+        adapter = AlcoholListAdapter(this@AlcoholFragment)
+        binding.rvAlcoholFragment.adapter = adapter
+        binding.rvAlcoholFragment.layoutManager = LinearLayoutManager(activity)
     }
 
     override fun onDestroyView() {

@@ -1,7 +1,7 @@
 package com.example.cocktailsapp.drink_details.presentation
 
-import com.example.cocktailsapp.drink_details.business.DrinkDetailsItem
+import com.example.cocktailsapp.shared.business.DrinkDetailsItem
 
 data class DetailsViewState(
-    val drinks: List<DrinkDetailsItem>
+    val drinks: ArrayList<DrinkDetailsItem>
 )

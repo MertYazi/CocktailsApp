@@ -3,40 +3,76 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <ImageView
         android:id="@+id/iv_home_fragment"
         android:layout_width="match_parent"
-        android:layout_height="240dp"
+        android:layout_height="260dp"
+        tools:src="@drawable/cocktails_home"
         android:scaleType="centerCrop" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="260dp"
+        android:background="@color/colorBlack"
+        android:alpha="0.7" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="50sp"
+        android:textColor="@color/colorAppName"
+        android:fontFamily="@font/drink_title"
+        android:text="@string/app_name"
+        android:layout_marginBottom="12dp"
+        android:gravity="center"
+        android:singleLine="true"
+        android:layout_above="@+id/sv_search" />
+
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/sv_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="52dp"
+        android:layout_marginEnd="52dp"
+        android:layout_marginBottom="112dp"
+        android:background="@drawable/search_background"
+        android:alpha="0.5"
+        app:queryHint="@string/search"
+        app:theme="@style/SearchViewTheme"
+        app:searchIcon="@drawable/image_search"
+        app:closeIcon="@drawable/image_cancel"
+        app:queryBackground="@color/colorText"
+        android:layout_above="@+id/tabLayout" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/iv_home_fragment"
-        android:background="@color/colorTab"
-        app:tabTextColor="@color/colorWhite"
+        android:background="#00000000"
+        app:tabTextColor="@color/colorText"
+        app:tabSelectedTextColor="@color/colorRed"
         app:tabTextAppearance="@style/MyTabLayoutTextAppearance"
-        android:layout_marginTop="-80dp"
+        android:layout_marginTop="-96dp"
         android:layout_marginBottom="30dp"/>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@id/tabLayout"
         android:layout_marginTop="-30dp"
         android:layout_marginBottom="-26dp"
-        app:cardBackgroundColor="#1a0000"
-        app:cardCornerRadius="30dp"
+        app:cardCornerRadius="20dp"
         app:cardElevation="4dp">
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/viewpager"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="26dp" />
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp" />
 
     </androidx.cardview.widget.CardView>
 

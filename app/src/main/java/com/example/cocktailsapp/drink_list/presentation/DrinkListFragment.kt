@@ -1,5 +1,6 @@
 package com.example.cocktailsapp.drink_list.presentation
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,7 +10,9 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.example.cocktailsapp.R
 import com.example.cocktailsapp.databinding.FragmentDrinkListBinding
+import com.example.cocktailsapp.shared.business.DrinkItem
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -22,12 +25,6 @@ class DrinkListFragment : Fragment() {
 
     private lateinit var adapter: DrinkListAdapter
 
-    private var category: String = ""
-    private var glass: String = ""
-    private var ingredient: String = ""
-    private var alcohol: String = ""
-    private var image: String = ""
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -38,75 +35,82 @@ class DrinkListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         val args: DrinkListFragmentArgs by navArgs()
-        category = args.myCategory
-        glass = args.myGlass
-        ingredient = args.myIngredient
-        alcohol = args.myAlcohol
-        image = args.myImage
+        val category = args.myCategory
+        val glass = args.myGlass
+        val ingredient = args.myIngredient
+        val alcohol = args.myAlcohol
+        val image = args.myImage
+
+        if (category.isNotEmpty()) {
+            adapter = DrinkListAdapter(this@DrinkListFragment, category)
+            setupRecyclerViewAdapter()
+            viewModel.getDrinksByCategory(category)
+            binding.tvDrinkListFragment.text = category
+        }
+        if (glass.isNotEmpty()) {
+            adapter = DrinkListAdapter(this@DrinkListFragment, glass)
+            setupRecyclerViewAdapter()
+            viewModel.getDrinksByGlass(glass)
+            binding.tvDrinkListFragment.text = glass
+        }
+        if (ingredient.isNotEmpty()) {
+            adapter = DrinkListAdapter(this@DrinkListFragment, ingredient)
+            setupRecyclerViewAdapter()
+            viewModel.getDrinksByIngredient(ingredient)
+            binding.tvDrinkListFragment.text = ingredient
+        }
+        if (alcohol.isNotEmpty()) {
+            adapter = DrinkListAdapter(this@DrinkListFragment, alcohol)
+            setupRecyclerViewAdapter()
+            viewModel.getDrinksByAlcohol(alcohol)
+            binding.tvDrinkListFragment.text = alcohol
+        }
 
         viewModel.viewStateDrinks.observe(viewLifecycleOwner) { drinks ->
             when(drinks) {
                 is DrinkListViewState.ContentDrinkByCategory -> {
-                    adapter = DrinkListAdapter(this@DrinkListFragment, category)
-
-                    adapter.differ.submitList(drinks.drinks.drinks)
-                    binding.rvDrinkListFragment.adapter = adapter
-                    binding.rvDrinkListFragment.layoutManager = LinearLayoutManager(activity)
+                    binding.loader.visibility = View.GONE
+                    populateRecyclerView(drinks.drinks.drinks)
                 }
                 is DrinkListViewState.ContentDrinkByGlass -> {
-                    adapter = DrinkListAdapter(this@DrinkListFragment, glass)
-
-                    adapter.differ.submitList(drinks.drinks.drinks)
-                    binding.rvDrinkListFragment.adapter = adapter
-                    binding.rvDrinkListFragment.layoutManager = LinearLayoutManager(activity)
+                    binding.loader.visibility = View.GONE
+                    populateRecyclerView(drinks.drinks.drinks)
                 }
                 is DrinkListViewState.ContentDrinkByIngredient -> {
-                    adapter = DrinkListAdapter(this@DrinkListFragment, ingredient)
-
-                    adapter.differ.submitList(drinks.drinks.drinks)
-                    binding.rvDrinkListFragment.adapter = adapter
-                    binding.rvDrinkListFragment.layoutManager = LinearLayoutManager(activity)
+                    binding.loader.visibility = View.GONE
+                    populateRecyclerView(drinks.drinks.drinks)
                 }
                 is DrinkListViewState.ContentDrinkByAlcohol -> {
-                    adapter = DrinkListAdapter(this@DrinkListFragment, alcohol)
-
-                    adapter.differ.submitList(drinks.drinks.drinks)
-                    binding.rvDrinkListFragment.adapter = adapter
-                    binding.rvDrinkListFragment.layoutManager = LinearLayoutManager(activity)
+                    binding.loader.visibility = View.GONE
+                    populateRecyclerView(drinks.drinks.drinks)
                 }
                 is DrinkListViewState.Error -> {
-
+                    binding.loader.visibility = View.GONE
                 }
                 is DrinkListViewState.Loading -> {
-
+                    binding.loader.visibility = View.VISIBLE
                 }
                 else -> { }
             }
         }
 
-        if (category.isNotEmpty()) {
-            viewModel.getDrinksByCategory(category)
-            binding.tvDrinkListFragment.text = category
-        }
-        if (glass.isNotEmpty()) {
-            viewModel.getDrinksByGlass(glass)
-            binding.tvDrinkListFragment.text = glass
-        }
-        if (ingredient.isNotEmpty()) {
-            viewModel.getDrinksByIngredient(ingredient)
-            binding.tvDrinkListFragment.text = ingredient
-        }
-        if (alcohol.isNotEmpty()) {
-            viewModel.getDrinksByAlcohol(alcohol)
-            binding.tvDrinkListFragment.text = alcohol
-        }
-
         Glide.with(this)
             .load(image)
-            //.override(90, 90)
             .into(binding.ivDrinkListFragment)
+    }
 
+    @SuppressLint("SetTextI18n")
+    private fun populateRecyclerView(drinks: ArrayList<DrinkItem>) {
+        adapter.differ.submitList(drinks)
+        binding.tvCountDrinkListFragment.text = (drinks.size ?: 0).toString() +
+                " " + resources.getString(R.string.cocktails)
+    }
+
+    private fun setupRecyclerViewAdapter() {
+        binding.rvDrinkListFragment.adapter = adapter
+        binding.rvDrinkListFragment.layoutManager = LinearLayoutManager(activity)
     }
 
     override fun onDestroyView() {

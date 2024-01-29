@@ -1,5 +1,5 @@
 package com.example.cocktailsapp.home.business
 
 data class GlassList(
-    val drinks: List<GlassItem>
+    val drinks: ArrayList<GlassItem>
 )

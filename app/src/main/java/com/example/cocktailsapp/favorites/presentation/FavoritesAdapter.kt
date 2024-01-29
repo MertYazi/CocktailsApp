@@ -8,8 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.cocktailsapp.databinding.ItemDrinkListBinding
-import com.example.cocktailsapp.drink_details.business.DrinkDetailsItem
-import com.example.cocktailsapp.home.business.DrinkItem
+import com.example.cocktailsapp.shared.business.DrinkDetailsItem
 
 class FavoritesAdapter(
     private val fragment: FavoritesFragment

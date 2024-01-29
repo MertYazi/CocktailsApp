@@ -1,7 +1,5 @@
 package com.example.cocktailsapp.drink_list.presentation
 
-import com.example.cocktailsapp.home.presentation.DrinkViewState
-
 sealed class DrinkListViewState {
     object Loading: DrinkListViewState()
     object Error: DrinkListViewState()

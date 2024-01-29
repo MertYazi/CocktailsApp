@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.cocktailsapp.CocktailsRepository
-import com.example.cocktailsapp.Result
+import com.example.cocktailsapp.shared.business.repository.CocktailsRepository
+import com.example.cocktailsapp.shared.data.repository.api.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -33,18 +33,6 @@ class HomeViewModel @Inject constructor(
     private val _viewStateAlcohol = MutableLiveData<HomeViewState>()
     val viewStateAlcohol: LiveData<HomeViewState>
         get() = _viewStateAlcohol
-
-    private val _viewStateDrinkByCategory = MutableLiveData<HomeViewState>()
-    val viewStateDrinkByCategory: LiveData<HomeViewState>
-        get() = _viewStateDrinkByCategory
-
-    private val _viewStateDrinkByGlass = MutableLiveData<HomeViewState>()
-    val viewStateDrinkByGlass: LiveData<HomeViewState>
-        get() = _viewStateDrinkByGlass
-
-    private val _viewStateDrinkByAlcohol = MutableLiveData<HomeViewState>()
-    val viewStateDrinkByAlcohol: LiveData<HomeViewState>
-        get() = _viewStateDrinkByAlcohol
 
     init {
         getCategories()
@@ -123,63 +111,6 @@ class HomeViewModel @Inject constructor(
                 _viewStateAlcohol.postValue(
                     HomeViewState.ContentAlcohol(
                         alcohols
-                    )
-                )
-            }
-        }
-    }
-
-    fun getDrinksByCategory(category: String) = viewModelScope.launch(dispatcher) {
-        _viewStateDrinkByCategory.postValue(HomeViewState.Loading)
-        when (val result = repository.getDrinksByCategory(category)) {
-            is Result.Error -> {
-                _viewStateDrinkByCategory.postValue(HomeViewState.Error)
-            }
-            is Result.Success -> {
-                val drinks = DrinkViewState(
-                    result.data.drinks
-                )
-                _viewStateDrinkByCategory.postValue(
-                    HomeViewState.ContentDrinkByCategory(
-                        drinks
-                    )
-                )
-            }
-        }
-    }
-
-    fun getDrinksByGlass(glass: String) = viewModelScope.launch(dispatcher) {
-        _viewStateDrinkByGlass.postValue(HomeViewState.Loading)
-        when (val result = repository.getDrinksByGlass(glass)) {
-            is Result.Error -> {
-                _viewStateDrinkByGlass.postValue(HomeViewState.Error)
-            }
-            is Result.Success -> {
-                val drinks = DrinkViewState(
-                    result.data.drinks
-                )
-                _viewStateDrinkByGlass.postValue(
-                    HomeViewState.ContentDrinkByGlass(
-                        drinks
-                    )
-                )
-            }
-        }
-    }
-
-    fun getDrinksByAlcohol(alcohol: String) = viewModelScope.launch(dispatcher) {
-        _viewStateDrinkByAlcohol.postValue(HomeViewState.Loading)
-        when (val result = repository.getDrinksByAlcohol(alcohol)) {
-            is Result.Error -> {
-                _viewStateDrinkByAlcohol.postValue(HomeViewState.Error)
-            }
-            is Result.Success -> {
-                val drinks = DrinkViewState(
-                    result.data.drinks
-                )
-                _viewStateDrinkByAlcohol.postValue(
-                    HomeViewState.ContentDrinkByAlcohol(
-                        drinks
                     )
                 )
             }
