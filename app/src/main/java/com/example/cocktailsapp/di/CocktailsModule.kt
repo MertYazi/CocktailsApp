@@ -1,15 +1,12 @@
 package com.example.cocktailsapp.di
 
-import com.example.cocktailsapp.APIClient
-import com.example.cocktailsapp.AlcoholEntityToAlcoholMapper
-import com.example.cocktailsapp.CategoryEntityToCategoryMapper
-import com.example.cocktailsapp.CocktailsRepository
-import com.example.cocktailsapp.CocktailsRepositoryAPI
-import com.example.cocktailsapp.CocktailsService
-import com.example.cocktailsapp.DrinkDetailsEntityToDrinkDetailsMapper
-import com.example.cocktailsapp.DrinkEntityToDrinkMapper
-import com.example.cocktailsapp.GlassEntityToGlassMapper
-import com.example.cocktailsapp.IngredientEntityToIngredientMapper
+import com.example.cocktailsapp.shared.data.repository.api.APIClient
+import com.example.cocktailsapp.shared.business.repository.CocktailsRepository
+import com.example.cocktailsapp.shared.data.repository.api.CocktailsRepositoryAPI
+import com.example.cocktailsapp.shared.data.repository.api.CocktailsService
+import com.example.cocktailsapp.drink_details.business.DrinkDetailsEntityToDrinkDetailsMapper
+import com.example.cocktailsapp.drink_list.business.DrinkListEntityToDrinkListMapper
+import com.example.cocktailsapp.home.business.IngredientEntityToIngredientMapper
 import com.google.firebase.firestore.FirebaseFirestore
 import com.jakewharton.espresso.OkHttp3IdlingResource
 import dagger.Module
@@ -43,20 +40,14 @@ class CocktailsModule {
     fun providesCocktailsRepositoryAPI(
         service: CocktailsService,
         database: FirebaseFirestore,
-        categoryEntityToCategoryMapper: CategoryEntityToCategoryMapper,
-        glassEntityToGlassMapper: GlassEntityToGlassMapper,
         ingredientEntityToIngredientMapper: IngredientEntityToIngredientMapper,
-        alcoholEntityToAlcoholMapper: AlcoholEntityToAlcoholMapper,
-        drinkEntityToDrinkMapper: DrinkEntityToDrinkMapper,
+        drinkListEntityToDrinkListMapper: DrinkListEntityToDrinkListMapper,
         drinkDetailsEntityToDrinkDetailsMapper: DrinkDetailsEntityToDrinkDetailsMapper
     ): CocktailsRepositoryAPI = CocktailsRepositoryAPI(
         service,
         database,
-        categoryEntityToCategoryMapper,
-        glassEntityToGlassMapper,
         ingredientEntityToIngredientMapper,
-        alcoholEntityToAlcoholMapper,
-        drinkEntityToDrinkMapper,
+        drinkListEntityToDrinkListMapper,
         drinkDetailsEntityToDrinkDetailsMapper)
 
     @Provides

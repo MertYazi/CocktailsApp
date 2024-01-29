@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.cocktailsapp.databinding.ItemIngredientBinding
 import com.example.cocktailsapp.home.business.IngredientItem
+import com.example.cocktailsapp.shared.Constants.INGREDIENT_EXTENSION
+import com.example.cocktailsapp.shared.Constants.INGREDIENT_URL
 
 class IngredientListAdapter(
     private val fragment: IngredientFragment
@@ -20,17 +22,11 @@ class IngredientListAdapter(
     }
 
     private val differCallback = object : DiffUtil.ItemCallback<IngredientItem>() {
-        override fun areItemsTheSame(
-            oldItem: IngredientItem,
-            newItem: IngredientItem
-        ): Boolean {
+        override fun areItemsTheSame(oldItem: IngredientItem, newItem: IngredientItem): Boolean {
             return oldItem.strIngredient1 == newItem.strIngredient1
         }
 
-        override fun areContentsTheSame(
-            oldItem: IngredientItem,
-            newItem: IngredientItem
-        ): Boolean {
+        override fun areContentsTheSame(oldItem: IngredientItem, newItem: IngredientItem): Boolean {
             return oldItem == newItem
         }
     }
@@ -52,9 +48,9 @@ class IngredientListAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val ingredient = differ.currentList[position]
-        val ingredientThumb = "https://www.thecocktaildb.com/images/ingredients/" +
+        val ingredientThumb = INGREDIENT_URL +
                 ingredient.strIngredient1 +
-                ".png"
+                INGREDIENT_EXTENSION
         holder.apply {
             Glide.with(fragment)
                 .load(ingredientThumb)

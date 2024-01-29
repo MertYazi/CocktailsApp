@@ -21,7 +21,7 @@ class GlassListAdapter(
 
     private var differCallback = object : DiffUtil.ItemCallback<GlassItem>() {
         override fun areItemsTheSame(oldItem: GlassItem, newItem: GlassItem): Boolean {
-            return oldItem.strGlass == newItem.strGlass
+            return oldItem.name == newItem.name
         }
 
         override fun areContentsTheSame(oldItem: GlassItem, newItem: GlassItem): Boolean {
@@ -40,29 +40,29 @@ class GlassListAdapter(
         return ViewHolder(binding)
     }
 
+    override fun getItemCount(): Int {
+        return differ.currentList.size
+    }
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val glass = differ.currentList[position]
         holder.apply {
             Glide.with(fragment)
-                .load(glass.imgGlass)
+                .load(glass.image)
                 .into(glassImage)
-            glassName.text = glass.strGlass
+            glassName.text = glass.name
 
             itemView.setOnClickListener {
                 fragment.findNavController().navigate(
                     HomeFragmentDirections.actionHomeFragmentToDrinkListFragment(
                         "",
-                        glass.strGlass,
+                        glass.name,
                         "",
                         "",
-                        glass.imgGlass
+                        glass.image
                     )
                 )
             }
         }
-    }
-
-    override fun getItemCount(): Int {
-        return differ.currentList.size
     }
 }

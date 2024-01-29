@@ -1,6 +1,6 @@
 package com.example.cocktailsapp.drink_details.business
 
-import com.example.cocktailsapp.CocktailsRepository
+import com.example.cocktailsapp.shared.business.repository.CocktailsRepository
 import javax.inject.Inject
 
 class IsDrinkInFavoritesUseCase @Inject constructor(

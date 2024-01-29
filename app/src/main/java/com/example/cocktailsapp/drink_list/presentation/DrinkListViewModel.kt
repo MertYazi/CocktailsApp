@@ -4,10 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.cocktailsapp.CocktailsRepository
-import com.example.cocktailsapp.Result
-import com.example.cocktailsapp.home.presentation.DrinkViewState
-import com.example.cocktailsapp.home.presentation.HomeViewState
+import com.example.cocktailsapp.shared.business.repository.CocktailsRepository
+import com.example.cocktailsapp.shared.data.repository.api.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers

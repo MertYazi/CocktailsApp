@@ -21,7 +21,7 @@ class AlcoholListAdapter(
 
     private val differCallback = object : DiffUtil.ItemCallback<AlcoholItem>() {
         override fun areItemsTheSame(oldItem: AlcoholItem, newItem: AlcoholItem): Boolean {
-            return oldItem.strAlcoholic == newItem.strAlcoholic
+            return oldItem.name == newItem.name
         }
 
         override fun areContentsTheSame(oldItem: AlcoholItem, newItem: AlcoholItem): Boolean {
@@ -48,9 +48,9 @@ class AlcoholListAdapter(
         val alcohol = differ.currentList[position]
         holder.apply {
             Glide.with(fragment)
-                .load(alcohol.imgAlcoholic)
+                .load(alcohol.image)
                 .into(alcoholImage)
-            alcoholName.text = alcohol.strAlcoholic
+            alcoholName.text = alcohol.name
 
             itemView.setOnClickListener {
                 fragment.findNavController().navigate(
@@ -58,8 +58,8 @@ class AlcoholListAdapter(
                         "",
                         "",
                         "",
-                        alcohol.strAlcoholic,
-                        alcohol.imgAlcoholic
+                        alcohol.name,
+                        alcohol.image
                     )
                 )
             }

@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.cocktailsapp.databinding.FragmentCategoryBinding
 import com.example.cocktailsapp.home.business.CategoryItem
@@ -15,6 +16,8 @@ class CategoryFragment : Fragment() {
 
     private var _binding: FragmentCategoryBinding? = null
     private val binding get() = _binding!!
+
+    private val viewModel: HomeViewModel by viewModels()
 
     private lateinit var adapter: CategoryListAdapter
 
@@ -29,13 +32,29 @@ class CategoryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        arguments.let {
-            val categoryList = it!!.getSerializable("myCategoryList") as List<CategoryItem>
-            adapter = CategoryListAdapter(this@CategoryFragment)
-            adapter.differ.submitList(categoryList)
-            binding.rvCategoryFragment.adapter = adapter
-            binding.rvCategoryFragment.layoutManager = GridLayoutManager(activity, 2)
+        setupRecyclerViewAdapter()
+
+        viewModel.viewStateCategory.observe(viewLifecycleOwner) { categoriesList ->
+            when(categoriesList) {
+                is HomeViewState.ContentCategory -> {
+                    binding.loader.visibility = View.GONE
+                    adapter.differ.submitList(categoriesList.categories.drinks)
+                }
+                is HomeViewState.Error -> {
+                    binding.loader.visibility = View.GONE
+                }
+                is HomeViewState.Loading -> {
+                    binding.loader.visibility = View.VISIBLE
+                }
+                else -> { }
+            }
         }
+    }
+
+    private fun setupRecyclerViewAdapter() {
+        adapter = CategoryListAdapter(this@CategoryFragment)
+        binding.rvCategoryFragment.adapter = adapter
+        binding.rvCategoryFragment.layoutManager = GridLayoutManager(activity, 2)
     }
 
     override fun onDestroyView() {
