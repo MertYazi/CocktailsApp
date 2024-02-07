@@ -4,7 +4,8 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".home.presentation.HomeFragment">
 
     <ImageView
         android:id="@+id/iv_home_fragment"
@@ -41,6 +42,7 @@
         android:background="@drawable/search_background"
         android:alpha="0.5"
         app:queryHint="@string/search"
+        android:focusable="false"
         app:theme="@style/SearchViewTheme"
         app:searchIcon="@drawable/image_search"
         app:closeIcon="@drawable/image_cancel"

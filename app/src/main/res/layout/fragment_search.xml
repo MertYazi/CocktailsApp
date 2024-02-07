@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".drink_list.presentation.SearchFragment">
+    tools:context=".search.presentation.SearchFragment">
 
     <ImageView
         android:id="@+id/iv_search_fragment"
@@ -41,6 +41,7 @@
         android:background="@drawable/search_background"
         android:alpha="0.5"
         app:queryHint="@string/search"
+        android:focusable="false"
         app:theme="@style/SearchViewTheme"
         app:searchIcon="@drawable/image_search"
         app:closeIcon="@drawable/image_cancel"

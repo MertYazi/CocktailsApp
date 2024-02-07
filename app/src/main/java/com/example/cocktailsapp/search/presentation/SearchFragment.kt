@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView.OnQueryTextListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
@@ -53,6 +54,11 @@ class SearchFragment : Fragment() {
                 }
                 is SearchViewState.Error -> {
                     binding.loader.visibility = View.GONE
+                    Toast.makeText(
+                        requireContext(),
+                        resources.getString(R.string.cocktail_not_found),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
                 is SearchViewState.Loading -> {
                     binding.loader.visibility = View.VISIBLE
@@ -85,11 +91,6 @@ class SearchFragment : Fragment() {
                 return false
             }
         })
-
-        binding.svSearchFragment.setOnCloseListener {
-            viewModel.searchDrinks("")
-            false
-        }
     }
 
     override fun onResume() {

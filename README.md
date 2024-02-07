@@ -18,7 +18,7 @@ Project is written in Kotlin.💯
 
 <br />
 
-*It's recommended to use in dark mode but light mode alternative also presented.
+**It's recommended to use in dark mode but light mode alternative also presented.
 
 <br />
 
@@ -26,6 +26,7 @@ Project is written in Kotlin.💯
 Implementing new technologies and best practices in android development such as:
 - [Clean Architecture](https://medium.com/android-dev-hacks/detailed-guide-on-android-clean-architecture-9eab262a9011) - Clean architecture is a software design philosophy that separates the elements of a design into ring levels.<br /><br />
 - [SOLID](https://medium.com/the-android-caf%C3%A9/solid-principles-the-kotlin-way-ff717c0d60da) - SOLID is a mnemonic acronym for five design principles intended to make software designs more understandable, flexible, and maintainable.<br /><br />
+- [TDD](https://developer.android.com/training/testing/fundamentals) - Testing is an integral part of the app development process. By running tests against your app consistently, you can verify your app's correctness, functional behavior, and usability before you release it publicly.<br /><br />
 - [MVVM](https://developer.android.com/topic/libraries/architecture/viewmodel) - Its principal advantage is that it caches state and persists it through configuration changes.<br /><br />
 - [HILT](https://dagger.dev/hilt) - Hilt provides a standard way to incorporate Dagger dependency injection into an Android application.<br /><br />
 - [Navigation Components](https://developer.android.com/guide/navigation/navigation-getting-started) - Navigation component helps you implement navigation, from simple button clicks to more complex patterns, such as app bars and the navigation drawer.<br /><br />

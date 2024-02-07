@@ -2,12 +2,14 @@ package com.example.cocktailsapp.shopping.presentation
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.cocktailsapp.R
 import com.example.cocktailsapp.databinding.ItemSubShoppingBinding
+import com.example.cocktailsapp.favorites.presentation.FavoritesFragmentDirections
 import com.example.cocktailsapp.shared.business.ShoppingItem
 
 class ShoppingSubAdapter(
@@ -53,6 +55,14 @@ class ShoppingSubAdapter(
             Glide.with(fragment)
                 .load(R.drawable.shopping_cart)
                 .into(imageShopping)
+
+            itemView.setOnClickListener {
+                fragment.findNavController().navigate(
+                    ShoppingFragmentDirections.actionShoppingFragmentToDrinkDetailsFragment(
+                        ingredients.drinkId
+                    )
+                )
+            }
 
             imageShopping.setOnClickListener {
                 fragment.deleteShopping(ingredients)

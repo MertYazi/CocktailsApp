@@ -1,8 +1,6 @@
 package com.example.cocktailsapp.drink_details.presentation
 
 import android.annotation.SuppressLint
-import android.graphics.BlendMode
-import android.graphics.BlendModeColorFilter
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.os.Build
@@ -11,6 +9,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.core.graphics.BlendModeColorFilterCompat
+import androidx.core.graphics.BlendModeCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -123,9 +123,11 @@ class DrinkDetailsFragment : Fragment() {
                             val intColor = it.vibrantSwatch?.rgb ?: 0
                             val hexColor = String.format("#%06X", (intColor))
                             binding.clSheetContentsDrinkDetails.background.colorFilter =
-                                BlendModeColorFilter(Color.parseColor(hexColor), BlendMode.SRC_ATOP)
+                                BlendModeColorFilterCompat.createBlendModeColorFilterCompat(
+                                    Color.parseColor(hexColor), BlendModeCompat.SRC_ATOP)
                             binding.clLikeDrinkDetails.background.colorFilter =
-                                BlendModeColorFilter(Color.parseColor(hexColor), BlendMode.SRC_ATOP)
+                                BlendModeColorFilterCompat.createBlendModeColorFilterCompat(
+                                    Color.parseColor(hexColor), BlendModeCompat.SRC_ATOP)
                         }
                     }
                     return false
