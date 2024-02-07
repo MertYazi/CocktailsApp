@@ -1,12 +1,14 @@
 package com.example.cocktailsapp.home.presentation
 
 import android.os.Bundle
+import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.cocktailsapp.R
@@ -52,15 +54,27 @@ class HomeFragment : Fragment() {
     }
 
     private fun searchViewDoneAction() {
-        val searchDone: EditText = binding.svSearch.findViewById<View>(androidx.appcompat.R.id.search_src_text) as EditText
-        searchDone.setOnEditorActionListener { search, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+        val searchDone: EditText =
+            binding.svSearch.findViewById<View>(androidx.appcompat.R.id.search_src_text) as EditText
+        searchDone.setOnEditorActionListener { search, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH
+                || actionId == EditorInfo.IME_ACTION_DONE
+                || event.action == KeyEvent.ACTION_DOWN
+                && event.keyCode == KeyEvent.KEYCODE_ENTER) {
                 val searchText = search.text.toString()
                 binding.svSearch.setQuery("", false)
                 binding.svSearch.clearFocus()
-                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSearchFragment(
-                    searchText
-                ))
+                if (searchText.isNotEmpty()) {
+                    findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSearchFragment(
+                        searchText
+                    ))
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        resources.getString(R.string.please_enter_text),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
             false
         }

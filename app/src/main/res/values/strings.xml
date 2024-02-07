@@ -13,4 +13,6 @@
     <string name="item">item</string>
     <string name="items">items</string>
     <string name="items_in">items in</string>
+    <string name="please_enter_text">Please enter something to search!</string>
+    <string name="cocktail_not_found">Cocktail does not found!</string>
 </resources>

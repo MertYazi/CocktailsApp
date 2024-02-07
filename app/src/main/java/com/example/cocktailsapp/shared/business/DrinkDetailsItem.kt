@@ -2,11 +2,11 @@ package com.example.cocktailsapp.shared.business
 
 data class DrinkDetailsItem(
     val dateModified: String = "",
-    val idDrink: String = "",
+    var idDrink: String = "",
     val strAlcoholic: String = "",
     val strCategory: String = "",
     val strCreativeCommonsConfirmed: String = "",
-    val strDrink: String = "",
+    var strDrink: String = "",
     val strDrinkAlternate: String = "",
     val strDrinkThumb: String = "",
     val strGlass: String = "",

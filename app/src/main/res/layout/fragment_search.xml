@@ -41,6 +41,7 @@
         android:background="@drawable/search_background"
         android:alpha="0.5"
         app:queryHint="@string/search"
+        android:focusable="false"
         app:theme="@style/SearchViewTheme"
         app:searchIcon="@drawable/image_search"
         app:closeIcon="@drawable/image_cancel"
