@@ -19,6 +19,7 @@
             android:id="@+id/iv_drink_details"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:contentDescription="@string/image_drink_details"
             android:scaleType="centerCrop" />
 
     </FrameLayout>
@@ -66,6 +67,7 @@
                             tools:src="@drawable/ic_favorite_unselected"
                             android:visibility="invisible"
                             tools:visibility="visible"
+                            android:contentDescription="@string/image_favorite_icon"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent"

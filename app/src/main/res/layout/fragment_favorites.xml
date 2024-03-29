@@ -11,12 +11,14 @@
         android:layout_width="match_parent"
         android:layout_height="260dp"
         tools:src="@drawable/cocktails_favorites"
+        android:contentDescription="@string/image_favorites"
         android:scaleType="centerCrop" />
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="260dp"
         android:background="@color/colorBlack"
+        android:contentDescription="@string/image_favorites_shadow"
         android:alpha="0.7" />
 
     <TextView

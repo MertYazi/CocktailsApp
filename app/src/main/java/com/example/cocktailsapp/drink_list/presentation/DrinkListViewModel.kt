@@ -1,7 +1,5 @@
 package com.example.cocktailsapp.drink_list.presentation
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.cocktailsapp.shared.business.repository.CocktailsRepository
@@ -9,6 +7,8 @@ import com.example.cocktailsapp.shared.data.repository.api.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -18,82 +18,77 @@ class DrinkListViewModel @Inject constructor(
     private val dispatcher: CoroutineDispatcher = Dispatchers.Main
 ): ViewModel() {
 
-    private val _viewStateDrinks = MutableLiveData<DrinkListViewState>()
-    val viewStateDrinks: LiveData<DrinkListViewState>
-        get() = _viewStateDrinks
+    private val _viewStateDrinks = MutableStateFlow<DrinkListViewState>(DrinkListViewState.Loading)
+    val viewStateDrinks = _viewStateDrinks.asStateFlow()
 
     fun getDrinksByCategory(category: String) = viewModelScope.launch(dispatcher) {
-        _viewStateDrinks.postValue(DrinkListViewState.Loading)
-        when (val result = repository.getDrinksByCategory(category)) {
-            is Result.Error -> {
-                _viewStateDrinks.postValue(DrinkListViewState.Error)
-            }
-            is Result.Success -> {
-                val drinks = DrinkViewState(
-                    result.data.drinks
-                )
-                _viewStateDrinks.postValue(
-                    DrinkListViewState.ContentDrinkByCategory(
+        repository.getDrinksByCategory(category).collect { result ->
+            when (result) {
+                is Result.Error -> {
+                    _viewStateDrinks.value = DrinkListViewState.Error
+                }
+                is Result.Success -> {
+                    val drinks = DrinkViewState(
+                        result.data.drinks
+                    )
+                    _viewStateDrinks.value = DrinkListViewState.ContentDrinkByCategory(
                         drinks
                     )
-                )
+                }
             }
         }
     }
 
     fun getDrinksByGlass(glass: String) = viewModelScope.launch(dispatcher) {
-        _viewStateDrinks.postValue(DrinkListViewState.Loading)
-        when (val result = repository.getDrinksByGlass(glass)) {
-            is Result.Error -> {
-                _viewStateDrinks.postValue(DrinkListViewState.Error)
-            }
-            is Result.Success -> {
-                val drinks = DrinkViewState(
-                    result.data.drinks
-                )
-                _viewStateDrinks.postValue(
-                    DrinkListViewState.ContentDrinkByGlass(
+        repository.getDrinksByGlass(glass).collect { result ->
+            when (result) {
+                is Result.Error -> {
+                    _viewStateDrinks.value = DrinkListViewState.Error
+                }
+                is Result.Success -> {
+                    val drinks = DrinkViewState(
+                        result.data.drinks
+                    )
+                    _viewStateDrinks.value = DrinkListViewState.ContentDrinkByGlass(
                         drinks
                     )
-                )
+                }
             }
         }
     }
 
     fun getDrinksByIngredient(ingredient: String) = viewModelScope.launch(dispatcher) {
-        _viewStateDrinks.postValue(DrinkListViewState.Loading)
-        when (val result = repository.getDrinksByIngredient(ingredient)) {
-            is Result.Error -> {
-                _viewStateDrinks.postValue(DrinkListViewState.Error)
-            }
-            is Result.Success -> {
-                val drinks = DrinkViewState(
-                    result.data.drinks
-                )
-                _viewStateDrinks.postValue(
-                    DrinkListViewState.ContentDrinkByIngredient(
+        repository.getDrinksByIngredient(ingredient).collect { result ->
+            when (result) {
+                is Result.Error -> {
+                    _viewStateDrinks.value = DrinkListViewState.Error
+                }
+                is Result.Success -> {
+                    val drinks = DrinkViewState(
+                        result.data.drinks
+                    )
+                    _viewStateDrinks.value = DrinkListViewState.ContentDrinkByIngredient(
                         drinks
                     )
-                )
+                }
             }
         }
     }
 
     fun getDrinksByAlcohol(alcohol: String) = viewModelScope.launch(dispatcher) {
-        _viewStateDrinks.postValue(DrinkListViewState.Loading)
-        when (val result = repository.getDrinksByAlcohol(alcohol)) {
-            is Result.Error -> {
-                _viewStateDrinks.postValue(DrinkListViewState.Error)
-            }
-            is Result.Success -> {
-                val drinks = DrinkViewState(
-                    result.data.drinks
-                )
-                _viewStateDrinks.postValue(
-                    DrinkListViewState.ContentDrinkByAlcohol(
+        repository.getDrinksByAlcohol(alcohol).collect { result ->
+            when (result) {
+                is Result.Error -> {
+                    _viewStateDrinks.value = DrinkListViewState.Error
+                }
+                is Result.Success -> {
+                    val drinks = DrinkViewState(
+                        result.data.drinks
+                    )
+                    _viewStateDrinks.value = DrinkListViewState.ContentDrinkByAlcohol(
                         drinks
                     )
-                )
+                }
             }
         }
     }

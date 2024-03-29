@@ -6,10 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.cocktailsapp.databinding.FragmentAlcoholBinding
-import com.example.cocktailsapp.home.business.AlcoholItem
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class AlcoholFragment : Fragment() {
@@ -34,19 +37,23 @@ class AlcoholFragment : Fragment() {
 
         setupRecyclerViewAdapter()
 
-        viewModel.viewStateAlcohol.observe(viewLifecycleOwner) { alcoholsList ->
-            when(alcoholsList) {
-                is HomeViewState.ContentAlcohol -> {
-                    binding.loader.visibility = View.GONE
-                    adapter.differ.submitList(alcoholsList.alcohols.drinks)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.viewStateAlcohol.collect { alcoholsList ->
+                    when(alcoholsList) {
+                        is HomeViewState.ContentAlcohol -> {
+                            binding.loader.visibility = View.GONE
+                            adapter.differ.submitList(alcoholsList.alcohols.drinks)
+                        }
+                        is HomeViewState.Error -> {
+                            binding.loader.visibility = View.GONE
+                        }
+                        is HomeViewState.Loading -> {
+                            binding.loader.visibility = View.VISIBLE
+                        }
+                        else -> { }
+                    }
                 }
-                is HomeViewState.Error -> {
-                    binding.loader.visibility = View.GONE
-                }
-                is HomeViewState.Loading -> {
-                    binding.loader.visibility = View.VISIBLE
-                }
-                else -> { }
             }
         }
     }

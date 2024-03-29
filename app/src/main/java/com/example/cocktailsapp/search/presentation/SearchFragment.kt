@@ -9,12 +9,16 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView.OnQueryTextListener
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.cocktailsapp.R
 import com.example.cocktailsapp.databinding.FragmentSearchBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SearchFragment : Fragment() {
@@ -44,26 +48,31 @@ class SearchFragment : Fragment() {
 
         setupRecyclerViewAdapter()
 
-        viewModel.viewStateSearch.observe(viewLifecycleOwner) { drinks ->
-            when (drinks) {
-                is SearchViewState.ContentSearch -> {
-                    binding.loader.visibility = View.GONE
-                    mSearchAdapter.differ.submitList(drinks.drinks.drinks)
-                    binding.tvCountSearchFragment.text = (drinks.drinks.drinks.size ?: 0).toString() +
-                            " " + resources.getString(R.string.cocktails)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.viewStateSearch.collect { drinks ->
+                    when (drinks) {
+                        is SearchViewState.ContentSearch -> {
+                            binding.loader.visibility = View.GONE
+                            drinks.drinks.drinks.sortBy { it.strDrink }
+                            mSearchAdapter.differ.submitList(drinks.drinks.drinks)
+                            binding.tvCountSearchFragment.text = (drinks.drinks.drinks.size ?: 0).toString() +
+                                    " " + resources.getString(R.string.cocktails)
+                        }
+                        is SearchViewState.Error -> {
+                            binding.loader.visibility = View.GONE
+                            Toast.makeText(
+                                requireContext(),
+                                resources.getString(R.string.cocktail_not_found),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                        is SearchViewState.Loading -> {
+                            binding.loader.visibility = View.VISIBLE
+                        }
+                        else -> { }
+                    }
                 }
-                is SearchViewState.Error -> {
-                    binding.loader.visibility = View.GONE
-                    Toast.makeText(
-                        requireContext(),
-                        resources.getString(R.string.cocktail_not_found),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-                is SearchViewState.Loading -> {
-                    binding.loader.visibility = View.VISIBLE
-                }
-                else -> { }
             }
         }
 

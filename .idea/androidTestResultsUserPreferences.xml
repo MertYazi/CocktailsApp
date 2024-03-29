@@ -3,6 +3,19 @@
   <component name="AndroidTestResultsUserPreferences">
     <option name="androidTestResultsTableState">
       <map>
+        <entry key="-1559349861">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="90" />
+                  <entry key="Pixel_Tablet_API_33" value="120" />
+                  <entry key="Tests" value="360" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
         <entry key="-1553860510">
           <value>
             <AndroidTestResultsTableState>
@@ -10,7 +23,22 @@
                 <map>
                   <entry key="Duration" value="90" />
                   <entry key="Pixel_5_API_24" value="120" />
+                  <entry key="Pixel_8_API_33" value="120" />
+                  <entry key="Pixel_Tablet_API_33" value="120" />
                   <entry key="Tests" value="360" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
+        <entry key="-1325370625">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="90" />
+                  <entry key="Tests" value="360" />
+                  <entry key="Xiaomi M2101K9AG" value="120" />
                 </map>
               </option>
             </AndroidTestResultsTableState>
@@ -38,6 +66,7 @@
                 <map>
                   <entry key="Duration" value="90" />
                   <entry key="Pixel_5_API_24" value="120" />
+                  <entry key="Pixel_Tablet_API_33" value="120" />
                   <entry key="Tests" value="360" />
                 </map>
               </option>
@@ -77,7 +106,10 @@
                 <map>
                   <entry key="Duration" value="90" />
                   <entry key="Pixel_5_API_24" value="120" />
+                  <entry key="Pixel_8_API_33" value="120" />
+                  <entry key="Pixel_Tablet_API_33" value="120" />
                   <entry key="Tests" value="360" />
+                  <entry key="Xiaomi M2101K9AG" value="120" />
                 </map>
               </option>
             </AndroidTestResultsTableState>
@@ -92,6 +124,19 @@
                   <entry key="Pixel_Tablet_API_33" value="120" />
                   <entry key="Tests" value="360" />
                   <entry key="Xiaomi M2101K9AG" value="120" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
+        <entry key="-705800439">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="90" />
+                  <entry key="Pixel_Tablet_API_33" value="120" />
+                  <entry key="Tests" value="360" />
                 </map>
               </option>
             </AndroidTestResultsTableState>
@@ -143,6 +188,7 @@
                 <map>
                   <entry key="Duration" value="90" />
                   <entry key="Pixel_5_API_24" value="120" />
+                  <entry key="Pixel_Tablet_API_33" value="120" />
                   <entry key="Tests" value="360" />
                 </map>
               </option>
@@ -156,6 +202,8 @@
                 <map>
                   <entry key="Duration" value="90" />
                   <entry key="Pixel_5_API_24" value="120" />
+                  <entry key="Pixel_8_API_33" value="120" />
+                  <entry key="Pixel_Tablet_API_33" value="120" />
                   <entry key="Tests" value="360" />
                 </map>
               </option>
@@ -169,6 +217,7 @@
                 <map>
                   <entry key="Duration" value="90" />
                   <entry key="Pixel_5_API_24" value="120" />
+                  <entry key="Pixel_Tablet_API_33" value="120" />
                   <entry key="Tests" value="360" />
                 </map>
               </option>
@@ -188,6 +237,19 @@
             </AndroidTestResultsTableState>
           </value>
         </entry>
+        <entry key="19177760">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="90" />
+                  <entry key="Pixel_Tablet_API_33" value="120" />
+                  <entry key="Tests" value="360" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
         <entry key="259945447">
           <value>
             <AndroidTestResultsTableState>
@@ -195,6 +257,19 @@
                 <map>
                   <entry key="Duration" value="90" />
                   <entry key="Pixel_5_API_24" value="120" />
+                  <entry key="Tests" value="360" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
+        <entry key="341902627">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="90" />
+                  <entry key="Pixel_Tablet_API_33" value="120" />
                   <entry key="Tests" value="360" />
                 </map>
               </option>
@@ -221,6 +296,21 @@
                 <map>
                   <entry key="Duration" value="90" />
                   <entry key="Pixel_5_API_24" value="120" />
+                  <entry key="Pixel_Tablet_API_33" value="120" />
+                  <entry key="Tests" value="360" />
+                  <entry key="Xiaomi M2101K9AG" value="120" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
+        <entry key="650078619">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="90" />
+                  <entry key="Pixel_Tablet_API_33" value="120" />
                   <entry key="Tests" value="360" />
                 </map>
               </option>
@@ -234,7 +324,9 @@
                 <map>
                   <entry key="Duration" value="90" />
                   <entry key="Pixel_5_API_24" value="120" />
+                  <entry key="Pixel_Tablet_API_33" value="120" />
                   <entry key="Tests" value="360" />
+                  <entry key="Xiaomi M2101K9AG" value="120" />
                 </map>
               </option>
             </AndroidTestResultsTableState>
@@ -250,6 +342,19 @@
                   <entry key="Pixel_Tablet_API_33" value="120" />
                   <entry key="Tests" value="360" />
                   <entry key="Xiaomi M2101K9AG" value="120" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
+        <entry key="1512537270">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="90" />
+                  <entry key="Pixel_Tablet_API_33" value="120" />
+                  <entry key="Tests" value="360" />
                 </map>
               </option>
             </AndroidTestResultsTableState>
@@ -275,6 +380,7 @@
                 <map>
                   <entry key="Duration" value="90" />
                   <entry key="Pixel_5_API_24" value="120" />
+                  <entry key="Pixel_Tablet_API_33" value="120" />
                   <entry key="Tests" value="360" />
                 </map>
               </option>
@@ -288,6 +394,7 @@
                 <map>
                   <entry key="Duration" value="90" />
                   <entry key="Pixel_5_API_24" value="120" />
+                  <entry key="Pixel_Tablet_API_33" value="120" />
                   <entry key="Tests" value="360" />
                 </map>
               </option>

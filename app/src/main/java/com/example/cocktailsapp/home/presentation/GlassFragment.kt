@@ -6,10 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.cocktailsapp.databinding.FragmentGlassBinding
-import com.example.cocktailsapp.home.business.GlassItem
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class GlassFragment : Fragment() {
@@ -34,19 +37,23 @@ class GlassFragment : Fragment() {
 
         setupRecyclerViewAdapter()
 
-        viewModel.viewStateGlass.observe(viewLifecycleOwner) { glassesList ->
-            when(glassesList) {
-                is HomeViewState.ContentGlass -> {
-                    binding.loader.visibility = View.GONE
-                    adapter.differ.submitList(glassesList.glasses.drinks)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.viewStateGlass.collect { glassesList ->
+                    when(glassesList) {
+                        is HomeViewState.ContentGlass -> {
+                            binding.loader.visibility = View.GONE
+                            adapter.differ.submitList(glassesList.glasses.drinks)
+                        }
+                        is HomeViewState.Error -> {
+                            binding.loader.visibility = View.GONE
+                        }
+                        is HomeViewState.Loading -> {
+                            binding.loader.visibility = View.VISIBLE
+                        }
+                        else -> { }
+                    }
                 }
-                is HomeViewState.Error -> {
-                    binding.loader.visibility = View.GONE
-                }
-                is HomeViewState.Loading -> {
-                    binding.loader.visibility = View.VISIBLE
-                }
-                else -> { }
             }
         }
     }

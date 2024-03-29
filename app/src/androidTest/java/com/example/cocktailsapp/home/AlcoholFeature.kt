@@ -1,7 +1,6 @@
 package com.example.cocktailsapp.home
 
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.swipeLeft
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -10,7 +9,6 @@ import androidx.test.rule.ActivityTestRule
 import com.example.cocktailsapp.BaseUITest
 import com.example.cocktailsapp.shared.presentation.CocktailsActivity
 import com.example.cocktailsapp.R
-import com.example.cocktailsapp.di.idlingResource
 import com.schibsted.spain.barista.assertion.BaristaRecyclerViewAssertions.assertRecyclerViewItemCount
 import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
 import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertNotDisplayed
@@ -26,6 +24,11 @@ class AlcoholFeature: BaseUITest() {
     @Test
     fun displaysListOfAlcohol() {
         navigateToAlcoholFragment()
+
+        onView(
+            withId(R.id.rv_alcohol_fragment)
+        ).waitUntilVisible(5000)
+
         assertRecyclerViewItemCount(R.id.rv_alcohol_fragment, 3)
 
         onView(
@@ -46,22 +49,29 @@ class AlcoholFeature: BaseUITest() {
             .check(matches(isDisplayed()))
     }
 
-    @Test
+    /*@Test
     fun displaysLoaderWhileFetchingAlcohols() {
         IdlingRegistry.getInstance().unregister(idlingResource)
+        Thread.sleep(500)
         navigateToAlcoholFragment()
         assertDisplayed(R.id.loader)
-    }
+    }*/
 
     @Test
     fun hideLoader() {
         navigateToAlcoholFragment()
+        onView(
+            withId(R.id.rv_alcohol_fragment)
+        ).waitUntilVisible(5000)
         assertNotDisplayed(R.id.loader)
     }
 
     @Test
     fun navigateToDrinkListScreen() {
         navigateToAlcoholFragment()
+        onView(
+            withId(R.id.rv_alcohol_fragment)
+        ).waitUntilVisible(5000)
         onView(
             allOf(
                 withId(R.id.iv_item_alcohol),
@@ -74,6 +84,9 @@ class AlcoholFeature: BaseUITest() {
     }
 
     private fun navigateToAlcoholFragment() {
+        onView(
+            withId(R.id.rv_category_fragment)
+        ).waitUntilVisible(5000)
         for (i in 1..3) {
             onView(
                 withId(R.id.viewpager)

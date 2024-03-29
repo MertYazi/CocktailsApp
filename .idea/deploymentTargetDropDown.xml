@@ -2,8 +2,43 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="Tests in 'com.example.cocktailsapp'">
+      <entry key="AlcoholFeature">
         <State />
+      </entry>
+      <entry key="DrinkDetailsFeature">
+        <State>
+          <runningDeviceTargetSelectedWithDropDown>
+            <Target>
+              <type value="RUNNING_DEVICE_TARGET" />
+              <deviceKey>
+                <Key>
+                  <type value="SERIAL_NUMBER" />
+                  <value value="adb-4ee17e1d-idtLbF._adb-tls-connect._tcp" />
+                </Key>
+              </deviceKey>
+            </Target>
+          </runningDeviceTargetSelectedWithDropDown>
+          <timeTargetWasSelectedWithDropDown value="2024-03-28T14:07:43.715746709Z" />
+        </State>
+      </entry>
+      <entry key="SearchFeature">
+        <State />
+      </entry>
+      <entry key="Tests in 'com.example.cocktailsapp'">
+        <State>
+          <targetSelectedWithDropDown>
+            <Target>
+              <type value="QUICK_BOOT_TARGET" />
+              <deviceKey>
+                <Key>
+                  <type value="VIRTUAL_DEVICE_PATH" />
+                  <value value="$USER_HOME$/.android/avd/Pixel_8_API_33.avd" />
+                </Key>
+              </deviceKey>
+            </Target>
+          </targetSelectedWithDropDown>
+          <timeTargetWasSelectedWithDropDown value="2024-03-28T20:43:38.085417270Z" />
+        </State>
       </entry>
       <entry key="app">
         <State>
@@ -13,12 +48,12 @@
               <deviceKey>
                 <Key>
                   <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="$USER_HOME$/.android/avd/Pixel_5_API_24.avd" />
+                  <value value="$USER_HOME$/.android/avd/Pixel_8_API_33.avd" />
                 </Key>
               </deviceKey>
             </Target>
           </targetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-01-30T11:40:42.327143844Z" />
+          <timeTargetWasSelectedWithDropDown value="2024-03-28T14:17:14.595320131Z" />
         </State>
       </entry>
     </value>

@@ -1,7 +1,5 @@
 package com.example.cocktailsapp.shopping.presentation
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.cocktailsapp.shared.business.repository.CocktailsRepository
@@ -11,6 +9,8 @@ import com.example.cocktailsapp.shared.business.ShoppingItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,41 +21,31 @@ class ShoppingViewModel @Inject constructor(
     private val dispatcher: CoroutineDispatcher = Dispatchers.Main
 ): ViewModel() {
 
-    private val _viewStateShopping = MutableLiveData<ShoppingViewState>()
-    val viewStateShopping: LiveData<ShoppingViewState>
-        get() = _viewStateShopping
+    private val _viewStateShopping = MutableStateFlow<ShoppingViewState>(ShoppingViewState.Loading)
+    val viewStateShopping = _viewStateShopping.asStateFlow()
 
     fun getShopping() = viewModelScope.launch(dispatcher) {
-        _viewStateShopping.postValue(ShoppingViewState.Loading)
-        when (val result = repository.getShopping()) {
-            is Result.Error -> {
-                _viewStateShopping.postValue(ShoppingViewState.Error)
-            }
-            is Result.Success -> {
-                val drinks = ShoppingDetailsViewState(
-                    result.data.drinks
-                )
-                _viewStateShopping.postValue(
-                    ShoppingViewState.ContentShopping(
+        repository.getShopping().collect { result ->
+            when (result) {
+                is Result.Error -> {
+                    _viewStateShopping.value = ShoppingViewState.Error
+                }
+                is Result.Success -> {
+                    val drinks = ShoppingDetailsViewState(
+                        result.data.drinks
+                    )
+                    _viewStateShopping.value = ShoppingViewState.ContentShopping(
                         drinks
                     )
-                )
+                }
             }
         }
     }
 
-    fun removeFromShopIconClicked(shopping: ShoppingDetailsViewState, shoppingItem: ShoppingItem) {
+    fun removeFromShopIconClicked(shoppingItem: ShoppingItem) {
         viewModelScope.launch(dispatcher) {
+            _viewStateShopping.value = ShoppingViewState.Loading
             addOrRemoveFromShoppingUseCase.execute(shoppingItem)
-            val currentViewState = _viewStateShopping.value
-            (currentViewState as? ShoppingViewState.ContentShopping)?.let { content ->
-                _viewStateShopping.postValue(
-                    content.updateShoppingItem(
-                        shopping,
-                        shoppingItem
-                    )
-                )
-            }
         }
     }
 }

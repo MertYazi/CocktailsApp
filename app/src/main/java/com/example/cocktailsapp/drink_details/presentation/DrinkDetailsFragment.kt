@@ -14,6 +14,9 @@ import androidx.core.graphics.BlendModeCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.navArgs
 import androidx.palette.graphics.Palette
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,6 +30,7 @@ import com.example.cocktailsapp.databinding.FragmentDrinkDetailsBinding
 import com.example.cocktailsapp.shared.business.ShoppingItem
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class DrinkDetailsFragment : Fragment() {
@@ -58,21 +62,25 @@ class DrinkDetailsFragment : Fragment() {
 
         setupBottomSheet()
 
-        viewModel.viewStateDrinkDetails.observe(viewLifecycleOwner) { drinkDetails ->
-            when(drinkDetails) {
-                is DrinkDetailsViewState.ContentDrinkDetails -> {
-                    binding.loader.visibility = View.GONE
-                    mShoppingIngredientsList = arrayListOf()
-                    mDrinkDetails = drinkDetails.drinks
-                    populateUI()
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.viewStateDrinkDetails.collect { drinkDetails ->
+                    when(drinkDetails) {
+                        is DrinkDetailsViewState.ContentDrinkDetails -> {
+                            binding.loader.visibility = View.GONE
+                            mShoppingIngredientsList = arrayListOf()
+                            mDrinkDetails = drinkDetails.drinks
+                            populateUI()
+                        }
+                        is DrinkDetailsViewState.Error -> {
+                            binding.loader.visibility = View.GONE
+                        }
+                        is DrinkDetailsViewState.Loading -> {
+                            binding.loader.visibility = View.VISIBLE
+                        }
+                        else -> { }
+                    }
                 }
-                is DrinkDetailsViewState.Error -> {
-                    binding.loader.visibility = View.GONE
-                }
-                is DrinkDetailsViewState.Loading -> {
-                    binding.loader.visibility = View.VISIBLE
-                }
-                else -> { }
             }
         }
 
@@ -140,7 +148,7 @@ class DrinkDetailsFragment : Fragment() {
         binding.tvInstructionsDrinkDetails.text = mDrinkDetails.drinks[0].strInstructions
 
         /* Because of the API structure below part had to be done this long.
-         * That is the only part in whole project that is hideous.
+         * That is one of the two part in whole project that is hideous.
          * Feel free to commit if you think there is shorter and better way. */
         if (mDrinkDetails.drinks[0].strIngredient1.isNotEmpty()) {
             mShoppingIngredientsList.add(

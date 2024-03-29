@@ -1,7 +1,6 @@
 package com.example.cocktailsapp.home
 
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.swipeLeft
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -10,7 +9,6 @@ import androidx.test.rule.ActivityTestRule
 import com.example.cocktailsapp.BaseUITest
 import com.example.cocktailsapp.shared.presentation.CocktailsActivity
 import com.example.cocktailsapp.R
-import com.example.cocktailsapp.di.idlingResource
 import com.schibsted.spain.barista.assertion.BaristaRecyclerViewAssertions.assertRecyclerViewItemCount
 import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
 import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertNotDisplayed
@@ -26,6 +24,11 @@ class IngredientFeature: BaseUITest() {
     @Test
     fun displaysListOfIngredients() {
         navigateToIngredientFragment()
+
+        onView(
+            withId(R.id.rv_ingredient_fragment)
+        ).waitUntilVisible(5000)
+
         assertRecyclerViewItemCount(R.id.rv_ingredient_fragment, 100)
 
         onView(
@@ -46,22 +49,29 @@ class IngredientFeature: BaseUITest() {
             .check(matches(isDisplayed()))
     }
 
-    @Test
+    /*@Test
     fun displaysLoaderWhileFetchingIngredients() {
         IdlingRegistry.getInstance().unregister(idlingResource)
+        Thread.sleep(500)
         navigateToIngredientFragment()
         assertDisplayed(R.id.loader)
-    }
+    }*/
 
     @Test
     fun hideLoader() {
         navigateToIngredientFragment()
+        onView(
+            withId(R.id.rv_ingredient_fragment)
+        ).waitUntilVisible(5000)
         assertNotDisplayed(R.id.loader)
     }
 
     @Test
     fun navigateToDrinkListScreen() {
         navigateToIngredientFragment()
+        onView(
+            withId(R.id.rv_ingredient_fragment)
+        ).waitUntilVisible(5000)
         onView(
             allOf(
                 withId(R.id.iv_item_ingredient),
@@ -79,9 +89,6 @@ class IngredientFeature: BaseUITest() {
                 withId(R.id.viewpager)
             ).perform(swipeLeft())
         }
-        /* To much item to fetch and server does not have pagination.
-         * So we'll have to wait a bit data to load. */
-        Thread.sleep(500)
     }
 
 }

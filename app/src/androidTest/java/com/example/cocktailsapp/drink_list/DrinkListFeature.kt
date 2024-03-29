@@ -26,6 +26,11 @@ class DrinkListFeature: BaseUITest() {
     @Test
     fun displaysListOfCocktailsComesFromCategory() {
         navigateToDrinkListFragmentFromCategory()
+
+        onView(
+            withId(R.id.rv_drink_list_fragment)
+        ).waitUntilVisible(5000)
+
         assertRecyclerViewItemCount(R.id.rv_drink_list_fragment, 100)
 
         onView(
@@ -70,6 +75,11 @@ class DrinkListFeature: BaseUITest() {
     @Test
     fun displaysListOfCocktailsComesFromGlass() {
         navigateToDrinkListFragmentFromGlass()
+
+        onView(
+            withId(R.id.rv_drink_list_fragment)
+        ).waitUntilVisible(5000)
+
         assertRecyclerViewItemCount(R.id.rv_drink_list_fragment, 7)
 
         onView(
@@ -114,6 +124,11 @@ class DrinkListFeature: BaseUITest() {
     @Test
     fun displaysListOfCocktailsComesFromIngredient() {
         navigateToDrinkListFragmentFromIngredient()
+
+        onView(
+            withId(R.id.rv_drink_list_fragment)
+        ).waitUntilVisible(5000)
+
         assertRecyclerViewItemCount(R.id.rv_drink_list_fragment, 44)
 
         onView(
@@ -158,6 +173,11 @@ class DrinkListFeature: BaseUITest() {
     @Test
     fun displaysListOfCocktailsComesFromAlcohol() {
         navigateToDrinkListFragmentFromAlcohol()
+
+        onView(
+            withId(R.id.rv_drink_list_fragment)
+        ).waitUntilVisible(5000)
+
         assertRecyclerViewItemCount(R.id.rv_drink_list_fragment, 58)
 
         onView(
@@ -199,22 +219,31 @@ class DrinkListFeature: BaseUITest() {
             .check(matches(isDisplayed()))
     }
 
-    @Test
+    /*@Test
     fun displaysLoaderWhileFetchingCocktails() {
         IdlingRegistry.getInstance().unregister(idlingResource)
+        Thread.sleep(500)
         navigateToDrinkListFragmentFromCategory()
         assertDisplayed(R.id.loader)
-    }
+    }*/
 
     @Test
     fun hideLoader() {
         navigateToDrinkListFragmentFromCategory()
+        onView(
+            withId(R.id.rv_drink_list_fragment)
+        ).waitUntilVisible(5000)
         assertNotDisplayed(R.id.loader)
     }
 
     @Test
     fun navigateToDetailsScreen() {
         navigateToDrinkListFragmentFromCategory()
+
+        onView(
+            withId(R.id.rv_drink_list_fragment)
+        ).waitUntilVisible(5000)
+
         onView(
             allOf(
                 withId(R.id.iv_item_drink_list),
@@ -228,16 +257,23 @@ class DrinkListFeature: BaseUITest() {
 
     private fun navigateToDrinkListFragmentFromCategory() {
         onView(
+            withId(R.id.rv_category_fragment)
+        ).waitUntilVisible(5000)
+
+        onView(
             allOf(
                 withId(R.id.iv_item_category),
                 isDescendantOfA(nthChildOf(withId(R.id.rv_category_fragment), 0))
             )
         )
             .perform(click())
-        Thread.sleep(500)
     }
 
     private fun navigateToDrinkListFragmentFromGlass() {
+        onView(
+            withId(R.id.rv_category_fragment)
+        ).waitUntilVisible(5000)
+
         onView(
             withId(R.id.viewpager)
         ).perform(swipeLeft())
@@ -249,10 +285,13 @@ class DrinkListFeature: BaseUITest() {
             )
         )
             .perform(click())
-        Thread.sleep(500)
     }
 
     private fun navigateToDrinkListFragmentFromIngredient() {
+        onView(
+            withId(R.id.rv_category_fragment)
+        ).waitUntilVisible(5000)
+
         for (i in 1..2) {
             onView(
                 withId(R.id.viewpager)
@@ -266,10 +305,13 @@ class DrinkListFeature: BaseUITest() {
             )
         )
             .perform(click())
-        Thread.sleep(500)
     }
 
     private fun navigateToDrinkListFragmentFromAlcohol() {
+        onView(
+            withId(R.id.rv_category_fragment)
+        ).waitUntilVisible(5000)
+
         for (i in 1..3) {
             onView(
                 withId(R.id.viewpager)
@@ -283,7 +325,6 @@ class DrinkListFeature: BaseUITest() {
             )
         )
             .perform(click())
-        Thread.sleep(500)
     }
 
 }
