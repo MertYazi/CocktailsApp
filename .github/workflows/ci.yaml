@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
   
       - name: Run sample script
         run: echo Hello, world
@@ -23,10 +23,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Cache Gradle
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ~/.gradle/caches
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
@@ -39,7 +39,7 @@ jobs:
         run: ./gradlew lintDebug
   
       - name: Upload html test report
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: lint.html
           path: app/build/reports/lint-results-debug.html
@@ -50,13 +50,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
   
       - name: Run tests
         run: ./gradlew test
   
       - name: Upload test report
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: unit_test_report
           path: app/build/reports/test/testDebugUnitTest/
@@ -67,22 +67,22 @@ jobs:
     runs-on: macos-latest # MacOS runs faster
     steps:
       - name: Checkout the code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
   
       # Gradle v8.0.0 requires java JDK v17
       - name: Set up Java JDK 17
-        uses: actions/setup-java@v1
+        uses: actions/setup-java@v3
         with:
           java-version: '17'
   
       - name: Run espresso tests
         uses: reactivecircus/android-emulator-runner@v2 # 3rd party tool
         with:
-          api-level: 29
+          api-level: 33
           script: ./gradlew connectedCheck
   
       - name: Upload Instrumentation Test report
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: instrumentation_test_report
           path: app/build/reports/androidTests/connected
@@ -93,10 +93,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
   
       - name: Set up Java JDK 17
-        uses: actions/setup-java@v1
+        uses: actions/setup-java@v3
         with:
           java-version: '17'
   
@@ -111,10 +111,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
   
       - name: Set up Java JDK 17
-        uses: actions/setup-java@v1
+        uses: actions/setup-java@v3
         with:
           java-version: '17'
   
@@ -122,7 +122,7 @@ jobs:
         run: ./gradlew assembleDebug --stacktrace
   
       - name: Upload APK
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: sample-app.apk
           path: app/build/outputs/apk/debug/app-debug.apk
