@@ -65,7 +65,7 @@ dependencies {
     kapt("com.google.dagger:hilt-android-compiler:2.48")
 
     implementation("com.github.bumptech.glide:glide:4.16.0")
-    implementation("jp.wasabeef:glide-transformations:4.0.0")
+    implementation("jp.wasabeef:glide-transformations:4.3.0")
 
     implementation("de.hdodenhof:circleimageview:3.1.0")
 
@@ -93,7 +93,7 @@ dependencies {
     androidTestImplementation("androidx.test:runner:1.5.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    androidTestImplementation("com.schibsted.spain:barista:3.6.0") {
+    androidTestImplementation("com.adevinta.android:barista:4.2.0") {
         exclude(group = "org.jetbrains.kotlin")
     }
 }
