@@ -1,8 +1,8 @@
 package com.example.cocktailsapp.home
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import app.cash.turbine.test
 import com.example.cocktailsapp.MainCoroutineScopeRule
-import com.example.cocktailsapp.getValueForTest
 import com.example.cocktailsapp.home.business.AlcoholList
 import com.example.cocktailsapp.home.business.CategoryList
 import com.example.cocktailsapp.home.business.GlassList
@@ -20,6 +20,7 @@ import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.StandardTestDispatcher
 import org.junit.Rule
@@ -39,24 +40,23 @@ class HomeViewModelShould {
     private val dispatcher = StandardTestDispatcher()
 
     private val categoryList = mock<CategoryList>()
-    private val expectedCategoryList = Result.Success(categoryList)
+    private val expectedCategoryList = flowOf(Result.Success(categoryList))
 
     private val glassList = mock<GlassList>()
-    private val expectedGlassList = Result.Success(glassList)
+    private val expectedGlassList = flowOf(Result.Success(glassList))
 
     private val ingredientList = mock<IngredientList>()
-    private val expectedIngredientList = Result.Success(ingredientList)
+    private val expectedIngredientList = flowOf(Result.Success(ingredientList))
 
     private val alcoholList = mock<AlcoholList>()
-    private val expectedAlcoholList = Result.Success(alcoholList)
+    private val expectedAlcoholList = flowOf(Result.Success(alcoholList))
 
-    private val exception = Result.Error(java.lang.RuntimeException("Something went wrong"))
+    private val exception = flowOf(Result.Error(java.lang.RuntimeException("Something went wrong")))
 
     @Test
     fun getCategoryListFromRepository(): Unit = runBlocking {
         val viewModel = mockSuccessfulCaseForCategoryList()
-        viewModel.viewStateCategory.getValueForTest()
-        dispatcher.scheduler.advanceUntilIdle()
+        getCategoryListViewStateValues(viewModel)
         verify(repository, Mockito.times(1)).getCategories()
     }
 
@@ -82,10 +82,16 @@ class HomeViewModelShould {
 
     private fun getCategoryListViewStateValues(viewModel: HomeViewModel): MutableList<HomeViewState> {
         val values = mutableListOf<HomeViewState>()
-        viewModel.viewStateCategory.observeForever {
-            values.add(it)
+        runBlocking {
+            viewModel.viewStateCategory.test {
+                for(i in 1 downTo 0) {
+                    dispatcher.scheduler.advanceTimeBy(1000L)
+                    val emission = awaitItem()
+                    values.add(emission)
+                }
+                cancelAndConsumeRemainingEvents()
+            }
         }
-        dispatcher.scheduler.advanceUntilIdle()
         return values
     }
 
@@ -110,8 +116,7 @@ class HomeViewModelShould {
     @Test
     fun getGlassListFromRepository(): Unit = runBlocking {
         val viewModel = mockSuccessfulCaseForGlassList()
-        viewModel.viewStateGlass.getValueForTest()
-        dispatcher.scheduler.advanceUntilIdle()
+        getGlassListViewStateValues(viewModel)
         verify(repository, Mockito.times(1)).getGlasses()
     }
 
@@ -137,10 +142,16 @@ class HomeViewModelShould {
 
     private fun getGlassListViewStateValues(viewModel: HomeViewModel): MutableList<HomeViewState> {
         val values = mutableListOf<HomeViewState>()
-        viewModel.viewStateGlass.observeForever {
-            values.add(it)
+        runBlocking {
+            viewModel.viewStateGlass.test {
+                for(i in 1 downTo 0) {
+                    dispatcher.scheduler.advanceTimeBy(1000L)
+                    val emission = awaitItem()
+                    values.add(emission)
+                }
+                cancelAndConsumeRemainingEvents()
+            }
         }
-        dispatcher.scheduler.advanceUntilIdle()
         return values
     }
 
@@ -165,8 +176,7 @@ class HomeViewModelShould {
     @Test
     fun getIngredientListFromRepository(): Unit = runBlocking {
         val viewModel = mockSuccessfulCaseForIngredientList()
-        viewModel.viewStateIngredient.getValueForTest()
-        dispatcher.scheduler.advanceUntilIdle()
+        getIngredientListViewStateValues(viewModel)
         verify(repository, Mockito.times(1)).getIngredients()
     }
 
@@ -192,10 +202,16 @@ class HomeViewModelShould {
 
     private fun getIngredientListViewStateValues(viewModel: HomeViewModel): MutableList<HomeViewState> {
         val values = mutableListOf<HomeViewState>()
-        viewModel.viewStateIngredient.observeForever {
-            values.add(it)
+        runBlocking {
+            viewModel.viewStateIngredient.test {
+                for(i in 1 downTo 0) {
+                    dispatcher.scheduler.advanceTimeBy(1000L)
+                    val emission = awaitItem()
+                    values.add(emission)
+                }
+                cancelAndConsumeRemainingEvents()
+            }
         }
-        dispatcher.scheduler.advanceUntilIdle()
         return values
     }
 
@@ -220,8 +236,7 @@ class HomeViewModelShould {
     @Test
     fun getAlcoholListFromRepository(): Unit = runBlocking {
         val viewModel = mockSuccessfulCaseForAlcoholList()
-        viewModel.viewStateAlcohol.getValueForTest()
-        dispatcher.scheduler.advanceUntilIdle()
+        getAlcoholListViewStateValues(viewModel)
         verify(repository, Mockito.times(1)).getAlcohols()
     }
 
@@ -247,10 +262,16 @@ class HomeViewModelShould {
 
     private fun getAlcoholListViewStateValues(viewModel: HomeViewModel): MutableList<HomeViewState> {
         val values = mutableListOf<HomeViewState>()
-        viewModel.viewStateAlcohol.observeForever {
-            values.add(it)
+        runBlocking {
+            viewModel.viewStateAlcohol.test {
+                for(i in 1 downTo 0) {
+                    dispatcher.scheduler.advanceTimeBy(1000L)
+                    val emission = awaitItem()
+                    values.add(emission)
+                }
+                cancelAndConsumeRemainingEvents()
+            }
         }
-        dispatcher.scheduler.advanceUntilIdle()
         return values
     }
 

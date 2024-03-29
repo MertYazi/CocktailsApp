@@ -11,11 +11,9 @@ import com.example.cocktailsapp.home.business.AlcoholItem
 import com.example.cocktailsapp.home.business.AlcoholList
 import com.example.cocktailsapp.home.business.CategoryItem
 import com.example.cocktailsapp.home.business.CategoryList
-import com.example.cocktailsapp.shared.business.DrinkList
 import com.example.cocktailsapp.home.business.GlassItem
 import com.example.cocktailsapp.home.business.GlassList
 import com.example.cocktailsapp.home.business.IngredientEntityToIngredientMapper
-import com.example.cocktailsapp.home.business.IngredientList
 import com.example.cocktailsapp.shared.Constants.DB_ALCOHOLS
 import com.example.cocktailsapp.shared.Constants.DB_CATEGORIES
 import com.example.cocktailsapp.shared.Constants.DB_FAVORITES
@@ -27,6 +25,10 @@ import com.example.cocktailsapp.shared.Constants.DRINK_ID
 import com.example.cocktailsapp.shared.business.repository.CocktailsRepository
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -38,197 +40,167 @@ class CocktailsRepositoryAPI @Inject constructor(
     private val drinkListEntityToDrinkListMapper: DrinkListEntityToDrinkListMapper,
     private val drinkDetailsEntityToDrinkDetailsMapper: DrinkDetailsEntityToDrinkDetailsMapper
 ): CocktailsRepository {
-    override suspend fun getCategories(): Result<CategoryList> {
-        return withContext(Dispatchers.IO) {
-            try {
-                val categories = database.collection(DB_CATEGORIES)
-                    .get()
-                    .await()
-                val categoriesList = CategoryList(
-                    drinks = arrayListOf()
-                )
-                if (categories.documents.isNotEmpty()) {
-                    for (category in categories) {
-                        val categoryItem = category.toObject(CategoryItem::class.java)
-                        categoriesList.drinks.add(categoryItem)
-                    }
+    /* With callbackFlow we're no longer need of a suspend keyword.
+     * With snapshotListener viewModel will consume remote data changes automatically. */
+    override fun getCategories() = callbackFlow {
+        val snapshotListener = database.collection(DB_CATEGORIES)
+            .addSnapshotListener { snapshot, _ ->
+                val categoriesResponse = if (snapshot != null) {
+                    val categoriesList = CategoryList(
+                        drinks = arrayListOf()
+                    )
+                    categoriesList.drinks.addAll(snapshot.toObjects(CategoryItem::class.java))
                     Result.Success(categoriesList)
                 } else {
                     Result.Error(IllegalStateException("Empty categories list"))
                 }
-            } catch (exception: Exception) {
-                Log.e("NetworkLayerCategories", exception.message, exception)
-                Result.Error(exception)
+                trySend(categoriesResponse)
             }
+        awaitClose {
+            snapshotListener.remove()
         }
-    }
+    }.flowOn(Dispatchers.IO)
 
-    override suspend fun getGlasses(): Result<GlassList> {
-        return withContext(Dispatchers.IO) {
-            try {
-                val glasses = database.collection(DB_GLASSES)
-                    .get()
-                    .await()
-                val glassesList = GlassList(
-                    drinks = arrayListOf()
-                )
-                if (glasses.documents.isNotEmpty()) {
-                    for (glass in glasses) {
-                        val glassItem = glass.toObject(GlassItem::class.java)
-                        glassesList.drinks.add(glassItem)
-                    }
+    override fun getGlasses() = callbackFlow {
+        val snapshotListener = database.collection(DB_GLASSES)
+            .addSnapshotListener { snapshot, _ ->
+                val glassesResponse = if (snapshot != null) {
+                    val glassesList = GlassList(
+                        drinks = arrayListOf()
+                    )
+                    glassesList.drinks.addAll(snapshot.toObjects(GlassItem::class.java))
                     Result.Success(glassesList)
                 } else {
                     Result.Error(IllegalStateException("Empty glasses list"))
                 }
-            } catch (exception: Exception) {
-                Log.e("NetworkLayerGlasses", exception.message, exception)
-                Result.Error(exception)
+                trySend(glassesResponse)
             }
+        awaitClose {
+            snapshotListener.remove()
         }
-    }
+    }.flowOn(Dispatchers.IO)
 
-    override suspend fun getIngredients(): Result<IngredientList> {
-        return withContext(Dispatchers.IO) {
-            try {
-                val response = service.getIngredientList()
-                val data = ingredientEntityToIngredientMapper.invoke(response)
-                if (data.drinks.isNotEmpty()) {
-                    Result.Success(data)
-                } else {
-                    Result.Error(IllegalStateException("Empty ingredient list"))
-                }
-            } catch (exception: Exception) {
-                Log.e("NetworkLayerIngredient", exception.message, exception)
-                Result.Error(exception)
+    override suspend fun getIngredients() = flow {
+        try {
+            val response = service.getIngredientList()
+            val data = ingredientEntityToIngredientMapper.invoke(response)
+            if (data.drinks.isNotEmpty()) {
+                emit(Result.Success(data))
+            } else {
+                emit(Result.Error(IllegalStateException("Empty ingredient list")))
             }
+        } catch (exception: Exception) {
+            Log.e("NetworkLayerIngredient", exception.message, exception)
+            emit(Result.Error(exception))
         }
-    }
+    }.flowOn(Dispatchers.IO)
 
-    override suspend fun getAlcohols(): Result<AlcoholList> {
-        return withContext(Dispatchers.IO) {
-            try {
-                val alcohols = database.collection(DB_ALCOHOLS)
-                    .get()
-                    .await()
-                val alcoholsList = AlcoholList(
-                    drinks = arrayListOf()
-                )
-                if (alcohols.documents.isNotEmpty()) {
-                    for (alcohol in alcohols) {
-                        val alcoholItem = alcohol.toObject(AlcoholItem::class.java)
-                        alcoholsList.drinks.add(alcoholItem)
-                    }
+    override fun getAlcohols() = callbackFlow {
+        val snapshotListener = database.collection(DB_ALCOHOLS)
+            .addSnapshotListener { snapshot, _ ->
+                val alcoholsResponse = if (snapshot != null) {
+                    val alcoholsList = AlcoholList(
+                        drinks = arrayListOf()
+                    )
+                    alcoholsList.drinks.addAll(snapshot.toObjects(AlcoholItem::class.java))
                     Result.Success(alcoholsList)
                 } else {
-                    Result.Error(IllegalStateException("Empty alcohol list"))
+                    Result.Error(IllegalStateException("Empty alcohols list"))
                 }
-            } catch (exception: Exception) {
-                Log.e("NetworkLayerAlcohol", exception.message, exception)
-                Result.Error(exception)
+                trySend(alcoholsResponse)
             }
+        awaitClose {
+            snapshotListener.remove()
         }
-    }
+    }.flowOn(Dispatchers.IO)
 
-    override suspend fun getDrinksByCategory(category: String): Result<DrinkList> {
-        return withContext(Dispatchers.IO) {
-            try {
-                val response = service.getDrinksByCategory(category)
-                val data = drinkListEntityToDrinkListMapper.invoke(response)
-                if (data.drinks.isNotEmpty()) {
-                    Result.Success(data)
-                } else {
-                    Result.Error(IllegalStateException("Empty drinks by category list"))
-                }
-            } catch (exception: Exception) {
-                Log.e("NetworkLayerDrinkByCategory", exception.message, exception)
-                Result.Error(exception)
-            }
-        }
-    }
-
-    override suspend fun getDrinksByGlass(glass: String): Result<DrinkList> {
-        return withContext(Dispatchers.IO) {
-            try {
-                val response = service.getDrinksByGlass(glass)
-                val data = drinkListEntityToDrinkListMapper.invoke(response)
-                if (data.drinks.isNotEmpty()) {
-                    Result.Success(data)
-                } else {
-                    Result.Error(IllegalStateException("Empty drinks by glass list"))
-                }
-            } catch (exception: Exception) {
-                Log.e("NetworkLayerDrinkByGlass", exception.message, exception)
-                Result.Error(exception)
-            }
-        }
-    }
-
-    override suspend fun getDrinksByIngredient(ingredient: String): Result<DrinkList> {
-        return withContext(Dispatchers.IO) {
-            try {
-                val response = service.getDrinksByIngredient(ingredient)
-                val data = drinkListEntityToDrinkListMapper.invoke(response)
-                if (data.drinks.isNotEmpty()) {
-                    Result.Success(data)
-                } else {
-                    Result.Error(IllegalStateException("Empty drinks by ingredient list"))
-                }
-            } catch (exception: Exception) {
-                Log.e("NetworkLayerDrinkByIngredient", exception.message, exception)
-                Result.Error(exception)
-            }
-        }
-    }
-
-    override suspend fun getDrinksByAlcohol(alcohol: String): Result<DrinkList> {
-        return withContext(Dispatchers.IO) {
-            try {
-                val response = service.getDrinksByAlcohol(alcohol)
-                val data = drinkListEntityToDrinkListMapper.invoke(response)
-                if (data.drinks.isNotEmpty()) {
-                    Result.Success(data)
-                } else {
-                    Result.Error(IllegalStateException("Empty drinks by alcohol list"))
-                }
-            } catch (exception: Exception) {
-                Log.e("NetworkLayerDrinkByAlcohol", exception.message, exception)
-                Result.Error(exception)
-            }
-        }
-    }
-
-    override suspend fun getDrinksById(id: String): Result<DrinkDetailsList> {
-        return withContext(Dispatchers.IO) {
-            try {
-                val response = service.getDrinksById(id)
-                val data = drinkDetailsEntityToDrinkDetailsMapper.invoke(response)
-                if (data.drinks.isNotEmpty()) {
-                    Result.Success(data)
-                } else {
-                    Result.Error(IllegalStateException("Empty drink details by id list"))
-                }
-            } catch (exception: Exception) {
-                Log.e("NetworkLayerDrinkById", exception.message, exception)
-                Result.Error(exception)
-            }
-        }
-    }
-
-    override suspend fun isFavorite(drinkId: String): Boolean {
-        return withContext(Dispatchers.IO) {
-            val document = database.collection(DB_FAVORITES)
-                .whereEqualTo(DRINK_ID, drinkId)
-                .get()
-                .await()
-            if (document.isEmpty) {
-                false
+    override suspend fun getDrinksByCategory(category: String) = flow {
+        try {
+            val response = service.getDrinksByCategory(category)
+            val data = drinkListEntityToDrinkListMapper.invoke(response)
+            if (data.drinks.isNotEmpty()) {
+                emit(Result.Success(data))
             } else {
-                val drink: DrinkDetailsItem = document.documents[0].toObject(DrinkDetailsItem::class.java)!!
-                drink.isFavorite
+                emit(Result.Error(IllegalStateException("Empty drinks by category list")))
             }
+        } catch (exception: Exception) {
+            Log.e("NetworkLayerDrinkByCategory", exception.message, exception)
+            emit(Result.Error(exception))
         }
-    }
+    }.flowOn(Dispatchers.IO)
+
+    override suspend fun getDrinksByGlass(glass: String) = flow {
+        try {
+            val response = service.getDrinksByGlass(glass)
+            val data = drinkListEntityToDrinkListMapper.invoke(response)
+            if (data.drinks.isNotEmpty()) {
+                emit(Result.Success(data))
+            } else {
+                emit(Result.Error(IllegalStateException("Empty drinks by glass list")))
+            }
+        } catch (exception: Exception) {
+            Log.e("NetworkLayerDrinkByGlass", exception.message, exception)
+            emit(Result.Error(exception))
+        }
+    }.flowOn(Dispatchers.IO)
+
+    override suspend fun getDrinksByIngredient(ingredient: String) = flow {
+        try {
+            val response = service.getDrinksByIngredient(ingredient)
+            val data = drinkListEntityToDrinkListMapper.invoke(response)
+            if (data.drinks.isNotEmpty()) {
+                emit(Result.Success(data))
+            } else {
+                emit(Result.Error(IllegalStateException("Empty drinks by ingredient list")))
+            }
+        } catch (exception: Exception) {
+            Log.e("NetworkLayerDrinkByIngredient", exception.message, exception)
+            emit(Result.Error(exception))
+        }
+    }.flowOn(Dispatchers.IO)
+
+    override suspend fun getDrinksByAlcohol(alcohol: String) = flow {
+        try {
+            val response = service.getDrinksByAlcohol(alcohol)
+            val data = drinkListEntityToDrinkListMapper.invoke(response)
+            if (data.drinks.isNotEmpty()) {
+                emit(Result.Success(data))
+            } else {
+                emit(Result.Error(IllegalStateException("Empty drinks by alcohol list")))
+            }
+        } catch (exception: Exception) {
+            Log.e("NetworkLayerDrinkByAlcohol", exception.message, exception)
+            emit(Result.Error(exception))
+        }
+    }.flowOn(Dispatchers.IO)
+
+    override suspend fun getDrinksById(id: String) = flow {
+        try {
+            val response = service.getDrinksById(id)
+            val data = drinkDetailsEntityToDrinkDetailsMapper.invoke(response)
+            if (data.drinks.isNotEmpty()) {
+                emit(Result.Success(data))
+            } else {
+                emit(Result.Error(IllegalStateException("Empty drink details by id list")))
+            }
+        } catch (exception: Exception) {
+            Log.e("NetworkLayerDrinkById", exception.message, exception)
+            emit(Result.Error(exception))
+        }
+    }.flowOn(Dispatchers.IO)
+
+    override suspend fun isFavorite(drinkId: String) = flow {
+        val document = database.collection(DB_FAVORITES)
+            .whereEqualTo(DRINK_ID, drinkId)
+            .get()
+            .await()
+        if (document.isEmpty) {
+            emit(false)
+        } else {
+            val drink: DrinkDetailsItem = document.documents[0].toObject(DrinkDetailsItem::class.java)!!
+            emit(drink.isFavorite)
+        }
+    }.flowOn(Dispatchers.IO)
 
     override suspend fun addToFavorites(drink: DrinkDetailsItem) {
         return withContext(Dispatchers.IO) {
@@ -249,63 +221,53 @@ class CocktailsRepositoryAPI @Inject constructor(
         }
     }
 
-    override suspend fun getFavorites(): Result<DrinkDetailsList> {
-        return withContext(Dispatchers.IO) {
-            try {
-                val favorites = database.collection(DB_FAVORITES)
-                    .get()
-                    .await()
-                val favoriteDrinkDetailsList = DrinkDetailsList(
-                    drinks = arrayListOf()
-                )
-                if (favorites.documents.isNotEmpty()) {
-                    for (favorite in favorites) {
-                        val favoritesItem = favorite.toObject(DrinkDetailsItem::class.java)
-                        favoriteDrinkDetailsList.drinks.add(favoritesItem)
-                    }
+    override fun getFavorites() = callbackFlow {
+        val snapshotListener = database.collection(DB_FAVORITES)
+            .addSnapshotListener { snapshot, _ ->
+                val favoritesResponse = if (snapshot != null) {
+                    val favoriteDrinkDetailsList = DrinkDetailsList(
+                        drinks = arrayListOf()
+                    )
+                    favoriteDrinkDetailsList.drinks.addAll(snapshot.toObjects(DrinkDetailsItem::class.java))
                     Result.Success(favoriteDrinkDetailsList)
                 } else {
                     Result.Error(IllegalStateException("Empty favorites list"))
                 }
-            } catch (exception: Exception) {
-                Log.e("NetworkLayerFavorites", exception.message, exception)
-                Result.Error(exception)
+                trySend(favoritesResponse)
             }
+        awaitClose {
+            snapshotListener.remove()
         }
-    }
+    }.flowOn(Dispatchers.IO)
 
-    override suspend fun searchDrinks(drink: String): Result<DrinkDetailsList> {
-        return withContext(Dispatchers.IO) {
-            try {
-                val response = service.searchDrinks(drink)
-                val data = drinkDetailsEntityToDrinkDetailsMapper.invoke(response)
-                if (data.drinks.isNotEmpty()) {
-                    Result.Success(data)
-                } else {
-                    Result.Error(IllegalStateException("Empty search drink details list"))
-                }
-            } catch (exception: Exception) {
-                Log.e("NetworkLayerSearch", exception.message, exception)
-                Result.Error(exception)
-            }
-        }
-    }
-
-    override suspend fun isInShopping(drinkId: String, ingredientName: String): Boolean {
-        return withContext(Dispatchers.IO) {
-            val document = database.collection(DB_SHOPPING)
-                .whereEqualTo(DB_FIELD_DRINK_ID, drinkId)
-                .whereEqualTo(DB_FIELD_INGREDIENT_NAME, ingredientName)
-                .get()
-                .await()
-            if (document.isEmpty) {
-                false
+    override suspend fun searchDrinks(drink: String) = flow {
+        try {
+            val response = service.searchDrinks(drink)
+            val data = drinkDetailsEntityToDrinkDetailsMapper.invoke(response)
+            if (data.drinks.isNotEmpty()) {
+                emit(Result.Success(data))
             } else {
-                val shopping: ShoppingItem = document.documents[0].toObject(ShoppingItem::class.java)!!
-                shopping.isAddedToShopping
+                emit(Result.Error(IllegalStateException("Empty search drink details list")))
             }
+        } catch (exception: Exception) {
+            Log.e("NetworkLayerSearch", exception.message, exception)
+            emit(Result.Error(exception))
         }
-    }
+    }.flowOn(Dispatchers.IO)
+
+    override suspend fun isInShopping(drinkId: String, ingredientName: String) = flow {
+        val document = database.collection(DB_SHOPPING)
+            .whereEqualTo(DB_FIELD_DRINK_ID, drinkId)
+            .whereEqualTo(DB_FIELD_INGREDIENT_NAME, ingredientName)
+            .get()
+            .await()
+        if (document.isEmpty) {
+            emit(false)
+        } else {
+            val shopping: ShoppingItem = document.documents[0].toObject(ShoppingItem::class.java)!!
+            emit(shopping.isAddedToShopping)
+        }
+    }.flowOn(Dispatchers.IO)
 
     override suspend fun addToShopping(shoppingItem: ShoppingItem) {
         return withContext(Dispatchers.IO) {
@@ -329,28 +291,22 @@ class CocktailsRepositoryAPI @Inject constructor(
         }
     }
 
-    override suspend fun getShopping(): Result<ShoppingList> {
-        return withContext(Dispatchers.IO) {
-            try {
-                val shopping = database.collection(DB_SHOPPING)
-                    .get()
-                    .await()
-                val shoppingList = ShoppingList(
-                    drinks = arrayListOf()
-                )
-                if (shopping.documents.isNotEmpty()) {
-                    for (item in shopping) {
-                        val shoppingItem = item.toObject(ShoppingItem::class.java)
-                        shoppingList.drinks.add(shoppingItem)
-                    }
+    override fun getShopping() = callbackFlow {
+        val snapshotListener = database.collection(DB_SHOPPING)
+            .addSnapshotListener { snapshot, _ ->
+                val shoppingResponse = if (snapshot != null) {
+                    val shoppingList = ShoppingList(
+                        drinks = arrayListOf()
+                    )
+                    shoppingList.drinks.addAll(snapshot.toObjects(ShoppingItem::class.java))
                     Result.Success(shoppingList)
                 } else {
                     Result.Error(IllegalStateException("Empty shopping list"))
                 }
-            } catch (exception: Exception) {
-                Log.e("NetworkLayerShopping", exception.message, exception)
-                Result.Error(exception)
+                trySend(shoppingResponse)
             }
+        awaitClose {
+            snapshotListener.remove()
         }
-    }
+    }.flowOn(Dispatchers.IO)
 }

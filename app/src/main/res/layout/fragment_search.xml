@@ -11,12 +11,14 @@
         android:layout_width="match_parent"
         android:layout_height="260dp"
         tools:src="@drawable/cocktails_search"
+        android:contentDescription="@string/image_search"
         android:scaleType="centerCrop" />
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="260dp"
         android:background="@color/colorBlack"
+        android:contentDescription="@string/image_search_shadow"
         android:alpha="0.7" />
 
     <TextView

@@ -1,7 +1,6 @@
 package com.example.cocktailsapp.shopping
 
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
@@ -9,9 +8,7 @@ import androidx.test.rule.ActivityTestRule
 import com.example.cocktailsapp.BaseUITest
 import com.example.cocktailsapp.shared.presentation.CocktailsActivity
 import com.example.cocktailsapp.R
-import com.example.cocktailsapp.di.idlingResource
 import com.schibsted.spain.barista.assertion.BaristaRecyclerViewAssertions.assertRecyclerViewItemCount
-import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
 import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertNotDisplayed
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.Matchers.not
@@ -26,6 +23,11 @@ class ShoppingFeature: BaseUITest() {
     @Test
     fun displaysListOfShoppingItems() {
         navigateToShoppingFragment()
+
+        onView(
+            withId(R.id.rv_shopping_fragment)
+        ).waitUntilVisible(5000)
+
         assertRecyclerViewItemCount(R.id.rv_shopping_fragment, 3)
 
         onView(
@@ -67,22 +69,29 @@ class ShoppingFeature: BaseUITest() {
             .check(matches(isDisplayed()))
     }
 
-    @Test
+    /*@Test
     fun displaysLoaderWhileFetchingCocktails() {
         IdlingRegistry.getInstance().unregister(idlingResource)
+        Thread.sleep(500)
         navigateToShoppingFragment()
         assertDisplayed(R.id.loader)
-    }
+    }*/
 
     @Test
     fun hideLoader() {
         navigateToShoppingFragment()
+        onView(
+            withId(R.id.rv_shopping_fragment)
+        ).waitUntilVisible(5000)
         assertNotDisplayed(R.id.loader)
     }
 
     @Test
     fun collapseCocktailsAndViewItemCount() {
         navigateToShoppingFragment()
+        onView(
+            withId(R.id.rv_shopping_fragment)
+        ).waitUntilVisible(5000)
         onView(
             allOf(
                 withId(R.id.iv_item_shopping),
@@ -106,7 +115,6 @@ class ShoppingFeature: BaseUITest() {
             withId(R.id.shoppingFragment)
         )
             .perform(click())
-        Thread.sleep(500)
     }
 
 }

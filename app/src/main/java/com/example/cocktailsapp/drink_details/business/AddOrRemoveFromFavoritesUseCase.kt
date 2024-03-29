@@ -9,7 +9,11 @@ class AddOrRemoveFromFavoritesUseCase @Inject constructor(
     private val repository: CocktailsRepository
 ) {
     suspend fun execute(drink: DetailsViewState) {
-        if(isDrinkInFavoritesUseCase.execute(drink.drinks[0].idDrink)){
+        var isInFavorites = false
+        isDrinkInFavoritesUseCase.execute(drink.drinks[0].idDrink).collect {
+            isInFavorites = it
+        }
+        if(isInFavorites){
             repository.removeFromFavorites(
                 drink.drinks[0].idDrink
             )

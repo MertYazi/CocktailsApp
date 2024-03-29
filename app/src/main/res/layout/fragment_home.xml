@@ -12,12 +12,14 @@
         android:layout_width="match_parent"
         android:layout_height="260dp"
         tools:src="@drawable/cocktails_home"
+        android:contentDescription="@string/image_home"
         android:scaleType="centerCrop" />
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="260dp"
         android:background="@color/colorBlack"
+        android:contentDescription="@string/image_home_shadow"
         android:alpha="0.7" />
 
     <TextView

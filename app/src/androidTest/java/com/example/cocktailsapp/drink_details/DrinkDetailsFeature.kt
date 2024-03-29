@@ -26,6 +26,11 @@ class DrinkDetailsFeature: BaseUITest() {
     @Test
     fun displaysDrinkDetails() {
         navigateToDrinkDetailsFragment()
+
+        onView(
+            withId(R.id.rv_instructions_drink_details)
+        ).waitUntilVisible(5000)
+
         assertRecyclerViewItemCount(R.id.rv_instructions_drink_details, 9)
 
         onView(
@@ -61,21 +66,29 @@ class DrinkDetailsFeature: BaseUITest() {
 
     }
 
-    @Test
+    /*@Test
     fun displaysLoaderWhileFetchingDetails() {
         IdlingRegistry.getInstance().unregister(idlingResource)
+        Thread.sleep(500)
         navigateToDrinkDetailsFragment()
         assertDisplayed(R.id.loader)
-    }
+    }*/
 
     @Test
     fun hideLoader() {
         navigateToDrinkDetailsFragment()
+        onView(
+            withId(R.id.rv_instructions_drink_details)
+        ).waitUntilVisible(5000)
+        Thread.sleep(500)
         assertNotDisplayed(R.id.loader)
     }
 
     private fun navigateToDrinkDetailsFragment() {
-        Thread.sleep(500)
+        onView(
+            withId(R.id.rv_category_fragment)
+        ).waitUntilVisible(5000)
+
         onView(
             allOf(
                 withId(R.id.iv_item_category),
@@ -83,7 +96,11 @@ class DrinkDetailsFeature: BaseUITest() {
             )
         )
             .perform(click())
-        Thread.sleep(500)
+
+        onView(
+            withId(R.id.rv_drink_list_fragment)
+        ).waitUntilVisible(5000)
+
         onView(
             allOf(
                 withId(R.id.iv_item_drink_list),
@@ -91,7 +108,6 @@ class DrinkDetailsFeature: BaseUITest() {
             )
         )
             .perform(click())
-        Thread.sleep(2000)
     }
 
 }

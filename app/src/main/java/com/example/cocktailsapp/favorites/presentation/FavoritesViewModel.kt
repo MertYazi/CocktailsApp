@@ -1,7 +1,5 @@
 package com.example.cocktailsapp.favorites.presentation
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.cocktailsapp.shared.business.repository.CocktailsRepository
@@ -9,6 +7,8 @@ import com.example.cocktailsapp.shared.data.repository.api.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -18,25 +18,23 @@ class FavoritesViewModel @Inject constructor(
     private val dispatcher: CoroutineDispatcher = Dispatchers.Main
 ): ViewModel() {
 
-    private val _viewStateFavorites = MutableLiveData<FavoritesViewState>()
-    val viewStateFavorites: LiveData<FavoritesViewState>
-        get() = _viewStateFavorites
+    private val _viewStateFavorites = MutableStateFlow<FavoritesViewState>(FavoritesViewState.Loading)
+    val viewStateFavorites = _viewStateFavorites.asStateFlow()
 
     fun getFavorites() = viewModelScope.launch(dispatcher) {
-        _viewStateFavorites.postValue(FavoritesViewState.Loading)
-        when (val result = repository.getFavorites()) {
-            is Result.Error -> {
-                _viewStateFavorites.postValue(FavoritesViewState.Error)
-            }
-            is Result.Success -> {
-                val drinks = FavoriteDetailsViewState(
-                    result.data.drinks
-                )
-                _viewStateFavorites.postValue(
-                    FavoritesViewState.ContentFavorites(
+        repository.getFavorites().collect { result ->
+            when (result) {
+                is Result.Error -> {
+                    _viewStateFavorites.value = FavoritesViewState.Error
+                }
+                is Result.Success -> {
+                    val drinks = FavoriteDetailsViewState(
+                        result.data.drinks
+                    )
+                    _viewStateFavorites.value = FavoritesViewState.ContentFavorites(
                         drinks
                     )
-                )
+                }
             }
         }
     }

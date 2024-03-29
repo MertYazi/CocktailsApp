@@ -19,12 +19,14 @@
             android:id="@+id/iv_item_drink_list"
             android:layout_width="match_parent"
             android:layout_height="156dp"
+            android:contentDescription="@string/item_drink_list"
             android:scaleType="centerCrop" />
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="156dp"
             android:background="@color/colorBlack"
+            android:contentDescription="@string/item_drink_list_shadow"
             android:alpha="0.2" />
 
         <TextView

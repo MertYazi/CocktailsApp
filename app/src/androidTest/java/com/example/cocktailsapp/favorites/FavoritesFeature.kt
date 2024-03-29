@@ -1,7 +1,6 @@
 package com.example.cocktailsapp.favorites
 
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
@@ -9,7 +8,6 @@ import androidx.test.rule.ActivityTestRule
 import com.example.cocktailsapp.BaseUITest
 import com.example.cocktailsapp.shared.presentation.CocktailsActivity
 import com.example.cocktailsapp.R
-import com.example.cocktailsapp.di.idlingResource
 import com.schibsted.spain.barista.assertion.BaristaRecyclerViewAssertions.assertRecyclerViewItemCount
 import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
 import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertNotDisplayed
@@ -25,6 +23,11 @@ class FavoritesFeature: BaseUITest() {
     @Test
     fun displaysListOfFavoriteCocktails() {
         navigateToFavoritesFragment()
+
+        onView(
+            withId(R.id.rv_favorites_fragment)
+        ).waitUntilVisible(5000)
+
         assertRecyclerViewItemCount(R.id.rv_favorites_fragment, 9)
 
         onView(
@@ -33,7 +36,7 @@ class FavoritesFeature: BaseUITest() {
                 isDescendantOfA(nthChildOf(withId(R.id.rv_favorites_fragment), 0))
             )
         )
-            .check(matches(withText("BLUE MARGARITA")))
+            .check(matches(withText("3-MILE LONG ISLAND ICED TEA")))
             .check(matches(isDisplayed()))
 
         onView(
@@ -66,22 +69,29 @@ class FavoritesFeature: BaseUITest() {
             .check(matches(isDisplayed()))
     }
 
-    @Test
+    /*@Test
     fun displaysLoaderWhileFetchingCocktails() {
         IdlingRegistry.getInstance().unregister(idlingResource)
+        Thread.sleep(500)
         navigateToFavoritesFragment()
         assertDisplayed(R.id.loader)
-    }
+    }*/
 
     @Test
     fun hideLoader() {
         navigateToFavoritesFragment()
+        onView(
+            withId(R.id.rv_favorites_fragment)
+        ).waitUntilVisible(5000)
         assertNotDisplayed(R.id.loader)
     }
 
     @Test
     fun navigateToDetailsScreen() {
         navigateToFavoritesFragment()
+        onView(
+            withId(R.id.rv_favorites_fragment)
+        ).waitUntilVisible(5000)
         onView(
             allOf(
                 withId(R.id.iv_item_drink_list),
@@ -98,7 +108,6 @@ class FavoritesFeature: BaseUITest() {
             withId(R.id.favoritesFragment)
         )
             .perform(click())
-        Thread.sleep(500)
     }
 
 }

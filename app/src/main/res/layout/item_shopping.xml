@@ -22,6 +22,7 @@
                 android:layout_height="30dp"
                 android:layout_margin="6dp"
                 android:src="@drawable/ic_alcohol_red"
+                android:contentDescription="@string/item_shopping"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/tv_item_shopping" />

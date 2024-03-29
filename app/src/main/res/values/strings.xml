@@ -15,4 +15,24 @@
     <string name="items_in">items in</string>
     <string name="please_enter_text">Please enter something to search!</string>
     <string name="cocktail_not_found">Cocktail does not found!</string>
+    <string name="image_drink_details">Image Drink Details</string>
+    <string name="image_favorite_icon">Image Favorite Icon</string>
+    <string name="image_drink_list">Image Drink List</string>
+    <string name="image_drink_list_shadow">Image Drink List Shadow</string>
+    <string name="image_favorites">Image Favorites</string>
+    <string name="image_favorites_shadow">Image Favorites Shadow</string>
+    <string name="image_home">Image Home</string>
+    <string name="image_home_shadow">Image Home Shadow</string>
+    <string name="image_search">Image Search</string>
+    <string name="image_search_shadow">Image Search Shadow</string>
+    <string name="image_shopping">Image Shopping</string>
+    <string name="image_shopping_shadow">Image Shopping Shadow</string>
+    <string name="item_alcohol">Item Alcohol</string>
+    <string name="item_category">Item Category</string>
+    <string name="item_drink_list">Item Drink List</string>
+    <string name="item_drink_list_shadow">Item Drink List Shadow</string>
+    <string name="item_glass">Item Glass</string>
+    <string name="item_ingredient">Item Ingredient</string>
+    <string name="item_shopping">Item Shopping</string>
+    <string name="item_sub_shopping">Item Sub Shopping</string>
 </resources>

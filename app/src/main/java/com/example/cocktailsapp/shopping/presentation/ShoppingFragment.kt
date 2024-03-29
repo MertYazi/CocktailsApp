@@ -7,6 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.cocktailsapp.R
@@ -14,6 +17,7 @@ import com.example.cocktailsapp.databinding.FragmentShoppingBinding
 import com.example.cocktailsapp.shared.business.ShoppingItem
 import com.example.cocktailsapp.shopping.business.ShoppingListItem
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import java.util.stream.Collectors
 
 @AndroidEntryPoint
@@ -40,20 +44,24 @@ class ShoppingFragment : Fragment() {
 
         setupRecyclerViewAdapter()
 
-        viewModel.viewStateShopping.observe(viewLifecycleOwner) { shopping ->
-            when (shopping) {
-                is ShoppingViewState.ContentShopping -> {
-                    binding.loader.visibility = View.GONE
-                    mShoppingList = shopping.drinks
-                    populateUI(shopping.drinks.drinks)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.viewStateShopping.collect { shopping ->
+                    when (shopping) {
+                        is ShoppingViewState.ContentShopping -> {
+                            binding.loader.visibility = View.GONE
+                            mShoppingList = shopping.drinks
+                            populateUI(shopping.drinks.drinks)
+                        }
+                        is ShoppingViewState.Error -> {
+                            binding.loader.visibility = View.GONE
+                        }
+                        is ShoppingViewState.Loading -> {
+                            binding.loader.visibility = View.VISIBLE
+                        }
+                        else -> { }
+                    }
                 }
-                is ShoppingViewState.Error -> {
-                    binding.loader.visibility = View.GONE
-                }
-                is ShoppingViewState.Loading -> {
-                    binding.loader.visibility = View.VISIBLE
-                }
-                else -> { }
             }
         }
 
@@ -99,7 +107,7 @@ class ShoppingFragment : Fragment() {
     }
 
     fun deleteShopping(shoppingItem: ShoppingItem) {
-        viewModel.removeFromShopIconClicked(mShoppingList, shoppingItem)
+        viewModel.removeFromShopIconClicked(shoppingItem)
     }
 
     override fun onDestroyView() {

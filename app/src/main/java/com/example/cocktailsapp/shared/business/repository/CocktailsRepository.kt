@@ -10,42 +10,43 @@ import com.example.cocktailsapp.home.business.CategoryList
 import com.example.cocktailsapp.shared.business.DrinkList
 import com.example.cocktailsapp.home.business.GlassList
 import com.example.cocktailsapp.home.business.IngredientList
+import kotlinx.coroutines.flow.Flow
 
 interface CocktailsRepository {
 
-    suspend fun getCategories(): Result<CategoryList>
+    fun getCategories(): Flow<Result<CategoryList>>
 
-    suspend fun getGlasses(): Result<GlassList>
+    fun getGlasses(): Flow<Result<GlassList>>
 
-    suspend fun getIngredients(): Result<IngredientList>
+    suspend fun getIngredients(): Flow<Result<IngredientList>>
 
-    suspend fun getAlcohols(): Result<AlcoholList>
+    fun getAlcohols(): Flow<Result<AlcoholList>>
 
-    suspend fun getDrinksByCategory(category: String): Result<DrinkList>
+    suspend fun getDrinksByCategory(category: String): Flow<Result<DrinkList>>
 
-    suspend fun getDrinksByGlass(glass: String): Result<DrinkList>
+    suspend fun getDrinksByGlass(glass: String): Flow<Result<DrinkList>>
 
-    suspend fun getDrinksByIngredient(ingredient: String): Result<DrinkList>
+    suspend fun getDrinksByIngredient(ingredient: String): Flow<Result<DrinkList>>
 
-    suspend fun getDrinksByAlcohol(alcohol: String): Result<DrinkList>
+    suspend fun getDrinksByAlcohol(alcohol: String): Flow<Result<DrinkList>>
 
-    suspend fun getDrinksById(id: String): Result<DrinkDetailsList>
+    suspend fun getDrinksById(id: String): Flow<Result<DrinkDetailsList>>
 
-    suspend fun isFavorite(drinkId: String): Boolean
+    suspend fun isFavorite(drinkId: String): Flow<Boolean>
 
     suspend fun addToFavorites(drink: DrinkDetailsItem)
 
     suspend fun removeFromFavorites(drinkId: String)
 
-    suspend fun getFavorites(): Result<DrinkDetailsList>
+    fun getFavorites(): Flow<Result<DrinkDetailsList>>
 
-    suspend fun searchDrinks(drink: String): Result<DrinkDetailsList>
+    suspend fun searchDrinks(drink: String): Flow<Result<DrinkDetailsList>>
 
-    suspend fun isInShopping(drinkId: String, ingredientName: String): Boolean
+    suspend fun isInShopping(drinkId: String, ingredientName: String): Flow<Boolean>
 
     suspend fun addToShopping(shoppingItem: ShoppingItem)
 
     suspend fun removeFromShopping(drinkId: String, ingredientName: String)
 
-    suspend fun getShopping(): Result<ShoppingList>
+    fun getShopping(): Flow<Result<ShoppingList>>
 }

@@ -7,6 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -14,6 +17,7 @@ import com.example.cocktailsapp.R
 import com.example.cocktailsapp.databinding.FragmentDrinkListBinding
 import com.example.cocktailsapp.shared.business.DrinkItem
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class DrinkListFragment : Fragment() {
@@ -68,31 +72,39 @@ class DrinkListFragment : Fragment() {
             binding.tvDrinkListFragment.text = alcohol
         }
 
-        viewModel.viewStateDrinks.observe(viewLifecycleOwner) { drinks ->
-            when(drinks) {
-                is DrinkListViewState.ContentDrinkByCategory -> {
-                    binding.loader.visibility = View.GONE
-                    populateRecyclerView(drinks.drinks.drinks)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.viewStateDrinks.collect { drinks ->
+                    when(drinks) {
+                        is DrinkListViewState.ContentDrinkByCategory -> {
+                            binding.loader.visibility = View.GONE
+                            drinks.drinks.drinks.sortBy { it.strDrink }
+                            populateRecyclerView(drinks.drinks.drinks)
+                        }
+                        is DrinkListViewState.ContentDrinkByGlass -> {
+                            binding.loader.visibility = View.GONE
+                            drinks.drinks.drinks.sortBy { it.strDrink }
+                            populateRecyclerView(drinks.drinks.drinks)
+                        }
+                        is DrinkListViewState.ContentDrinkByIngredient -> {
+                            binding.loader.visibility = View.GONE
+                            drinks.drinks.drinks.sortBy { it.strDrink }
+                            populateRecyclerView(drinks.drinks.drinks)
+                        }
+                        is DrinkListViewState.ContentDrinkByAlcohol -> {
+                            binding.loader.visibility = View.GONE
+                            drinks.drinks.drinks.sortBy { it.strDrink }
+                            populateRecyclerView(drinks.drinks.drinks)
+                        }
+                        is DrinkListViewState.Error -> {
+                            binding.loader.visibility = View.GONE
+                        }
+                        is DrinkListViewState.Loading -> {
+                            binding.loader.visibility = View.VISIBLE
+                        }
+                        else -> { }
+                    }
                 }
-                is DrinkListViewState.ContentDrinkByGlass -> {
-                    binding.loader.visibility = View.GONE
-                    populateRecyclerView(drinks.drinks.drinks)
-                }
-                is DrinkListViewState.ContentDrinkByIngredient -> {
-                    binding.loader.visibility = View.GONE
-                    populateRecyclerView(drinks.drinks.drinks)
-                }
-                is DrinkListViewState.ContentDrinkByAlcohol -> {
-                    binding.loader.visibility = View.GONE
-                    populateRecyclerView(drinks.drinks.drinks)
-                }
-                is DrinkListViewState.Error -> {
-                    binding.loader.visibility = View.GONE
-                }
-                is DrinkListViewState.Loading -> {
-                    binding.loader.visibility = View.VISIBLE
-                }
-                else -> { }
             }
         }
 
