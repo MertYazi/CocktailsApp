@@ -9,7 +9,7 @@ on:
 
 jobs:
   start:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout the code
         uses: actions/checkout@v2
@@ -20,7 +20,7 @@ jobs:
   lint:
     name: Perform lint check
     needs: [start]
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout the code
         uses: actions/checkout@v2
@@ -47,7 +47,7 @@ jobs:
   unit-test:
     name: Perform Unit Testing
     needs: [lint]
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout the code
         uses: actions/checkout@v2
@@ -64,7 +64,7 @@ jobs:
   instrumentation-test:
     name: Perform Instrumentation Testing
     needs: [unit-test]
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout the code
         uses: actions/checkout@v2
@@ -90,7 +90,7 @@ jobs:
   static-code-analysis:
     name: Perform static code analysis
     needs: [instrumentation-test]
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout the code
         uses: actions/checkout@v2
@@ -108,7 +108,7 @@ jobs:
   debug-apk:
     name: Generate Debug APK
     needs: [static-code-analysis]
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout the code
         uses: actions/checkout@v2
