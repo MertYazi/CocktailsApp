@@ -9,4 +9,5 @@ plugins {
     id("com.google.dagger.hilt.android") version "2.48" apply false
     id("com.google.gms.google-services") version "4.4.0" apply false
     id("androidx.navigation.safeargs") version "2.5.0" apply false
+    id("org.sonarqube") version "5.0.0.4638" apply false
 }
