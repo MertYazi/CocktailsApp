@@ -58,7 +58,6 @@ class FavoritesFragment : Fragment() {
                         is FavoritesViewState.Loading -> {
                             binding.loader.visibility = View.VISIBLE
                         }
-                        else -> { }
                     }
                 }
             }

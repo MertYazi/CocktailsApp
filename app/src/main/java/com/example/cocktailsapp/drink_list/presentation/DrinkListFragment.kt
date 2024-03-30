@@ -102,7 +102,6 @@ class DrinkListFragment : Fragment() {
                         is DrinkListViewState.Loading -> {
                             binding.loader.visibility = View.VISIBLE
                         }
-                        else -> { }
                     }
                 }
             }

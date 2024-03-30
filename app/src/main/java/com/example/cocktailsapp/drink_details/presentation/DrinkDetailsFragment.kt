@@ -78,7 +78,6 @@ class DrinkDetailsFragment : Fragment() {
                         is DrinkDetailsViewState.Loading -> {
                             binding.loader.visibility = View.VISIBLE
                         }
-                        else -> { }
                     }
                 }
             }

@@ -59,7 +59,6 @@ class ShoppingFragment : Fragment() {
                         is ShoppingViewState.Loading -> {
                             binding.loader.visibility = View.VISIBLE
                         }
-                        else -> { }
                     }
                 }
             }

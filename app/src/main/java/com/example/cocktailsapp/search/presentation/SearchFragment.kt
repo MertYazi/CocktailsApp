@@ -70,7 +70,6 @@ class SearchFragment : Fragment() {
                         is SearchViewState.Loading -> {
                             binding.loader.visibility = View.VISIBLE
                         }
-                        else -> { }
                     }
                 }
             }
