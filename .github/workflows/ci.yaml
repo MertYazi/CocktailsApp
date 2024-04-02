@@ -19,7 +19,7 @@ jobs:
           java-package: jdk
   
       - name: Run sample script
-        run: java -cp java echo Hello, world
+        run: java -cp echo Hello, world
 
   lint:
     name: Perform lint check
@@ -44,10 +44,10 @@ jobs:
           restore-keys: ${{ runner.os }}-gradle-
 
       - name: Make Gradle executable
-        run: java -cp java chmod +x ./gradlew
+        run: java -cp chmod +x ./gradlew
   
       - name: Run lint
-        run: java -cp java ./gradlew lintDebug
+        run: java -cp ./gradlew lintDebug
   
       - name: Upload html test report
         uses: actions/upload-artifact@v4
@@ -71,7 +71,7 @@ jobs:
           java-package: jdk
   
       - name: Run tests
-        run: java -cp java ./gradlew test
+        run: java -cp ./gradlew test
   
       - name: Upload test report
         uses: actions/upload-artifact@v4
@@ -140,7 +140,7 @@ jobs:
           java-package: jdk
   
       - name: SonarCloud Scan # sonarcloud properties in gradle.properties file
-        run: java -cp java ./gradlew app:sonarqube -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+        run: java -cp ./gradlew app:sonarqube -Dsonar.login=${{ secrets.SONAR_TOKEN }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -164,7 +164,7 @@ jobs:
           java-package: jdk
   
       - name: Build debug APK
-        run: java -cp java ./gradlew assembleDebug --stacktrace
+        run: java -cp ./gradlew assembleDebug --stacktrace
   
       - name: Upload APK
         uses: actions/upload-artifact@v4
