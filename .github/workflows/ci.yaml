@@ -14,7 +14,7 @@ jobs:
       - name: Checkout the code
         uses: actions/checkout@v4
         with:
-          distribution: 'temurin'
+          distribution: 'corretto'
           java-version: '17'
           check-latest: true
   
@@ -29,14 +29,14 @@ jobs:
       - name: Checkout the code
         uses: actions/checkout@v4
         with:
-          distribution: 'temurin'
+          distribution: 'corretto'
           java-version: '17'
           check-latest: true
 
       - name: Cache Gradle
         uses: actions/cache@v4
         with:
-          distribution: 'temurin'
+          distribution: 'corretto'
           java-version: '17'
           check-latest: true
           path: ~/.gradle/caches
@@ -52,7 +52,7 @@ jobs:
       - name: Upload html test report
         uses: actions/upload-artifact@v4
         with:
-          distribution: 'temurin'
+          distribution: 'corretto'
           java-version: '17'
           check-latest: true
           name: lint.html
@@ -66,7 +66,7 @@ jobs:
       - name: Checkout the code
         uses: actions/checkout@v4
         with:
-          distribution: 'temurin'
+          distribution: 'corretto'
           java-version: '17'
           check-latest: true
   
@@ -76,7 +76,7 @@ jobs:
       - name: Upload test report
         uses: actions/upload-artifact@v4
         with:
-          distribution: 'temurin'
+          distribution: 'corretto'
           java-version: '17'
           check-latest: true
           name: unit_test_report
@@ -90,7 +90,7 @@ jobs:
       - name: Checkout the code
         uses: actions/checkout@v4
         with:
-          distribution: 'temurin'
+          distribution: 'corretto'
           java-version: '17'
           check-latest: true
   
@@ -98,14 +98,14 @@ jobs:
       - name: Set up Java JDK 17
         uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
+          distribution: 'corretto'
           java-version: '17'
           check-latest: true
   
       - name: Run espresso tests
         uses: reactivecircus/android-emulator-runner@v2 # 3rd party tool
         with:
-          distribution: 'temurin'
+          distribution: 'corretto'
           java-version: '17'
           check-latest: true
           api-level: 33
@@ -114,7 +114,7 @@ jobs:
       - name: Upload Instrumentation Test report
         uses: actions/upload-artifact@v4
         with:
-          distribution: 'temurin'
+          distribution: 'corretto'
           java-version: '17'
           check-latest: true
           name: instrumentation_test_report
@@ -128,14 +128,14 @@ jobs:
       - name: Checkout the code
         uses: actions/checkout@v4
         with:
-          distribution: 'temurin'
+          distribution: 'corretto'
           java-version: '17'
           check-latest: true
   
       - name: Set up Java JDK 17
         uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
+          distribution: 'corretto'
           java-version: '17'
           check-latest: true
   
@@ -152,14 +152,14 @@ jobs:
       - name: Checkout the code
         uses: actions/checkout@v4
         with:
-          distribution: 'temurin'
+          distribution: 'corretto'
           java-version: '17'
           check-latest: true
   
       - name: Set up Java JDK 17
         uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
+          distribution: 'corretto'
           java-version: '17'
           check-latest: true
   
@@ -169,7 +169,7 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          distribution: 'temurin'
+          distribution: 'corretto'
           java-version: '17'
           check-latest: true
           name: sample-app.apk
