@@ -2,15 +2,19 @@ package com.example.cocktailsapp.home.presentation
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
+import androidx.core.os.bundleOf
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.cocktailsapp.R
 import com.example.cocktailsapp.databinding.ItemIngredientBinding
 import com.example.cocktailsapp.home.business.IngredientItem
 import com.example.cocktailsapp.shared.Constants.INGREDIENT_EXTENSION
 import com.example.cocktailsapp.shared.Constants.INGREDIENT_URL
+import com.example.cocktailsapp.shared.Constants.MY_IMAGE
+import com.example.cocktailsapp.shared.Constants.MY_INGREDIENT
 
 class IngredientListAdapter(
     private val fragment: IngredientFragment
@@ -58,14 +62,13 @@ class IngredientListAdapter(
             ingredientName.text = ingredient.strIngredient1
 
             itemView.setOnClickListener {
-                fragment.findNavController().navigate(
-                    HomeFragmentDirections.actionHomeFragmentToDrinkListFragment(
-                        "",
-                        "",
-                        ingredient.strIngredient1,
-                        "",
-                        ingredientThumb
-                    )
+                val bundle = bundleOf(
+                    MY_INGREDIENT to ingredient.strIngredient1,
+                    MY_IMAGE to ingredient.imgIngredient
+                )
+                Navigation.findNavController(holder.itemView).navigate(
+                    R.id.action_homeFragment_to_drinkListFragment,
+                    bundle
                 )
             }
         }

@@ -2,13 +2,17 @@ package com.example.cocktailsapp.home.presentation
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
+import androidx.core.os.bundleOf
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.cocktailsapp.R
 import com.example.cocktailsapp.databinding.ItemCategoryBinding
 import com.example.cocktailsapp.home.business.CategoryItem
+import com.example.cocktailsapp.shared.Constants.MY_CATEGORY
+import com.example.cocktailsapp.shared.Constants.MY_IMAGE
 
 class CategoryListAdapter(
     private val fragment: CategoryFragment
@@ -53,14 +57,13 @@ class CategoryListAdapter(
             categoryName.text = category.name
 
             itemView.setOnClickListener {
-                fragment.findNavController().navigate(
-                    HomeFragmentDirections.actionHomeFragmentToDrinkListFragment(
-                        category.name,
-                        "",
-                        "",
-                        "",
-                        category.image
-                    )
+                val bundle = bundleOf(
+                    MY_CATEGORY to category.name,
+                    MY_IMAGE to category.image
+                )
+                Navigation.findNavController(holder.itemView).navigate(
+                    R.id.action_homeFragment_to_drinkListFragment,
+                    bundle
                 )
             }
         }

@@ -17,7 +17,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.fragment.navArgs
 import androidx.palette.graphics.Palette
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -27,6 +26,7 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.example.cocktailsapp.R
 import com.example.cocktailsapp.databinding.FragmentDrinkDetailsBinding
+import com.example.cocktailsapp.shared.Constants.MY_DRINK_ID
 import com.example.cocktailsapp.shared.business.ShoppingItem
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.AndroidEntryPoint
@@ -44,6 +44,8 @@ class DrinkDetailsFragment : Fragment() {
 
     private var mShoppingIngredientsList: ArrayList<ShoppingItem> = arrayListOf()
 
+    private lateinit var id: String
+
     private lateinit var mIngredientsAdapter: DrinkDetailsAdapter
 
     override fun onCreateView(
@@ -57,8 +59,11 @@ class DrinkDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val args: DrinkDetailsFragmentArgs by navArgs()
-        val id = args.myDrinkId
+        arguments?.let {
+            if (it.getString(MY_DRINK_ID) != null) {
+                id = it.getString(MY_DRINK_ID)!!
+            }
+        }
 
         setupBottomSheet()
 

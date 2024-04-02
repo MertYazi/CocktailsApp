@@ -2,13 +2,17 @@ package com.example.cocktailsapp.home.presentation
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
+import androidx.core.os.bundleOf
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.cocktailsapp.R
 import com.example.cocktailsapp.databinding.ItemGlassBinding
 import com.example.cocktailsapp.home.business.GlassItem
+import com.example.cocktailsapp.shared.Constants.MY_GLASS
+import com.example.cocktailsapp.shared.Constants.MY_IMAGE
 
 class GlassListAdapter(
     private val fragment: GlassFragment
@@ -53,14 +57,13 @@ class GlassListAdapter(
             glassName.text = glass.name
 
             itemView.setOnClickListener {
-                fragment.findNavController().navigate(
-                    HomeFragmentDirections.actionHomeFragmentToDrinkListFragment(
-                        "",
-                        glass.name,
-                        "",
-                        "",
-                        glass.image
-                    )
+                val bundle = bundleOf(
+                    MY_GLASS to glass.name,
+                    MY_IMAGE to glass.image
+                )
+                Navigation.findNavController(holder.itemView).navigate(
+                    R.id.action_homeFragment_to_drinkListFragment,
+                    bundle
                 )
             }
         }

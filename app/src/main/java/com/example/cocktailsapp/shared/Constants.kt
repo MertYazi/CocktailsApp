@@ -12,4 +12,11 @@ object Constants {
     const val DB_SHOPPING = "shopping"
     const val DB_FIELD_DRINK_ID = "drinkId"
     const val DB_FIELD_INGREDIENT_NAME = "ingredientName"
+    const val MY_DRINK_ID = "myDrinkId"
+    const val MY_IMAGE = "myImage"
+    const val MY_ALCOHOL = "myAlcohol"
+    const val MY_INGREDIENT = "myIngredient"
+    const val MY_GLASS = "myGlass"
+    const val MY_CATEGORY = "myCategory"
+    const val MY_SEARCH = "mySearch"
 }
