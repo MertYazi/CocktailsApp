@@ -33,21 +33,21 @@ jobs:
           java-version: '17'
           check-latest: true
 
-      - name: Cache Gradle
-        uses: actions/cache@v4
-        with:
-          distribution: 'corretto'
-          java-version: '17'
-          check-latest: true
-          path: ~/.gradle/caches
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
-          restore-keys: ${{ runner.os }}-gradle-
+      # - name: Cache Gradle
+      #   uses: actions/cache@v4
+      #   with:
+      #     distribution: 'corretto'
+      #     java-version: '17'
+      #     check-latest: true
+      #     path: ~/.gradle/caches
+      #     key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
+      #     restore-keys: ${{ runner.os }}-gradle-
 
       - name: Make Gradle executable
-        run: chmod +x ./gradlew --scan
+        run: chmod +x ./gradlew
   
       - name: Run lint
-        run: ./gradlew lintDebug --scan
+        run: ./gradlew lintDebug
   
       - name: Upload html test report
         uses: actions/upload-artifact@v4
@@ -71,7 +71,7 @@ jobs:
           check-latest: true
   
       - name: Run tests
-        run: ./gradlew test --scan
+        run: ./gradlew test
   
       - name: Upload test report
         uses: actions/upload-artifact@v4
@@ -140,7 +140,7 @@ jobs:
           check-latest: true
   
       - name: SonarCloud Scan # sonarcloud properties in gradle.properties file
-        run: ./gradlew app:sonarqube -Dsonar.login=${{ secrets.SONAR_TOKEN }} --scan
+        run: ./gradlew app:sonarqube -Dsonar.login=${{ secrets.SONAR_TOKEN }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -164,7 +164,7 @@ jobs:
           check-latest: true
   
       - name: Build debug APK
-        run: ./gradlew assembleDebug --scan
+        run: ./gradlew assembleDebug --stacktrace
   
       - name: Upload APK
         uses: actions/upload-artifact@v4
