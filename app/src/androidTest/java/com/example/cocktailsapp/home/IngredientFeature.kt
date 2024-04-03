@@ -80,6 +80,9 @@ class IngredientFeature: BaseUITest() {
         )
             .perform(click())
 
+        onView(
+            withId(R.id.iv_drink_list_fragment)
+        ).waitUntilVisible(5000)
         assertDisplayed(R.id.iv_drink_list_fragment)
     }
 

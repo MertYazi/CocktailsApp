@@ -28,6 +28,7 @@ class GlassFeature: BaseUITest() {
         onView(
             withId(R.id.rv_glass_fragment)
         ).waitUntilVisible(5000)
+        Thread.sleep(1000)
 
         assertRecyclerViewItemCount(R.id.rv_glass_fragment, 32)
 
@@ -80,6 +81,9 @@ class GlassFeature: BaseUITest() {
         )
             .perform(click())
 
+        onView(
+            withId(R.id.iv_drink_list_fragment)
+        ).waitUntilVisible(5000)
         assertDisplayed(R.id.iv_drink_list_fragment)
     }
 

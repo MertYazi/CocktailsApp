@@ -28,6 +28,7 @@ class AlcoholFeature: BaseUITest() {
         onView(
             withId(R.id.rv_alcohol_fragment)
         ).waitUntilVisible(5000)
+        Thread.sleep(1000)
 
         assertRecyclerViewItemCount(R.id.rv_alcohol_fragment, 3)
 
@@ -80,6 +81,9 @@ class AlcoholFeature: BaseUITest() {
         )
             .perform(click())
 
+        onView(
+            withId(R.id.iv_drink_list_fragment)
+        ).waitUntilVisible(5000)
         assertDisplayed(R.id.iv_drink_list_fragment)
     }
 

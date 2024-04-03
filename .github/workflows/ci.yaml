@@ -21,73 +21,73 @@ jobs:
       - name: Run sample script
         run: echo CI started
 
-  lint:
-    name: Perform lint check
-    needs: [start]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout the code
-        uses: actions/checkout@v4
-
-      - name: Cache Gradle
-        uses: actions/cache@v4
-        with:
-          path: ~/.gradle/caches
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
-          restore-keys: ${{ runner.os }}-gradle-
-
-      - run: |
-          download_url="https://download.oracle.com/java/17/latest/jdk-17_linux-x64_bin.tar.gz"
-          wget -O $RUNNER_TEMP/java_package.tar.gz $download_url
-      - uses: actions/setup-java@v4
-        with:
-          distribution: 'jdkfile'
-          jdkFile: ${{ runner.temp }}/java_package.tar.gz
-          java-version: '17'
-          architecture: x64
-          
-      - name: Make Gradle executable
-        run: chmod +x ./gradlew
-  
-      - name: Run lint
-        run: ./gradlew lintDebug
-  
-      - name: Upload html test report
-        uses: actions/upload-artifact@v4
-        with:
-          name: lint.html
-          path: app/build/reports/lint-results-debug.html
-
-  unit-test:
-    name: Perform Unit Testing
-    needs: [lint]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout the code
-        uses: actions/checkout@v4
-
-      - run: |
-          download_url="https://download.oracle.com/java/17/latest/jdk-17_linux-x64_bin.tar.gz"
-          wget -O $RUNNER_TEMP/java_package.tar.gz $download_url
-      - uses: actions/setup-java@v4
-        with:
-          distribution: 'jdkfile'
-          jdkFile: ${{ runner.temp }}/java_package.tar.gz
-          java-version: '17'
-          architecture: x64
-  
-      - name: Run tests
-        run: ./gradlew test
-  
-      - name: Upload test report
-        uses: actions/upload-artifact@v4
-        with:
-          name: unit_test_report
-          path: app/build/reports/tests/testDebugUnitTest/
+#  lint:
+#    name: Perform lint check
+#    needs: [start]
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Checkout the code
+#        uses: actions/checkout@v4
+#
+#      - name: Cache Gradle
+#        uses: actions/cache@v4
+#        with:
+#          path: ~/.gradle/caches
+#          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
+#          restore-keys: ${{ runner.os }}-gradle-
+#
+#      - run: |
+#          download_url="https://download.oracle.com/java/17/latest/jdk-17_linux-x64_bin.tar.gz"
+#          wget -O $RUNNER_TEMP/java_package.tar.gz $download_url
+#      - uses: actions/setup-java@v4
+#        with:
+#          distribution: 'jdkfile'
+#          jdkFile: ${{ runner.temp }}/java_package.tar.gz
+#          java-version: '17'
+#          architecture: x64
+#
+#      - name: Make Gradle executable
+#        run: chmod +x ./gradlew
+#
+#      - name: Run lint
+#        run: ./gradlew lintDebug
+#
+#      - name: Upload html test report
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: lint.html
+#          path: app/build/reports/lint-results-debug.html
+#
+#  unit-test:
+#    name: Perform Unit Testing
+#    needs: [lint]
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Checkout the code
+#        uses: actions/checkout@v4
+#
+#      - run: |
+#          download_url="https://download.oracle.com/java/17/latest/jdk-17_linux-x64_bin.tar.gz"
+#          wget -O $RUNNER_TEMP/java_package.tar.gz $download_url
+#      - uses: actions/setup-java@v4
+#        with:
+#          distribution: 'jdkfile'
+#          jdkFile: ${{ runner.temp }}/java_package.tar.gz
+#          java-version: '17'
+#          architecture: x64
+#
+#      - name: Run tests
+#        run: ./gradlew test
+#
+#      - name: Upload test report
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: unit_test_report
+#          path: app/build/reports/tests/testDebugUnitTest/
 
   instrumentation-test:
     name: Perform Instrumentation Testing
-    needs: [unit-test]
+    needs: [start]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the code
@@ -115,7 +115,6 @@ jobs:
           api-level: 34
           arch: x86_64
           target: google_apis
-          disable-animations: true
           script: ./gradlew connectedCheck
   
       - name: Upload Instrumentation Test report

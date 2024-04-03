@@ -78,6 +78,7 @@ class DrinkListFeature: BaseUITest() {
         onView(
             withId(R.id.rv_drink_list_fragment)
         ).waitUntilVisible(5000)
+        Thread.sleep(1000)
 
         assertRecyclerViewItemCount(R.id.rv_drink_list_fragment, 7)
 
@@ -127,6 +128,7 @@ class DrinkListFeature: BaseUITest() {
         onView(
             withId(R.id.rv_drink_list_fragment)
         ).waitUntilVisible(5000)
+        Thread.sleep(1000)
 
         assertRecyclerViewItemCount(R.id.rv_drink_list_fragment, 44)
 
@@ -176,6 +178,7 @@ class DrinkListFeature: BaseUITest() {
         onView(
             withId(R.id.rv_drink_list_fragment)
         ).waitUntilVisible(5000)
+        Thread.sleep(1000)
 
         assertRecyclerViewItemCount(R.id.rv_drink_list_fragment, 58)
 
@@ -270,12 +273,12 @@ class DrinkListFeature: BaseUITest() {
 
     private fun navigateToDrinkListFragmentFromGlass() {
         onView(
-            withId(R.id.rv_category_fragment)
-        ).waitUntilVisible(5000)
-
-        onView(
             withId(R.id.viewpager)
         ).perform(swipeLeft())
+
+        onView(
+            withId(R.id.rv_glass_fragment)
+        ).waitUntilVisible(5000)
 
         onView(
             allOf(
@@ -287,15 +290,15 @@ class DrinkListFeature: BaseUITest() {
     }
 
     private fun navigateToDrinkListFragmentFromIngredient() {
-        onView(
-            withId(R.id.rv_category_fragment)
-        ).waitUntilVisible(5000)
-
         for (i in 1..2) {
             onView(
                 withId(R.id.viewpager)
             ).perform(swipeLeft())
         }
+
+        onView(
+            withId(R.id.rv_ingredient_fragment)
+        ).waitUntilVisible(5000)
 
         onView(
             allOf(
@@ -307,15 +310,15 @@ class DrinkListFeature: BaseUITest() {
     }
 
     private fun navigateToDrinkListFragmentFromAlcohol() {
-        onView(
-            withId(R.id.rv_category_fragment)
-        ).waitUntilVisible(5000)
-
         for (i in 1..3) {
             onView(
                 withId(R.id.viewpager)
             ).perform(swipeLeft())
         }
+
+        onView(
+            withId(R.id.rv_alcohol_fragment)
+        ).waitUntilVisible(5000)
 
         onView(
             allOf(

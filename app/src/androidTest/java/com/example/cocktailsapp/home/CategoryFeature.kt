@@ -25,6 +25,7 @@ class CategoryFeature: BaseUITest() {
         onView(
             withId(R.id.rv_category_fragment)
         ).waitUntilVisible(5000)
+        Thread.sleep(1000)
 
         assertRecyclerViewItemCount(R.id.rv_category_fragment, 11)
 
@@ -74,6 +75,9 @@ class CategoryFeature: BaseUITest() {
         )
             .perform(click())
 
+        onView(
+            withId(R.id.iv_drink_list_fragment)
+        ).waitUntilVisible(5000)
         assertDisplayed(R.id.iv_drink_list_fragment)
     }
 

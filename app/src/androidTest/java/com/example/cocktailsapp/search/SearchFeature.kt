@@ -112,6 +112,9 @@ class SearchFeature: BaseUITest() {
         )
             .perform(click())
 
+        onView(
+            withId(R.id.iv_drink_details)
+        ).waitUntilVisible(5000)
         assertDisplayed(R.id.iv_drink_details)
     }
 
