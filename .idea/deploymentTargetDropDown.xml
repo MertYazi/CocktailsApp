@@ -2,26 +2,7 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="AlcoholFeature">
-        <State />
-      </entry>
-      <entry key="DrinkDetailsFeature">
-        <State>
-          <runningDeviceTargetSelectedWithDropDown>
-            <Target>
-              <type value="RUNNING_DEVICE_TARGET" />
-              <deviceKey>
-                <Key>
-                  <type value="SERIAL_NUMBER" />
-                  <value value="adb-4ee17e1d-idtLbF._adb-tls-connect._tcp" />
-                </Key>
-              </deviceKey>
-            </Target>
-          </runningDeviceTargetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-03-28T14:07:43.715746709Z" />
-        </State>
-      </entry>
-      <entry key="SearchFeature">
+      <entry key="IngredientFeature">
         <State />
       </entry>
       <entry key="Tests in 'com.example.cocktailsapp'">
@@ -37,7 +18,7 @@
               </deviceKey>
             </Target>
           </targetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-03-28T20:43:38.085417270Z" />
+          <timeTargetWasSelectedWithDropDown value="2024-04-03T13:29:37.781950455Z" />
         </State>
       </entry>
       <entry key="app">

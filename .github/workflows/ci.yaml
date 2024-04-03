@@ -19,7 +19,7 @@ jobs:
           check-latest: true
   
       - name: Run sample script
-        run: echo Hello, world
+        run: echo CI started
 
   lint:
     name: Perform lint check

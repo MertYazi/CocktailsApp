@@ -27,6 +27,7 @@ class FavoritesFeature: BaseUITest() {
         onView(
             withId(R.id.rv_favorites_fragment)
         ).waitUntilVisible(5000)
+        Thread.sleep(1000)
 
         assertRecyclerViewItemCount(R.id.rv_favorites_fragment, 9)
 

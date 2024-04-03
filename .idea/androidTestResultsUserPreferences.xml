@@ -217,6 +217,7 @@
                 <map>
                   <entry key="Duration" value="90" />
                   <entry key="Pixel_5_API_24" value="120" />
+                  <entry key="Pixel_8_API_33" value="120" />
                   <entry key="Pixel_Tablet_API_33" value="120" />
                   <entry key="Tests" value="360" />
                 </map>

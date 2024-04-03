@@ -27,6 +27,7 @@ class ShoppingFeature: BaseUITest() {
         onView(
             withId(R.id.rv_shopping_fragment)
         ).waitUntilVisible(5000)
+        Thread.sleep(1000)
 
         assertRecyclerViewItemCount(R.id.rv_shopping_fragment, 3)
 

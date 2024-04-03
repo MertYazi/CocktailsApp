@@ -68,9 +68,8 @@ dependencies {
 
     implementation("de.hdodenhof:circleimageview:3.1.0")
 
-    implementation("com.google.firebase:firebase-firestore:24.11.0")
-    implementation(platform("com.google.firebase:firebase-bom:32.8.0"))
-    implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.firebase:firebase-firestore-ktx:24.11.0")
+    implementation("com.google.firebase:firebase-analytics-ktx:21.6.1")
 
     implementation("androidx.palette:palette-ktx:1.0.0")
 
@@ -91,9 +90,12 @@ dependencies {
     androidTestImplementation("com.jakewharton.espresso:okhttp3-idling-resource:1.0.0")
     androidTestImplementation("androidx.test:runner:1.5.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1") {
+        exclude(group = "com.google.protobuf", module = "protobuf-lite")
+    }
     androidTestImplementation("com.adevinta.android:barista:4.2.0") {
         exclude(group = "org.jetbrains.kotlin")
+        exclude(group = "com.google.protobuf", module = "protobuf-lite")
     }
 }
 

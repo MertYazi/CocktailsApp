@@ -27,6 +27,7 @@ class DrinkDetailsFeature: BaseUITest() {
         onView(
             withId(R.id.rv_instructions_drink_details)
         ).waitUntilVisible(5000)
+        Thread.sleep(1000)
 
         assertRecyclerViewItemCount(R.id.rv_instructions_drink_details, 9)
 
