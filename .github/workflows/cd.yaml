@@ -13,12 +13,16 @@ jobs:
     steps:
       - name: Checkout the code
         uses: actions/checkout@v2
-  
-      - name: Set up JDK
-        uses: actions/setup-java@v3
+
+      - run: |
+          download_url="https://download.oracle.com/java/17/latest/jdk-17_linux-x64_bin.tar.gz"
+          wget -O $RUNNER_TEMP/java_package.tar.gz $download_url
+      - uses: actions/setup-java@v4
         with:
-          distribution: temurin
+          distribution: 'jdkfile'
+          jdkFile: ${{ runner.temp }}/java_package.tar.gz
           java-version: '17'
+          architecture: x64
   
       - name: Build Release APK
         run: ./gradlew assembleRelease
@@ -48,11 +52,15 @@ jobs:
       - name: Checkout the code
         uses: actions/checkout@v2
 
-      - name: Set up JDK
-        uses: actions/setup-java@v3
+      - run: |
+          download_url="https://download.oracle.com/java/17/latest/jdk-17_linux-x64_bin.tar.gz"
+          wget -O $RUNNER_TEMP/java_package.tar.gz $download_url
+      - uses: actions/setup-java@v4
         with:
-          distribution: temurin
+          distribution: 'jdkfile'
+          jdkFile: ${{ runner.temp }}/java_package.tar.gz
           java-version: '17'
+          architecture: x64
 
       - name: Build Release AAB
         run: ./gradlew bundleRelease
