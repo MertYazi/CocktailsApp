@@ -7,6 +7,18 @@ plugins {
     id("androidx.navigation.safeargs.kotlin")
 }
 
+sonarqube {
+    properties {
+        property("sonar.projectKey", "MertYazi_CocktailsApp")
+        property("sonar.organization", "MertYazi")
+        property("sonar.host.url", "https://sonarcloud.io")
+        property("sonar.sources", "./src/main")
+        property("sonar.projectName", "CocktailsApp")
+        property("sonar.language", "kotlin")
+        property("sonar.gradle.skipCompile", true)
+    }
+}
+
 android {
     namespace = "com.example.cocktailsapp"
     compileSdk = 34
