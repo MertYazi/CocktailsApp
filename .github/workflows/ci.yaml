@@ -140,7 +140,7 @@ jobs:
           architecture: x64
   
       - name: SonarCloud Scan # sonarcloud properties in gradle.properties file
-        run: ./gradlew app:sonarqube --settings-file=./settings.gradle.kts -Dsonar.login=${{ secrets.SONAR_TOKEN }} --stacktrace
+        run: ./gradlew app:sonarqube -Dsonar.login=${{ secrets.SONAR_TOKEN }} --stacktrace
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

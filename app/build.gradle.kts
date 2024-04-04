@@ -8,14 +8,6 @@ plugins {
     id("org.sonarqube")
 }
 
-sonar {
-    properties {
-        property("sonar.sources", "src/main/")
-        property("sonar.exclusions", "src/main/res/**/*")
-        property("sonar.tests", "src/androidTest/")
-    }
-}
-
 android {
     namespace = "com.example.cocktailsapp"
     compileSdk = 34
