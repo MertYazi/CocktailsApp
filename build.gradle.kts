@@ -11,3 +11,11 @@ plugins {
     id("androidx.navigation.safeargs") version "2.5.0" apply false
     id("org.sonarqube") version "5.0.0.4638"
 }
+sonar {
+    properties {
+        property("sonar.host.url", "https://sonarcloud.io")
+        property("sonar.projectName", "CocktailsApp")
+        property("sonar.projectKey", "MertYazi_CocktailsApp")
+        property("sonar.organization", "MertYazi")
+    }
+}
