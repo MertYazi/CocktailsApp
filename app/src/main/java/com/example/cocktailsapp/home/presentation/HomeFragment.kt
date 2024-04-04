@@ -9,12 +9,10 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.Toast
-import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.cocktailsapp.R
 import com.example.cocktailsapp.databinding.FragmentHomeBinding
-import com.example.cocktailsapp.shared.Constants.MY_SEARCH
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -67,13 +65,9 @@ class HomeFragment : Fragment() {
                 binding.svSearch.setQuery("", false)
                 binding.svSearch.clearFocus()
                 if (searchText.isNotEmpty()) {
-                    val bundle = bundleOf(
-                        MY_SEARCH to searchText
-                    )
-                    findNavController().navigate(
-                        R.id.action_homeFragment_to_searchFragment,
-                        bundle
-                    )
+                    findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSearchFragment(
+                        searchText
+                    ))
                 } else {
                     Toast.makeText(
                         requireContext(),

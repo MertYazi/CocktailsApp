@@ -12,11 +12,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.cocktailsapp.R
 import com.example.cocktailsapp.databinding.FragmentSearchBinding
-import com.example.cocktailsapp.shared.Constants.MY_SEARCH
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -104,9 +104,8 @@ class SearchFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         if (!requireArguments().isEmpty) {
-            arguments?.let {
-                searchTerm = it.getString(MY_SEARCH)!!
-            }
+            val args: SearchFragmentArgs by navArgs()
+            searchTerm = args.mySearch
             binding.svSearchFragment.setQuery(searchTerm, true)
         } else {
             binding.svSearchFragment.setQuery(binding.svSearchFragment.query.toString(), true)

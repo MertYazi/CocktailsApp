@@ -22,6 +22,10 @@
         android:name="com.example.cocktailsapp.search.presentation.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" >
+        <argument
+            android:name="mySearch"
+            app:argType="string"
+            app:nullable="false" />
         <action
             android:id="@+id/action_searchFragment_to_drinkDetailsFragment"
             app:destination="@id/drinkDetailsFragment" />
@@ -31,6 +35,10 @@
         android:name="com.example.cocktailsapp.favorites.presentation.FavoritesFragment"
         android:label="fragment_favorites"
         tools:layout="@layout/fragment_favorites" >
+        <argument
+            android:name="myId"
+            app:argType="string"
+            app:nullable="false" />
         <action
             android:id="@+id/action_favoritesFragment_to_drinkDetailsFragment"
             app:destination="@id/drinkDetailsFragment" />
@@ -49,6 +57,26 @@
         android:name="com.example.cocktailsapp.drink_list.presentation.DrinkListFragment"
         android:label="fragment_drink_list"
         tools:layout="@layout/fragment_drink_list">
+        <argument
+            android:name="myCategory"
+            app:argType="string"
+            app:nullable="false" />
+        <argument
+            android:name="myGlass"
+            app:argType="string"
+            app:nullable="false" />
+        <argument
+            android:name="myIngredient"
+            app:argType="string"
+            app:nullable="false" />
+        <argument
+            android:name="myAlcohol"
+            app:argType="string"
+            app:nullable="false" />
+        <argument
+            android:name="myImage"
+            app:argType="string"
+            app:nullable="false" />
         <action
             android:id="@+id/action_drinkListFragment_to_drinkDetailsFragment"
             app:destination="@id/drinkDetailsFragment" />
@@ -57,5 +85,10 @@
         android:id="@+id/drinkDetailsFragment"
         android:name="com.example.cocktailsapp.drink_details.presentation.DrinkDetailsFragment"
         android:label="fragment_drink_details"
-        tools:layout="@layout/fragment_drink_details" />
+        tools:layout="@layout/fragment_drink_details">
+        <argument
+            android:name="myDrinkId"
+            app:argType="string"
+            app:nullable="false" />
+    </fragment>
 </navigation>

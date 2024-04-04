@@ -2,15 +2,12 @@ package com.example.cocktailsapp.search.presentation
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
-import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.cocktailsapp.R
 import com.example.cocktailsapp.databinding.ItemDrinkListBinding
-import com.example.cocktailsapp.shared.Constants.MY_DRINK_ID
 import com.example.cocktailsapp.shared.business.DrinkDetailsItem
 
 class SearchAdapter(
@@ -58,12 +55,10 @@ class SearchAdapter(
             filterDrinkList.text = drink.strCategory
 
             itemView.setOnClickListener {
-                val bundle = bundleOf(
-                    MY_DRINK_ID to drink.idDrink
-                )
-                Navigation.findNavController(holder.itemView).navigate(
-                    R.id.action_searchFragment_to_drinkDetailsFragment,
-                    bundle
+                fragment.findNavController().navigate(
+                    SearchFragmentDirections.actionSearchFragmentToDrinkDetailsFragment(
+                        drink.idDrink
+                    )
                 )
             }
         }

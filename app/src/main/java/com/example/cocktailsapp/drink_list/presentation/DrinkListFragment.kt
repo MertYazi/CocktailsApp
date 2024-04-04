@@ -10,15 +10,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.cocktailsapp.R
 import com.example.cocktailsapp.databinding.FragmentDrinkListBinding
-import com.example.cocktailsapp.shared.Constants.MY_ALCOHOL
-import com.example.cocktailsapp.shared.Constants.MY_CATEGORY
-import com.example.cocktailsapp.shared.Constants.MY_GLASS
-import com.example.cocktailsapp.shared.Constants.MY_IMAGE
-import com.example.cocktailsapp.shared.Constants.MY_INGREDIENT
 import com.example.cocktailsapp.shared.business.DrinkItem
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -30,12 +26,6 @@ class DrinkListFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: DrinkListViewModel by viewModels()
-
-    private lateinit var category: String
-    private lateinit var glass: String
-    private lateinit var ingredient: String
-    private lateinit var alcohol: String
-    private lateinit var image: String
 
     private lateinit var adapter: DrinkListAdapter
 
@@ -50,38 +40,36 @@ class DrinkListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        arguments?.let {
-            if (it.getString(MY_CATEGORY) != null) {
-                category = it.getString(MY_CATEGORY)!!
-                adapter = DrinkListAdapter(this@DrinkListFragment, category)
-                setupRecyclerViewAdapter()
-                viewModel.getDrinksByCategory(category)
-                binding.tvDrinkListFragment.text = category
-            }
-            if (it.getString(MY_GLASS) != null) {
-                glass = it.getString(MY_GLASS)!!
-                adapter = DrinkListAdapter(this@DrinkListFragment, glass)
-                setupRecyclerViewAdapter()
-                viewModel.getDrinksByGlass(glass)
-                binding.tvDrinkListFragment.text = glass
-            }
-            if (it.getString(MY_INGREDIENT) != null) {
-                ingredient = it.getString(MY_INGREDIENT)!!
-                adapter = DrinkListAdapter(this@DrinkListFragment, ingredient)
-                setupRecyclerViewAdapter()
-                viewModel.getDrinksByIngredient(ingredient)
-                binding.tvDrinkListFragment.text = ingredient
-            }
-            if (it.getString(MY_ALCOHOL) != null) {
-                alcohol = it.getString(MY_ALCOHOL)!!
-                adapter = DrinkListAdapter(this@DrinkListFragment, alcohol)
-                setupRecyclerViewAdapter()
-                viewModel.getDrinksByAlcohol(alcohol)
-                binding.tvDrinkListFragment.text = alcohol
-            }
-            if (it.getString(MY_IMAGE) != null) {
-                image = it.getString(MY_IMAGE)!!
-            }
+        val args: DrinkListFragmentArgs by navArgs()
+        val category = args.myCategory
+        val glass = args.myGlass
+        val ingredient = args.myIngredient
+        val alcohol = args.myAlcohol
+        val image = args.myImage
+
+        if (category.isNotEmpty()) {
+            adapter = DrinkListAdapter(this@DrinkListFragment, category)
+            setupRecyclerViewAdapter()
+            viewModel.getDrinksByCategory(category)
+            binding.tvDrinkListFragment.text = category
+        }
+        if (glass.isNotEmpty()) {
+            adapter = DrinkListAdapter(this@DrinkListFragment, glass)
+            setupRecyclerViewAdapter()
+            viewModel.getDrinksByGlass(glass)
+            binding.tvDrinkListFragment.text = glass
+        }
+        if (ingredient.isNotEmpty()) {
+            adapter = DrinkListAdapter(this@DrinkListFragment, ingredient)
+            setupRecyclerViewAdapter()
+            viewModel.getDrinksByIngredient(ingredient)
+            binding.tvDrinkListFragment.text = ingredient
+        }
+        if (alcohol.isNotEmpty()) {
+            adapter = DrinkListAdapter(this@DrinkListFragment, alcohol)
+            setupRecyclerViewAdapter()
+            viewModel.getDrinksByAlcohol(alcohol)
+            binding.tvDrinkListFragment.text = alcohol
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
