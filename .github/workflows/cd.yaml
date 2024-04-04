@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Checkout the code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Run sample script
         run: echo CD started
@@ -20,7 +22,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - run: |
           download_url="https://download.oracle.com/java/17/latest/jdk-17_linux-x64_bin.tar.gz"
@@ -58,7 +62,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - run: |
           download_url="https://download.oracle.com/java/17/latest/jdk-17_linux-x64_bin.tar.gz"

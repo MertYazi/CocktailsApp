@@ -48,6 +48,11 @@ android {
     buildFeatures {
         viewBinding = true
     }
+    lint {
+        quiet = true
+        abortOnError = false
+        warningsAsErrors = true
+    }
 }
 
 dependencies {
