@@ -7,6 +7,17 @@ plugins {
     id("org.sonarqube")
 }
 
+sonar {
+    properties {
+        property("sonar.sources", "./src/main")
+        property("sonar.host.url", "https://sonarcloud.io")
+        property("sonar.organization", "MertYazi")
+        property("sonar.projectKey", "MertYazi_CocktailsApp")
+        property("sonar.projectName", "CocktailsApp")
+        property("sonar.language", "kotlin")
+    }
+}
+
 android {
     namespace = "com.example.cocktailsapp"
     compileSdk = 34
