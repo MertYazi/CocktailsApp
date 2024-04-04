@@ -19,7 +19,7 @@ jobs:
           check-latest: true
   
       - name: Run sample script
-        run: echo CI started
+        run: avdmanager list device
 
 #  lint:
 #    name: Perform lint check
