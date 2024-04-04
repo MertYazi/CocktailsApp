@@ -11,7 +11,7 @@ plugins {
     id("androidx.navigation.safeargs") version "2.5.0" apply false
     id("org.sonarqube") version "5.0.0.4638"
 }
-sonar {
+sonarqube {
     properties {
         property("sonar.projectKey", "MertYazi_CocktailsApp")
         property("sonar.organization", "MertYazi")
