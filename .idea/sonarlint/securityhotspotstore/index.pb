@@ -3273,3 +3273,5 @@ Q.idea/sonarlint/securityhotspotstore/4/8/489bd187c85a02845fcfe0286d19d2cf6c303b
 Q.idea/sonarlint/securityhotspotstore/9/9/9996dcd0db890a3000828c6e0fd7d2d5cc7b62ee,7/d/7db582e92b79752f5810e463943739cc08ec8a5d
 I
 .github/workflows/cd.yaml,c/e/ce17662d0ada74286c697071a553bf6cdfe6be2e
+o
+?app/src/androidTest/java/com/example/cocktailsapp/BaseUITest.kt,b/1/b1d3f5a659970fcc9f968b11aab69bb1bf1e32f7
