@@ -19,7 +19,7 @@ jobs:
           check-latest: true
   
       - name: Run sample script
-        run: avdmanager list device
+        run: echo CI started
 
 #  lint:
 #    name: Perform lint check
@@ -115,7 +115,7 @@ jobs:
           api-level: 34
           arch: x86_64
           target: google_apis
-          profile: Pixel 8
+          profile: Nexus 7
           disable-animations: true
           script: ./gradlew connectedCheck
   
