@@ -93,6 +93,7 @@ class ShoppingFeature: BaseUITest() {
         onView(
             withId(R.id.rv_shopping_fragment)
         ).waitUntilVisible(5000)
+        Thread.sleep(1000)
         onView(
             allOf(
                 withId(R.id.iv_item_shopping),
@@ -112,6 +113,10 @@ class ShoppingFeature: BaseUITest() {
     }
 
     private fun navigateToShoppingFragment() {
+        onView(
+            withId(R.id.rv_category_fragment)
+        ).waitUntilVisible(5000)
+        Thread.sleep(1000)
         onView(
             withId(R.id.shoppingFragment)
         )

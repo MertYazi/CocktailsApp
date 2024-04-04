@@ -93,6 +93,7 @@ class FavoritesFeature: BaseUITest() {
         onView(
             withId(R.id.rv_favorites_fragment)
         ).waitUntilVisible(5000)
+        Thread.sleep(1000)
         onView(
             allOf(
                 withId(R.id.iv_item_drink_list),
@@ -108,6 +109,10 @@ class FavoritesFeature: BaseUITest() {
     }
 
     private fun navigateToFavoritesFragment() {
+        onView(
+            withId(R.id.rv_category_fragment)
+        ).waitUntilVisible(5000)
+        Thread.sleep(1000)
         onView(
             withId(R.id.favoritesFragment)
         )

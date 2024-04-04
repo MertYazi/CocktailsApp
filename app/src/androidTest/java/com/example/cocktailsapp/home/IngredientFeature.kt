@@ -72,6 +72,7 @@ class IngredientFeature: BaseUITest() {
         onView(
             withId(R.id.rv_ingredient_fragment)
         ).waitUntilVisible(5000)
+        Thread.sleep(1000)
         onView(
             allOf(
                 withId(R.id.iv_item_ingredient),
@@ -87,6 +88,9 @@ class IngredientFeature: BaseUITest() {
     }
 
     private fun navigateToIngredientFragment() {
+        onView(
+            withId(R.id.rv_category_fragment)
+        ).waitUntilVisible(5000)
         for (i in 1..2) {
             onView(
                 withId(R.id.viewpager)

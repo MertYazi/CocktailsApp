@@ -73,6 +73,7 @@ class GlassFeature: BaseUITest() {
         onView(
             withId(R.id.rv_glass_fragment)
         ).waitUntilVisible(5000)
+        Thread.sleep(1000)
         onView(
             allOf(
                 withId(R.id.iv_item_glass),
@@ -88,6 +89,9 @@ class GlassFeature: BaseUITest() {
     }
 
     private fun navigateToGlassFragment() {
+        onView(
+            withId(R.id.rv_category_fragment)
+        ).waitUntilVisible(5000)
         onView(
             withId(R.id.viewpager)
         ).perform(swipeLeft())

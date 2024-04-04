@@ -73,6 +73,7 @@ class AlcoholFeature: BaseUITest() {
         onView(
             withId(R.id.rv_alcohol_fragment)
         ).waitUntilVisible(5000)
+        Thread.sleep(1000)
         onView(
             allOf(
                 withId(R.id.iv_item_alcohol),
