@@ -1,4 +1,4 @@
-# CocktailsApp
+# CocktailsApp [![Codacy Badge](https://app.codacy.com/project/badge/Grade/82842456aa0542ecb3081ee7a4daf5fb)](https://app.codacy.com/gh/MertYazi/CocktailsApp/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 
 It's an app to prepare your dream cocktails. Users can browse cocktails, sort them by category, glass, ingredient and to be alcoholic. They can save cocktails to favorites. Ingredients can be added to shopping list, so they can know which cocktail they wanna prepare and which ingredients needed they do not have at the moment.<br>
 &nbsp;<br>
