@@ -14,7 +14,11 @@ import com.example.cocktailsapp.shared.business.repository.CocktailsRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 
+/**
+ * Created by Mert on 2024
+ */
 open class FakeCocktailsRepositoryAPI: CocktailsRepository {
 
     private val shoppingItems = mutableListOf(
@@ -75,55 +79,50 @@ open class FakeCocktailsRepositoryAPI: CocktailsRepository {
     }
 
     override fun getCategories(): Flow<Result<CategoryList>> {
-        TODO("Not yet implemented")
+        return flowOf()
     }
 
     override fun getGlasses(): Flow<Result<GlassList>> {
-        TODO("Not yet implemented")
+        return flowOf()
     }
 
     override fun getAlcohols(): Flow<Result<AlcoholList>> {
-        TODO("Not yet implemented")
+        return flowOf()
     }
 
     override suspend fun getDrinksByCategory(category: String): Flow<Result<DrinkList>> {
-        TODO("Not yet implemented")
+        return flowOf()
     }
 
     override suspend fun getDrinksByGlass(glass: String): Flow<Result<DrinkList>> {
-        TODO("Not yet implemented")
+        return flowOf()
     }
 
     override suspend fun getDrinksByIngredient(ingredient: String): Flow<Result<DrinkList>> {
-        TODO("Not yet implemented")
+        return flowOf()
     }
 
     override suspend fun getDrinksByAlcohol(alcohol: String): Flow<Result<DrinkList>> {
-        TODO("Not yet implemented")
+        return flowOf()
     }
 
     override suspend fun getDrinksById(id: String): Flow<Result<DrinkDetailsList>> {
-        TODO("Not yet implemented")
+        return flowOf()
     }
 
+    override suspend fun addToFavorites(drink: DrinkDetailsItem) { }
 
-    override suspend fun addToFavorites(drink: DrinkDetailsItem) {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun removeFromFavorites(drinkId: String) {
-        TODO("Not yet implemented")
-    }
+    override suspend fun removeFromFavorites(drinkId: String) { }
 
     override fun getFavorites(): Flow<Result<DrinkDetailsList>> {
-        TODO("Not yet implemented")
+        return flowOf()
     }
 
     override suspend fun searchDrinks(drink: String): Flow<Result<DrinkDetailsList>> {
-        TODO("Not yet implemented")
+        return flowOf()
     }
 
     override fun getShopping(): Flow<Result<ShoppingList>> {
-        TODO("Not yet implemented")
+        return flowOf()
     }
 }

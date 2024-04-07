@@ -18,6 +18,9 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+/**
+ * Created by Mert on 2024
+ */
 @HiltViewModel
 class DrinkDetailsViewModel @Inject constructor(
     private val repository: CocktailsRepository,
@@ -31,6 +34,9 @@ class DrinkDetailsViewModel @Inject constructor(
     private val _viewStateDrinkDetails = MutableStateFlow<DrinkDetailsViewState>(DrinkDetailsViewState.Loading)
     val viewStateDrinkDetails = _viewStateDrinkDetails.asStateFlow()
 
+    /* Because of the API structure below part had to be done this long.
+     * That is one of the two part in whole project with one in the DrinkDetailsFragment.
+     * */
     fun getDrinkDetails(id: String) = viewModelScope.launch(dispatcher) {
         repository.getDrinksById(id).collect { result ->
             when(result) {
@@ -38,15 +44,8 @@ class DrinkDetailsViewModel @Inject constructor(
                     _viewStateDrinkDetails.value = DrinkDetailsViewState.Error
                 }
                 is Result.Success -> {
-                    val drinkDetails = DetailsViewState(
-                        result.data.drinks
-                    )
-                    drinkDetails.drinks[0].isFavorite =
-                        isDrinkInFavoritesUseCase.execute(result.data.drinks[0].idDrink).first()
-
-                    /* Because of the API structure below part had to be done this long.
-                     * That is two of the two part in whole project that is hideous.
-                     * Feel free to commit if you think there is shorter and better way. */
+                    val drinkDetails = DetailsViewState(result.data.drinks)
+                    drinkDetails.drinks[0].isFavorite = isDrinkInFavoritesUseCase.execute(result.data.drinks[0].idDrink).first()
                     if (result.data.drinks[0].strIngredient1.isNotEmpty()) {
                         drinkDetails.drinks[0].isShopping1 = isIngredientInShoppingUseCase.execute(
                             result.data.drinks[0].idDrink, result.data.drinks[0].strIngredient1).first() }
@@ -92,9 +91,7 @@ class DrinkDetailsViewModel @Inject constructor(
                     if (result.data.drinks[0].strIngredient15.isNotEmpty()) {
                         drinkDetails.drinks[0].isShopping15 = isIngredientInShoppingUseCase.execute(
                             result.data.drinks[0].idDrink, result.data.drinks[0].strIngredient15).first() }
-                    _viewStateDrinkDetails.value = DrinkDetailsViewState.ContentDrinkDetails(
-                        drinkDetails
-                    )
+                    _viewStateDrinkDetails.value = DrinkDetailsViewState.ContentDrinkDetails(drinkDetails)
                 }
             }
         }
@@ -112,8 +109,7 @@ class DrinkDetailsViewModel @Inject constructor(
             (currentViewState as? DrinkDetailsViewState.ContentDrinkDetails)?.let { content ->
                 _viewStateDrinkDetails.value = content.updateFavoriteDrink(
                     drink,
-                    isInFavorites
-                )
+                    isInFavorites)
             }
         }
     }
@@ -131,8 +127,7 @@ class DrinkDetailsViewModel @Inject constructor(
                 _viewStateDrinkDetails.value = content.updateShoppingItem(
                     drink,
                     shoppingItem.ingredientPosition,
-                    isInShopping
-                )
+                    isInShopping)
             }
         }
     }

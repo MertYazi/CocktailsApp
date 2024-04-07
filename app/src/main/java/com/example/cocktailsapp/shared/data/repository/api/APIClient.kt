@@ -6,6 +6,9 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+/**
+ * Created by Mert on 2024
+ */
 class APIClient {
     companion object {
         fun getService(): CocktailsService {

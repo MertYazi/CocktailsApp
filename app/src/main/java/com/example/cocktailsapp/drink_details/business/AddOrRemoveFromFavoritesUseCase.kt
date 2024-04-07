@@ -4,6 +4,9 @@ import com.example.cocktailsapp.shared.business.repository.CocktailsRepository
 import com.example.cocktailsapp.drink_details.presentation.DetailsViewState
 import javax.inject.Inject
 
+/**
+ * Created by Mert on 2024
+ */
 class AddOrRemoveFromFavoritesUseCase @Inject constructor(
     private val isDrinkInFavoritesUseCase: IsDrinkInFavoritesUseCase,
     private val repository: CocktailsRepository

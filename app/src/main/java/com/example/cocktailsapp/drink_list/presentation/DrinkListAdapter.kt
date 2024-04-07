@@ -10,6 +10,9 @@ import com.bumptech.glide.Glide
 import com.example.cocktailsapp.databinding.ItemDrinkListBinding
 import com.example.cocktailsapp.shared.business.DrinkItem
 
+/**
+ * Created by Mert on 2024
+ */
 class DrinkListAdapter(
     private val fragment: DrinkListFragment,
     private val filter: String
@@ -54,13 +57,10 @@ class DrinkListAdapter(
                 .into(imageDrinkList)
             nameDrinkList.text = drink.strDrink
             filterDrinkList.text = filter
-
             itemView.setOnClickListener {
                 fragment.findNavController().navigate(
                     DrinkListFragmentDirections.actionDrinkListFragmentToDrinkDetailsFragment(
-                        drink.idDrink
-                    )
-                )
+                        drink.idDrink))
             }
         }
     }

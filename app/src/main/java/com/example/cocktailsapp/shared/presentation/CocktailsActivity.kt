@@ -11,6 +11,9 @@ import com.example.cocktailsapp.databinding.ActivityCocktailsBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
+/**
+ * Created by Mert on 2024
+ */
 @AndroidEntryPoint
 class CocktailsActivity : AppCompatActivity() {
 

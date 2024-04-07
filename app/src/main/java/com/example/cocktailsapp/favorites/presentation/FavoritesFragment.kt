@@ -17,6 +17,9 @@ import com.example.cocktailsapp.databinding.FragmentFavoritesBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+/**
+ * Created by Mert on 2024
+ */
 @AndroidEntryPoint
 class FavoritesFragment : Fragment() {
 

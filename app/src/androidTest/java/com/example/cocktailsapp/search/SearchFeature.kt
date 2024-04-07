@@ -18,6 +18,9 @@ import org.hamcrest.Matchers.allOf
 import org.junit.Rule
 import org.junit.Test
 
+/**
+ * Created by Mert on 2024
+ */
 class SearchFeature: BaseUITest() {
 
     val mActivityRule = ActivityTestRule(CocktailsActivity::class.java)

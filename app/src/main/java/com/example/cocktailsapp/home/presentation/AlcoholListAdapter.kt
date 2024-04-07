@@ -10,6 +10,9 @@ import com.bumptech.glide.Glide
 import com.example.cocktailsapp.databinding.ItemAlcoholBinding
 import com.example.cocktailsapp.home.business.AlcoholItem
 
+/**
+ * Created by Mert on 2024
+ */
 class AlcoholListAdapter(
     private val fragment: AlcoholFragment
 ): RecyclerView.Adapter<AlcoholListAdapter.ViewHolder>() {

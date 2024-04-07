@@ -5,6 +5,9 @@ import com.example.cocktailsapp.drink_details.business.IsIngredientInShoppingUse
 import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
+/**
+ * Created by Mert on 2024
+ */
 class AddOrRemoveFromShoppingUseCase @Inject constructor(
     private val isIngredientInShoppingUseCase: IsIngredientInShoppingUseCase,
     private val repository: CocktailsRepository

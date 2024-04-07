@@ -12,6 +12,9 @@ import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
 
+/**
+ * Created by Mert on 2024
+ */
 @ExperimentalCoroutinesApi
 class AddOrRemoveFromShoppingUseCaseShould {
 
@@ -19,6 +22,8 @@ class AddOrRemoveFromShoppingUseCaseShould {
     private val cocktailsRepository = mock<CocktailsRepository>()
     private lateinit var useCase: AddOrRemoveFromShoppingUseCase
     private lateinit var shoppingItem: ShoppingItem
+    private val drinkId = "1234"
+    private val drinkName = "Vodka"
 
     @Before
     fun setup(){
@@ -28,13 +33,13 @@ class AddOrRemoveFromShoppingUseCaseShould {
                 cocktailsRepository
             )
         shoppingItem = ShoppingItem()
-        shoppingItem.drinkId = "1234"
-        shoppingItem.ingredientName = "Vodka"
+        shoppingItem.drinkId = drinkId
+        shoppingItem.ingredientName = drinkName
     }
 
     @Test
     fun callAddMethodWhenIngredientIsNotInShopping() = runBlocking {
-        whenever(isIngredientInShoppingUseCase.execute("1234", "Vodka")).thenReturn(
+        whenever(isIngredientInShoppingUseCase.execute(drinkId, drinkName)).thenReturn(
             flowOf(false)
         )
         useCase.execute(
@@ -47,7 +52,7 @@ class AddOrRemoveFromShoppingUseCaseShould {
 
     @Test
     fun callRemoveMethodWhenIngredientIsInShopping() = runBlocking {
-        whenever(isIngredientInShoppingUseCase.execute("1234", "Vodka")).thenReturn(
+        whenever(isIngredientInShoppingUseCase.execute(drinkId, drinkName)).thenReturn(
             flowOf(true)
         )
         useCase.execute(

@@ -20,6 +20,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.util.stream.Collectors
 
+/**
+ * Created by Mert on 2024
+ */
 @AndroidEntryPoint
 class ShoppingFragment : Fragment() {
 

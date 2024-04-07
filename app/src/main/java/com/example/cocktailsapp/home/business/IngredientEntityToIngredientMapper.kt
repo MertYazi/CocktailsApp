@@ -3,6 +3,9 @@ package com.example.cocktailsapp.home.business
 import com.example.cocktailsapp.home.data.IngredientListEntity
 import javax.inject.Inject
 
+/**
+ * Created by Mert on 2024
+ */
 class IngredientEntityToIngredientMapper @Inject constructor(
 ): Function1<IngredientListEntity, IngredientList> {
 
@@ -13,7 +16,7 @@ class IngredientEntityToIngredientMapper @Inject constructor(
                     it.strIngredient1,
                     ""
                 )
-            } as ArrayList<IngredientItem> ?: arrayListOf()
+            } as ArrayList<IngredientItem>
         )
     }
 }

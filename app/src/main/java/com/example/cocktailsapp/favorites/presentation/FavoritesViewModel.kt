@@ -12,6 +12,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+/**
+ * Created by Mert on 2024
+ */
 @HiltViewModel
 class FavoritesViewModel @Inject constructor(
     private val repository: CocktailsRepository,

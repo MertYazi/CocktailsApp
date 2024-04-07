@@ -10,6 +10,9 @@ import com.bumptech.glide.Glide
 import com.example.cocktailsapp.databinding.ItemDrinkListBinding
 import com.example.cocktailsapp.shared.business.DrinkDetailsItem
 
+/**
+ * Created by Mert on 2024
+ */
 class SearchAdapter(
     private val fragment: SearchFragment
 ): RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
@@ -53,15 +56,11 @@ class SearchAdapter(
                 .into(imageDrinkList)
             nameDrinkList.text = drink.strDrink
             filterDrinkList.text = drink.strCategory
-
             itemView.setOnClickListener {
                 fragment.findNavController().navigate(
-                    SearchFragmentDirections.actionSearchFragmentToDrinkDetailsFragment(
-                        drink.idDrink
-                    )
+                    SearchFragmentDirections.actionSearchFragmentToDrinkDetailsFragment(drink.idDrink)
                 )
             }
         }
     }
-
 }

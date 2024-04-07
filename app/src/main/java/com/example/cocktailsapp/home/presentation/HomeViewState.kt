@@ -1,5 +1,8 @@
 package com.example.cocktailsapp.home.presentation
 
+/**
+ * Created by Mert on 2024
+ */
 sealed class HomeViewState {
     object Loading: HomeViewState()
     object Error: HomeViewState()
