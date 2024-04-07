@@ -1,6 +1,8 @@
 package com.example.cocktailsapp.drink_details.presentation
 
-
+/**
+ * Created by Mert on 2024
+ */
 sealed class DrinkDetailsViewState {
 
     object Loading: DrinkDetailsViewState()

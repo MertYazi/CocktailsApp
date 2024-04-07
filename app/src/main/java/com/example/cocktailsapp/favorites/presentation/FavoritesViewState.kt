@@ -1,5 +1,8 @@
 package com.example.cocktailsapp.favorites.presentation
 
+/**
+ * Created by Mert on 2024
+ */
 
 sealed class FavoritesViewState {
 

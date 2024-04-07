@@ -8,6 +8,9 @@ import org.junit.Test
 import junit.framework.TestCase.assertEquals
 import org.junit.Before
 
+/**
+ * Created by Mert on 2024
+ */
 @ExperimentalCoroutinesApi
 class DrinkDetailsEntityToDrinkDetailsMapperShould {
 
@@ -21,61 +24,58 @@ class DrinkDetailsEntityToDrinkDetailsMapperShould {
     @Before
     fun setup() {
         detailsEntity = DrinkDetailsListEntity(
-            listOf(
-                DrinkDetailsItemEntity(
-                    "dateModified",
-                    "idDrink",
-                    "strAlcoholic",
-                    "strCategory",
-                    "strCreativeCommonsConfirmed",
-                    "strDrink",
-                    "strDrinkAlternate",
-                    "strDrinkThumb",
-                    "strGlass",
-                    "strIBA",
-                    "strImageAttribution",
-                    "strImageSource",
-                    " strIngredient1",
-                    "strIngredient10",
-                    "strIngredient11",
-                    "strIngredient12",
-                    "strIngredient13",
-                    "strIngredient14",
-                    "strIngredient15",
-                    "strIngredient2",
-                    "strIngredient3",
-                    "strIngredient4",
-                    "strIngredient5",
-                    "strIngredient6",
-                    "strIngredient7",
-                    "strIngredient8",
-                    "strIngredient9",
-                    "strInstructions",
-                    "strInstructionsDE",
-                    "strInstructionsES",
-                    "strInstructionsFR",
-                    "strInstructionsIT",
-                    "strInstructionsZHHANS",
-                    "strInstructionsZHHANT",
-                    "strMeasure1",
-                    "strMeasure10",
-                    "strMeasure11",
-                    "strMeasure12",
-                    "strMeasure13",
-                    "strMeasure14",
-                    "strMeasure15",
-                    "strMeasure2",
-                    "strMeasure3",
-                    "strMeasure4",
-                    "strMeasure5",
-                    "strMeasure6",
-                    "strMeasure7",
-                    "strMeasure8",
-                    "strMeasure9",
-                    "strTags",
-                    "strVideo"
-                )
-            )
+            listOf(DrinkDetailsItemEntity(
+                "dateModified",
+                "idDrink",
+                "strAlcoholic",
+                "strCategory",
+                "strCreativeCommonsConfirmed",
+                "strDrink",
+                "strDrinkAlternate",
+                "strDrinkThumb",
+                "strGlass",
+                "strIBA",
+                "strImageAttribution",
+                "strImageSource",
+                " strIngredient1",
+                "strIngredient10",
+                "strIngredient11",
+                "strIngredient12",
+                "strIngredient13",
+                "strIngredient14",
+                "strIngredient15",
+                "strIngredient2",
+                "strIngredient3",
+                "strIngredient4",
+                "strIngredient5",
+                "strIngredient6",
+                "strIngredient7",
+                "strIngredient8",
+                "strIngredient9",
+                "strInstructions",
+                "strInstructionsDE",
+                "strInstructionsES",
+                "strInstructionsFR",
+                "strInstructionsIT",
+                "strInstructionsZHHANS",
+                "strInstructionsZHHANT",
+                "strMeasure1",
+                "strMeasure10",
+                "strMeasure11",
+                "strMeasure12",
+                "strMeasure13",
+                "strMeasure14",
+                "strMeasure15",
+                "strMeasure2",
+                "strMeasure3",
+                "strMeasure4",
+                "strMeasure5",
+                "strMeasure6",
+                "strMeasure7",
+                "strMeasure8",
+                "strMeasure9",
+                "strTags",
+                "strVideo"))
         )
         mapper = DrinkDetailsEntityToDrinkDetailsMapper()
         details = mapper.invoke(detailsEntity)

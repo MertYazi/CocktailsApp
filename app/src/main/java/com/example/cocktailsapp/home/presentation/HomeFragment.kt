@@ -15,6 +15,9 @@ import com.example.cocktailsapp.R
 import com.example.cocktailsapp.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
 
+/**
+ * Created by Mert on 2024
+ */
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
 

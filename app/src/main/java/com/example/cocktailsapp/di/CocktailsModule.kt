@@ -18,6 +18,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import okhttp3.OkHttpClient
 
+/**
+ * Created by Mert on 2024
+ */
+
 val client = OkHttpClient()
 val idlingResource = OkHttp3IdlingResource.create("okhttp", client)
 

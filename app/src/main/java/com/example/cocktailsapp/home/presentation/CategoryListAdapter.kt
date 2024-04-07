@@ -10,6 +10,9 @@ import com.bumptech.glide.Glide
 import com.example.cocktailsapp.databinding.ItemCategoryBinding
 import com.example.cocktailsapp.home.business.CategoryItem
 
+/**
+ * Created by Mert on 2024
+ */
 class CategoryListAdapter(
     private val fragment: CategoryFragment
 ): RecyclerView.Adapter<CategoryListAdapter.ViewHolder>() {

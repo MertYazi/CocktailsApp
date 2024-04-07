@@ -1,5 +1,8 @@
 package com.example.cocktailsapp.shared.business
 
+/**
+ * Created by Mert on 2024
+ */
 data class DrinkDetailsItem(
     val dateModified: String = "",
     var idDrink: String = "",

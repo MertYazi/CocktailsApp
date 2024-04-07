@@ -10,6 +10,9 @@ import com.bumptech.glide.Glide
 import com.example.cocktailsapp.databinding.ItemDrinkListBinding
 import com.example.cocktailsapp.shared.business.DrinkDetailsItem
 
+/**
+ * Created by Mert on 2024
+ */
 class FavoritesAdapter(
     private val fragment: FavoritesFragment
 ): RecyclerView.Adapter<FavoritesAdapter.ViewHolder>() {

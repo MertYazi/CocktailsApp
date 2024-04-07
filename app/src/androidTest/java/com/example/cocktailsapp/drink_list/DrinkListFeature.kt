@@ -16,6 +16,9 @@ import org.hamcrest.Matchers.allOf
 import org.junit.Rule
 import org.junit.Test
 
+/**
+ * Created by Mert on 2024
+ */
 class DrinkListFeature: BaseUITest() {
 
     val mActivityRule = ActivityTestRule(CocktailsActivity::class.java)
@@ -24,201 +27,37 @@ class DrinkListFeature: BaseUITest() {
     @Test
     fun displaysListOfCocktailsComesFromCategory() {
         navigateToDrinkListFragmentFromCategory()
-
-        onView(
-            withId(R.id.rv_drink_list_fragment)
-        ).waitUntilVisible(5000)
-        Thread.sleep(1000)
-
-        assertRecyclerViewItemCount(R.id.rv_drink_list_fragment, 100)
-
-        onView(
-            allOf(
-                withId(R.id.tv_item_name_drink_list),
-                isDescendantOfA(nthChildOf(withId(R.id.rv_drink_list_fragment), 0))
-            )
-        )
-            .check(matches(withText("3-MILE LONG ISLAND ICED TEA")))
-            .check(matches(isDisplayed()))
-
-        onView(
-            allOf(
-                withId(R.id.tv_item_filter_drink_list),
-                isDescendantOfA(nthChildOf(withId(R.id.rv_drink_list_fragment), 0))
-            )
-        )
-            .check(matches(withText("Ordinary Drink")))
-            .check(matches(isDisplayed()))
-
-        onView(
-            allOf(
-                withId(R.id.iv_item_drink_list),
-                isDescendantOfA(nthChildOf(withId(R.id.rv_drink_list_fragment), 0))
-            )
-        )
-            .check(matches(isDisplayed()))
-
-        onView(
-            withId(R.id.tv_drink_list_fragment)
-        )
-            .check(matches(withText("Ordinary Drink")))
-            .check(matches(isDisplayed()))
-
-        onView(
-            withId(R.id.tv_count_drink_list_fragment)
-        )
-            .check(matches(withText("100 Cocktails")))
-            .check(matches(isDisplayed()))
+        checkDrinkRelatedFields(
+            "3-MILE LONG ISLAND ICED TEA",
+            "Ordinary Drink",
+            "100 Cocktails")
     }
 
     @Test
     fun displaysListOfCocktailsComesFromGlass() {
         navigateToDrinkListFragmentFromGlass()
-
-        onView(
-            withId(R.id.rv_drink_list_fragment)
-        ).waitUntilVisible(5000)
-        Thread.sleep(1000)
-
-        assertRecyclerViewItemCount(R.id.rv_drink_list_fragment, 7)
-
-        onView(
-            allOf(
-                withId(R.id.tv_item_name_drink_list),
-                isDescendantOfA(nthChildOf(withId(R.id.rv_drink_list_fragment), 0))
-            )
-        )
-            .check(matches(withText("A.D.M. (AFTER DINNER MINT)")))
-            .check(matches(isDisplayed()))
-
-        onView(
-            allOf(
-                withId(R.id.tv_item_filter_drink_list),
-                isDescendantOfA(nthChildOf(withId(R.id.rv_drink_list_fragment), 0))
-            )
-        )
-            .check(matches(withText("Irish coffee cup")))
-            .check(matches(isDisplayed()))
-
-        onView(
-            allOf(
-                withId(R.id.iv_item_drink_list),
-                isDescendantOfA(nthChildOf(withId(R.id.rv_drink_list_fragment), 0))
-            )
-        )
-            .check(matches(isDisplayed()))
-
-        onView(
-            withId(R.id.tv_drink_list_fragment)
-        )
-            .check(matches(withText("Irish coffee cup")))
-            .check(matches(isDisplayed()))
-
-        onView(
-            withId(R.id.tv_count_drink_list_fragment)
-        )
-            .check(matches(withText("7 Cocktails")))
-            .check(matches(isDisplayed()))
+        checkDrinkRelatedFields(
+            "A.D.M. (AFTER DINNER MINT)",
+            "Irish coffee cup",
+            "7 Cocktails")
     }
 
     @Test
     fun displaysListOfCocktailsComesFromIngredient() {
         navigateToDrinkListFragmentFromIngredient()
-
-        onView(
-            withId(R.id.rv_drink_list_fragment)
-        ).waitUntilVisible(5000)
-        Thread.sleep(1000)
-
-        assertRecyclerViewItemCount(R.id.rv_drink_list_fragment, 44)
-
-        onView(
-            allOf(
-                withId(R.id.tv_item_name_drink_list),
-                isDescendantOfA(nthChildOf(withId(R.id.rv_drink_list_fragment), 0))
-            )
-        )
-            .check(matches(withText("151 FLORIDA BUSHWACKER")))
-            .check(matches(isDisplayed()))
-
-        onView(
-            allOf(
-                withId(R.id.tv_item_filter_drink_list),
-                isDescendantOfA(nthChildOf(withId(R.id.rv_drink_list_fragment), 0))
-            )
-        )
-            .check(matches(withText("Light rum")))
-            .check(matches(isDisplayed()))
-
-        onView(
-            allOf(
-                withId(R.id.iv_item_drink_list),
-                isDescendantOfA(nthChildOf(withId(R.id.rv_drink_list_fragment), 0))
-            )
-        )
-            .check(matches(isDisplayed()))
-
-        onView(
-            withId(R.id.tv_drink_list_fragment)
-        )
-            .check(matches(withText("Light rum")))
-            .check(matches(isDisplayed()))
-
-        onView(
-            withId(R.id.tv_count_drink_list_fragment)
-        )
-            .check(matches(withText("44 Cocktails")))
-            .check(matches(isDisplayed()))
+        checkDrinkRelatedFields(
+            "151 FLORIDA BUSHWACKER",
+            "Light rum",
+            "44 Cocktails")
     }
 
     @Test
     fun displaysListOfCocktailsComesFromAlcohol() {
         navigateToDrinkListFragmentFromAlcohol()
-
-        onView(
-            withId(R.id.rv_drink_list_fragment)
-        ).waitUntilVisible(5000)
-        Thread.sleep(1000)
-
-        assertRecyclerViewItemCount(R.id.rv_drink_list_fragment, 58)
-
-        onView(
-            allOf(
-                withId(R.id.tv_item_name_drink_list),
-                isDescendantOfA(nthChildOf(withId(R.id.rv_drink_list_fragment), 0))
-            )
-        )
-            .check(matches(withText("AFTERGLOW")))
-            .check(matches(isDisplayed()))
-
-        onView(
-            allOf(
-                withId(R.id.tv_item_filter_drink_list),
-                isDescendantOfA(nthChildOf(withId(R.id.rv_drink_list_fragment), 0))
-            )
-        )
-            .check(matches(withText("Non alcoholic")))
-            .check(matches(isDisplayed()))
-
-        onView(
-            allOf(
-                withId(R.id.iv_item_drink_list),
-                isDescendantOfA(nthChildOf(withId(R.id.rv_drink_list_fragment), 0))
-            )
-        )
-            .check(matches(isDisplayed()))
-
-        onView(
-            withId(R.id.tv_drink_list_fragment)
-        )
-            .check(matches(withText("Non alcoholic")))
-            .check(matches(isDisplayed()))
-
-        onView(
-            withId(R.id.tv_count_drink_list_fragment)
-        )
-            .check(matches(withText("58 Cocktails")))
-            .check(matches(isDisplayed()))
+        checkDrinkRelatedFields(
+            "AFTERGLOW",
+            "Non alcoholic",
+            "58 Cocktails")
     }
 
     /*@Test
@@ -259,6 +98,63 @@ class DrinkListFeature: BaseUITest() {
             withId(R.id.iv_drink_details)
         ).waitUntilVisible(5000)
         assertDisplayed(R.id.iv_drink_details)
+    }
+
+    private fun checkDrinkRelatedFields(name: String, filter: String, count: String) {
+        onView(
+            withId(R.id.rv_drink_list_fragment)
+        ).waitUntilVisible(5000)
+        Thread.sleep(1000)
+
+        when (count) {
+            "58 Cocktails" -> {
+                assertRecyclerViewItemCount(R.id.rv_drink_list_fragment, 58)
+            }
+            "44 Cocktails" -> {
+                assertRecyclerViewItemCount(R.id.rv_drink_list_fragment, 44)
+            }
+            "7 Cocktails" -> {
+                assertRecyclerViewItemCount(R.id.rv_drink_list_fragment, 7)
+            }
+        }
+
+        onView(
+            allOf(
+                withId(R.id.tv_item_name_drink_list),
+                isDescendantOfA(nthChildOf(withId(R.id.rv_drink_list_fragment), 0))
+            )
+        )
+            .check(matches(withText(name)))
+            .check(matches(isDisplayed()))
+
+        onView(
+            allOf(
+                withId(R.id.tv_item_filter_drink_list),
+                isDescendantOfA(nthChildOf(withId(R.id.rv_drink_list_fragment), 0))
+            )
+        )
+            .check(matches(withText(filter)))
+            .check(matches(isDisplayed()))
+
+        onView(
+            allOf(
+                withId(R.id.iv_item_drink_list),
+                isDescendantOfA(nthChildOf(withId(R.id.rv_drink_list_fragment), 0))
+            )
+        )
+            .check(matches(isDisplayed()))
+
+        onView(
+            withId(R.id.tv_drink_list_fragment)
+        )
+            .check(matches(withText(filter)))
+            .check(matches(isDisplayed()))
+
+        onView(
+            withId(R.id.tv_count_drink_list_fragment)
+        )
+            .check(matches(withText(count)))
+            .check(matches(isDisplayed()))
     }
 
     private fun navigateToDrinkListFragmentFromCategory() {

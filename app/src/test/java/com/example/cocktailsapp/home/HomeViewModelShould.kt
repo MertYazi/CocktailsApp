@@ -27,6 +27,9 @@ import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mockito
 
+/**
+ * Created by Mert on 2024
+ */
 @ExperimentalCoroutinesApi
 class HomeViewModelShould {
 

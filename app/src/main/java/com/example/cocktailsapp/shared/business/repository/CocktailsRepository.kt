@@ -12,6 +12,9 @@ import com.example.cocktailsapp.home.business.GlassList
 import com.example.cocktailsapp.home.business.IngredientList
 import kotlinx.coroutines.flow.Flow
 
+/**
+ * Created by Mert on 2024
+ */
 interface CocktailsRepository {
 
     fun getCategories(): Flow<Result<CategoryList>>

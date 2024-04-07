@@ -12,6 +12,9 @@ import com.example.cocktailsapp.home.business.IngredientItem
 import com.example.cocktailsapp.shared.Constants.INGREDIENT_EXTENSION
 import com.example.cocktailsapp.shared.Constants.INGREDIENT_URL
 
+/**
+ * Created by Mert on 2024
+ */
 class IngredientListAdapter(
     private val fragment: IngredientFragment
 ): RecyclerView.Adapter<IngredientListAdapter.ViewHolder>() {

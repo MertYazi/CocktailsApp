@@ -10,6 +10,9 @@ import com.bumptech.glide.Glide
 import com.example.cocktailsapp.databinding.ItemGlassBinding
 import com.example.cocktailsapp.home.business.GlassItem
 
+/**
+ * Created by Mert on 2024
+ */
 class GlassListAdapter(
     private val fragment: GlassFragment
 ): RecyclerView.Adapter<GlassListAdapter.ViewHolder>() {

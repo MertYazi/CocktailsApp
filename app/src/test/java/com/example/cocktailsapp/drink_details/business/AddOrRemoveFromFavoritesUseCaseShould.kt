@@ -13,6 +13,9 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 
+/**
+ * Created by Mert on 2024
+ */
 @ExperimentalCoroutinesApi
 class AddOrRemoveFromFavoritesUseCaseShould {
 

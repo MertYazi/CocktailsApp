@@ -32,6 +32,9 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+/**
+ * Created by Mert on 2024
+ */
 @AndroidEntryPoint
 class DrinkDetailsFragment : Fragment() {
 
@@ -72,7 +75,8 @@ class DrinkDetailsFragment : Fragment() {
                             binding.loader.visibility = View.GONE
                             mShoppingIngredientsList = arrayListOf()
                             mDrinkDetails = drinkDetails.drinks
-                            populateUI()
+                            loadDataAndPalette()
+                            populateShoppingItemsFirstFive()
                         }
                         is DrinkDetailsViewState.Error -> {
                             binding.loader.visibility = View.GONE
@@ -94,6 +98,15 @@ class DrinkDetailsFragment : Fragment() {
         }
     }
 
+    private fun createShoppingItem(): ShoppingItem {
+        val shoppingItem = ShoppingItem()
+        shoppingItem.drinkId = mDrinkDetails.drinks[0].idDrink
+        shoppingItem.drinkName = mDrinkDetails.drinks[0].strDrink
+        shoppingItem.drinkCategory = mDrinkDetails.drinks[0].strCategory
+        shoppingItem.drinkAlcoholic = mDrinkDetails.drinks[0].strAlcoholic
+        return shoppingItem
+    }
+
     private fun setupBottomSheet() {
         val bottomSheet = binding.bsDrinkDetails
         val mBottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
@@ -101,7 +114,7 @@ class DrinkDetailsFragment : Fragment() {
         mBottomSheetBehavior.state = BottomSheetBehavior.STATE_HALF_EXPANDED
     }
 
-    private fun populateUI() {
+    private fun loadDataAndPalette() {
         if (mDrinkDetails.drinks[0].isFavorite) {
             Glide.with(this)
                 .load(R.drawable.ic_favorite_selected)
@@ -117,7 +130,7 @@ class DrinkDetailsFragment : Fragment() {
             .load(mDrinkDetails.drinks[0].strDrinkThumb)
             .listener(object : RequestListener<Drawable> {
                 override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>,
-                    isFirstResource: Boolean
+                                          isFirstResource: Boolean
                 ): Boolean {
                     return false
                 }
@@ -125,7 +138,7 @@ class DrinkDetailsFragment : Fragment() {
                 @RequiresApi(Build.VERSION_CODES.Q)
                 @SuppressLint("UseCompatLoadingForDrawables", "ResourceAsColor")
                 override fun onResourceReady(resource: Drawable, model: Any, target: Target<Drawable>?,
-                    dataSource: DataSource, isFirstResource: Boolean
+                                             dataSource: DataSource, isFirstResource: Boolean
                 ): Boolean {
                     Palette.from(resource.toBitmap()).generate { palette ->
                         palette?.let {
@@ -147,222 +160,166 @@ class DrinkDetailsFragment : Fragment() {
         binding.tvNameDrinkDetails.text = mDrinkDetails.drinks[0].strDrink
         binding.tvFilterDrinkDetails.text = mDrinkDetails.drinks[0].strCategory
         binding.tvInstructionsDrinkDetails.text = mDrinkDetails.drinks[0].strInstructions
+    }
 
-        /* Because of the API structure below part had to be done this long.
-         * That is one of the two part in whole project that is hideous.
-         * Feel free to commit if you think there is shorter and better way. */
+    /* Because of the API structure below part had to be done this long.
+     * That is one of the two part in whole project with one in the DrinkDetailsViewModel.
+     * */
+    private fun populateShoppingItemsFirstFive() {
         if (mDrinkDetails.drinks[0].strIngredient1.isNotEmpty()) {
-            mShoppingIngredientsList.add(
-                ShoppingItem(
-                    mDrinkDetails.drinks[0].idDrink,
-                    mDrinkDetails.drinks[0].strDrink,
-                    mDrinkDetails.drinks[0].strCategory,
-                    mDrinkDetails.drinks[0].strAlcoholic,
-                    mDrinkDetails.drinks[0].strIngredient1,
-                    mDrinkDetails.drinks[0].strMeasure1,
-                    "1",
-                    mDrinkDetails.drinks[0].isShopping1
-                )
-            )
+            val shoppingItem = createShoppingItem()
+            fillItemSpecificShoppingItemFields(
+                shoppingItem,
+                mDrinkDetails.drinks[0].strIngredient1,
+                mDrinkDetails.drinks[0].strMeasure1,
+                "1",
+                mDrinkDetails.drinks[0].isShopping1)
         }
         if (mDrinkDetails.drinks[0].strIngredient2.isNotEmpty()) {
-            mShoppingIngredientsList.add(
-                ShoppingItem(
-                    mDrinkDetails.drinks[0].idDrink,
-                    mDrinkDetails.drinks[0].strDrink,
-                    mDrinkDetails.drinks[0].strCategory,
-                    mDrinkDetails.drinks[0].strAlcoholic,
-                    mDrinkDetails.drinks[0].strIngredient2,
-                    mDrinkDetails.drinks[0].strMeasure2,
-                    "2",
-                    mDrinkDetails.drinks[0].isShopping2
-                )
-            )
+            val shoppingItem = createShoppingItem()
+            fillItemSpecificShoppingItemFields(
+                shoppingItem,
+                mDrinkDetails.drinks[0].strIngredient2,
+                mDrinkDetails.drinks[0].strMeasure2,
+                "2",
+                mDrinkDetails.drinks[0].isShopping2)
         }
         if (mDrinkDetails.drinks[0].strIngredient3.isNotEmpty()) {
-            mShoppingIngredientsList.add(
-                ShoppingItem(
-                    mDrinkDetails.drinks[0].idDrink,
-                    mDrinkDetails.drinks[0].strDrink,
-                    mDrinkDetails.drinks[0].strCategory,
-                    mDrinkDetails.drinks[0].strAlcoholic,
-                    mDrinkDetails.drinks[0].strIngredient3,
-                    mDrinkDetails.drinks[0].strMeasure3,
-                    "3",
-                    mDrinkDetails.drinks[0].isShopping3
-                )
-            )
+            val shoppingItem = createShoppingItem()
+            fillItemSpecificShoppingItemFields(
+                shoppingItem,
+                mDrinkDetails.drinks[0].strIngredient3,
+                mDrinkDetails.drinks[0].strMeasure3,
+                "3",
+                mDrinkDetails.drinks[0].isShopping3)
         }
         if (mDrinkDetails.drinks[0].strIngredient4.isNotEmpty()) {
-            mShoppingIngredientsList.add(
-                ShoppingItem(
-                    mDrinkDetails.drinks[0].idDrink,
-                    mDrinkDetails.drinks[0].strDrink,
-                    mDrinkDetails.drinks[0].strCategory,
-                    mDrinkDetails.drinks[0].strAlcoholic,
-                    mDrinkDetails.drinks[0].strIngredient4,
-                    mDrinkDetails.drinks[0].strMeasure4,
-                    "4",
-                    mDrinkDetails.drinks[0].isShopping4
-                )
-            )
+            val shoppingItem = createShoppingItem()
+            fillItemSpecificShoppingItemFields(
+                shoppingItem,
+                mDrinkDetails.drinks[0].strIngredient4,
+                mDrinkDetails.drinks[0].strMeasure4,
+                "4",
+                mDrinkDetails.drinks[0].isShopping4)
         }
         if (mDrinkDetails.drinks[0].strIngredient5.isNotEmpty()) {
-            mShoppingIngredientsList.add(
-                ShoppingItem(
-                    mDrinkDetails.drinks[0].idDrink,
-                    mDrinkDetails.drinks[0].strDrink,
-                    mDrinkDetails.drinks[0].strCategory,
-                    mDrinkDetails.drinks[0].strAlcoholic,
-                    mDrinkDetails.drinks[0].strIngredient5,
-                    mDrinkDetails.drinks[0].strMeasure5,
-                    "5",
-                    mDrinkDetails.drinks[0].isShopping5
-                )
-            )
+            val shoppingItem = createShoppingItem()
+            fillItemSpecificShoppingItemFields(
+                shoppingItem,
+                mDrinkDetails.drinks[0].strIngredient5,
+                mDrinkDetails.drinks[0].strMeasure5,
+                "5",
+                mDrinkDetails.drinks[0].isShopping5)
         }
+        populateShoppingItemsSecondFive()
+    }
+
+    private fun populateShoppingItemsSecondFive() {
         if (mDrinkDetails.drinks[0].strIngredient6.isNotEmpty()) {
-            mShoppingIngredientsList.add(
-                ShoppingItem(
-                    mDrinkDetails.drinks[0].idDrink,
-                    mDrinkDetails.drinks[0].strDrink,
-                    mDrinkDetails.drinks[0].strCategory,
-                    mDrinkDetails.drinks[0].strAlcoholic,
-                    mDrinkDetails.drinks[0].strIngredient6,
-                    mDrinkDetails.drinks[0].strMeasure6,
-                    "6",
-                    mDrinkDetails.drinks[0].isShopping6
-                )
-            )
+            val shoppingItem = createShoppingItem()
+            fillItemSpecificShoppingItemFields(
+                shoppingItem,
+                mDrinkDetails.drinks[0].strIngredient6,
+                mDrinkDetails.drinks[0].strMeasure6,
+                "6",
+                mDrinkDetails.drinks[0].isShopping6)
         }
         if (mDrinkDetails.drinks[0].strIngredient7.isNotEmpty()) {
-            mShoppingIngredientsList.add(
-                ShoppingItem(
-                    mDrinkDetails.drinks[0].idDrink,
-                    mDrinkDetails.drinks[0].strDrink,
-                    mDrinkDetails.drinks[0].strCategory,
-                    mDrinkDetails.drinks[0].strAlcoholic,
-                    mDrinkDetails.drinks[0].strIngredient7,
-                    mDrinkDetails.drinks[0].strMeasure7,
-                    "7",
-                    mDrinkDetails.drinks[0].isShopping7
-                )
-            )
+            val shoppingItem = createShoppingItem()
+            fillItemSpecificShoppingItemFields(
+                shoppingItem,
+                mDrinkDetails.drinks[0].strIngredient7,
+                mDrinkDetails.drinks[0].strMeasure7,
+                "7",
+                mDrinkDetails.drinks[0].isShopping7)
         }
         if (mDrinkDetails.drinks[0].strIngredient8.isNotEmpty()) {
-            mShoppingIngredientsList.add(
-                ShoppingItem(
-                    mDrinkDetails.drinks[0].idDrink,
-                    mDrinkDetails.drinks[0].strDrink,
-                    mDrinkDetails.drinks[0].strCategory,
-                    mDrinkDetails.drinks[0].strAlcoholic,
-                    mDrinkDetails.drinks[0].strIngredient8,
-                    mDrinkDetails.drinks[0].strMeasure8,
-                    "8",
-                    mDrinkDetails.drinks[0].isShopping8
-                )
-            )
+            val shoppingItem = createShoppingItem()
+            fillItemSpecificShoppingItemFields(
+                shoppingItem,
+                mDrinkDetails.drinks[0].strIngredient8,
+                mDrinkDetails.drinks[0].strMeasure8,
+                "8",
+                mDrinkDetails.drinks[0].isShopping8)
         }
         if (mDrinkDetails.drinks[0].strIngredient9.isNotEmpty()) {
-            mShoppingIngredientsList.add(
-                ShoppingItem(
-                    mDrinkDetails.drinks[0].idDrink,
-                    mDrinkDetails.drinks[0].strDrink,
-                    mDrinkDetails.drinks[0].strCategory,
-                    mDrinkDetails.drinks[0].strAlcoholic,
-                    mDrinkDetails.drinks[0].strIngredient9,
-                    mDrinkDetails.drinks[0].strMeasure9,
-                    "9",
-                    mDrinkDetails.drinks[0].isShopping9
-                )
-            )
+            val shoppingItem = createShoppingItem()
+            fillItemSpecificShoppingItemFields(
+                shoppingItem,
+                mDrinkDetails.drinks[0].strIngredient9,
+                mDrinkDetails.drinks[0].strMeasure9,
+                "9",
+                mDrinkDetails.drinks[0].isShopping9)
         }
         if (mDrinkDetails.drinks[0].strIngredient10.isNotEmpty()) {
-            mShoppingIngredientsList.add(
-                ShoppingItem(
-                    mDrinkDetails.drinks[0].idDrink,
-                    mDrinkDetails.drinks[0].strDrink,
-                    mDrinkDetails.drinks[0].strCategory,
-                    mDrinkDetails.drinks[0].strAlcoholic,
-                    mDrinkDetails.drinks[0].strIngredient10,
-                    mDrinkDetails.drinks[0].strMeasure10,
-                    "10",
-                    mDrinkDetails.drinks[0].isShopping10
-                )
-            )
+            val shoppingItem = createShoppingItem()
+            fillItemSpecificShoppingItemFields(
+                shoppingItem,
+                mDrinkDetails.drinks[0].strIngredient10,
+                mDrinkDetails.drinks[0].strMeasure10,
+                "10",
+                mDrinkDetails.drinks[0].isShopping10)
         }
+        populateShoppingItemsThirdFive()
+    }
+    private fun populateShoppingItemsThirdFive() {
         if (mDrinkDetails.drinks[0].strIngredient11.isNotEmpty()) {
-            mShoppingIngredientsList.add(
-                ShoppingItem(
-                    mDrinkDetails.drinks[0].idDrink,
-                    mDrinkDetails.drinks[0].strDrink,
-                    mDrinkDetails.drinks[0].strCategory,
-                    mDrinkDetails.drinks[0].strAlcoholic,
-                    mDrinkDetails.drinks[0].strIngredient11,
-                    mDrinkDetails.drinks[0].strMeasure11,
-                    "11",
-                    mDrinkDetails.drinks[0].isShopping11
-                )
-            )
+            val shoppingItem = createShoppingItem()
+            fillItemSpecificShoppingItemFields(
+                shoppingItem,
+                mDrinkDetails.drinks[0].strIngredient11,
+                mDrinkDetails.drinks[0].strMeasure11,
+                "11",
+                mDrinkDetails.drinks[0].isShopping11)
         }
         if (mDrinkDetails.drinks[0].strIngredient12.isNotEmpty()) {
-            mShoppingIngredientsList.add(
-                ShoppingItem(
-                    mDrinkDetails.drinks[0].idDrink,
-                    mDrinkDetails.drinks[0].strDrink,
-                    mDrinkDetails.drinks[0].strCategory,
-                    mDrinkDetails.drinks[0].strAlcoholic,
-                    mDrinkDetails.drinks[0].strIngredient12,
-                    mDrinkDetails.drinks[0].strMeasure12,
-                    "12",
-                    mDrinkDetails.drinks[0].isShopping12
-                )
-            )
+            val shoppingItem = createShoppingItem()
+            fillItemSpecificShoppingItemFields(
+                shoppingItem,
+                mDrinkDetails.drinks[0].strIngredient12,
+                mDrinkDetails.drinks[0].strMeasure12,
+                "12",
+                mDrinkDetails.drinks[0].isShopping12)
         }
         if (mDrinkDetails.drinks[0].strIngredient13.isNotEmpty()) {
-            mShoppingIngredientsList.add(
-                ShoppingItem(
-                    mDrinkDetails.drinks[0].idDrink,
-                    mDrinkDetails.drinks[0].strDrink,
-                    mDrinkDetails.drinks[0].strCategory,
-                    mDrinkDetails.drinks[0].strAlcoholic,
-                    mDrinkDetails.drinks[0].strIngredient13,
-                    mDrinkDetails.drinks[0].strMeasure13,
-                    "13",
-                    mDrinkDetails.drinks[0].isShopping13
-                )
-            )
+            val shoppingItem = createShoppingItem()
+            fillItemSpecificShoppingItemFields(
+                shoppingItem,
+                mDrinkDetails.drinks[0].strIngredient13,
+                mDrinkDetails.drinks[0].strMeasure13,
+                "13",
+                mDrinkDetails.drinks[0].isShopping13)
         }
         if (mDrinkDetails.drinks[0].strIngredient14.isNotEmpty()) {
-            mShoppingIngredientsList.add(
-                ShoppingItem(
-                    mDrinkDetails.drinks[0].idDrink,
-                    mDrinkDetails.drinks[0].strDrink,
-                    mDrinkDetails.drinks[0].strCategory,
-                    mDrinkDetails.drinks[0].strAlcoholic,
-                    mDrinkDetails.drinks[0].strIngredient14,
-                    mDrinkDetails.drinks[0].strMeasure14,
-                    "14",
-                    mDrinkDetails.drinks[0].isShopping14
-                )
-            )
+            val shoppingItem = createShoppingItem()
+            fillItemSpecificShoppingItemFields(
+                shoppingItem,
+                mDrinkDetails.drinks[0].strIngredient14,
+                mDrinkDetails.drinks[0].strMeasure14,
+                "14",
+                mDrinkDetails.drinks[0].isShopping14)
         }
         if (mDrinkDetails.drinks[0].strIngredient15.isNotEmpty()) {
-            mShoppingIngredientsList.add(
-                ShoppingItem(
-                    mDrinkDetails.drinks[0].idDrink,
-                    mDrinkDetails.drinks[0].strDrink,
-                    mDrinkDetails.drinks[0].strCategory,
-                    mDrinkDetails.drinks[0].strAlcoholic,
-                    mDrinkDetails.drinks[0].strIngredient15,
-                    mDrinkDetails.drinks[0].strMeasure15,
-                    "15",
-                    mDrinkDetails.drinks[0].isShopping15
-                )
-            )
+            val shoppingItem = createShoppingItem()
+            fillItemSpecificShoppingItemFields(
+                shoppingItem,
+                mDrinkDetails.drinks[0].strIngredient15,
+                mDrinkDetails.drinks[0].strMeasure15,
+                "15",
+                mDrinkDetails.drinks[0].isShopping15)
         }
-
         setupRecyclerViewAdapter()
+    }
+
+    private fun fillItemSpecificShoppingItemFields(
+        shoppingItem: ShoppingItem, ingredientName: String,
+        ingredientMeasure: String, ingredientPosition: String,
+        isAddedToShopping: Boolean) {
+        shoppingItem.ingredientName = ingredientName
+        shoppingItem.ingredientMeasure = ingredientMeasure
+        shoppingItem.ingredientPosition = ingredientPosition
+        shoppingItem.isAddedToShopping = isAddedToShopping
+        mShoppingIngredientsList.add(shoppingItem)
     }
 
     private fun setupRecyclerViewAdapter() {

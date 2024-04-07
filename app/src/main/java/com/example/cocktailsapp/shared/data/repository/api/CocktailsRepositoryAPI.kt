@@ -24,6 +24,7 @@ import com.example.cocktailsapp.shared.Constants.DB_SHOPPING
 import com.example.cocktailsapp.shared.Constants.DRINK_ID
 import com.example.cocktailsapp.shared.business.repository.CocktailsRepository
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
@@ -33,12 +34,16 @@ import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
+/**
+ * Created by Mert on 2024
+ */
 class CocktailsRepositoryAPI @Inject constructor(
     private val service: CocktailsService,
     private val database: FirebaseFirestore,
     private val ingredientEntityToIngredientMapper: IngredientEntityToIngredientMapper,
     private val drinkListEntityToDrinkListMapper: DrinkListEntityToDrinkListMapper,
-    private val drinkDetailsEntityToDrinkDetailsMapper: DrinkDetailsEntityToDrinkDetailsMapper
+    private val drinkDetailsEntityToDrinkDetailsMapper: DrinkDetailsEntityToDrinkDetailsMapper,
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ): CocktailsRepository {
     /* With callbackFlow we're no longer need of a suspend keyword.
      * With snapshotListener viewModel will consume remote data changes automatically. */
@@ -59,7 +64,7 @@ class CocktailsRepositoryAPI @Inject constructor(
         awaitClose {
             snapshotListener.remove()
         }
-    }.flowOn(Dispatchers.IO)
+    }.flowOn(dispatcher)
 
     override fun getGlasses() = callbackFlow {
         val snapshotListener = database.collection(DB_GLASSES)
@@ -78,7 +83,7 @@ class CocktailsRepositoryAPI @Inject constructor(
         awaitClose {
             snapshotListener.remove()
         }
-    }.flowOn(Dispatchers.IO)
+    }.flowOn(dispatcher)
 
     override suspend fun getIngredients() = flow {
         try {
@@ -93,7 +98,7 @@ class CocktailsRepositoryAPI @Inject constructor(
             Log.e("NetworkLayerIngredient", exception.message, exception)
             emit(Result.Error(exception))
         }
-    }.flowOn(Dispatchers.IO)
+    }.flowOn(dispatcher)
 
     override fun getAlcohols() = callbackFlow {
         val snapshotListener = database.collection(DB_ALCOHOLS)
@@ -112,7 +117,7 @@ class CocktailsRepositoryAPI @Inject constructor(
         awaitClose {
             snapshotListener.remove()
         }
-    }.flowOn(Dispatchers.IO)
+    }.flowOn(dispatcher)
 
     override suspend fun getDrinksByCategory(category: String) = flow {
         try {
@@ -127,7 +132,7 @@ class CocktailsRepositoryAPI @Inject constructor(
             Log.e("NetworkLayerDrinkByCategory", exception.message, exception)
             emit(Result.Error(exception))
         }
-    }.flowOn(Dispatchers.IO)
+    }.flowOn(dispatcher)
 
     override suspend fun getDrinksByGlass(glass: String) = flow {
         try {
@@ -142,7 +147,7 @@ class CocktailsRepositoryAPI @Inject constructor(
             Log.e("NetworkLayerDrinkByGlass", exception.message, exception)
             emit(Result.Error(exception))
         }
-    }.flowOn(Dispatchers.IO)
+    }.flowOn(dispatcher)
 
     override suspend fun getDrinksByIngredient(ingredient: String) = flow {
         try {
@@ -157,7 +162,7 @@ class CocktailsRepositoryAPI @Inject constructor(
             Log.e("NetworkLayerDrinkByIngredient", exception.message, exception)
             emit(Result.Error(exception))
         }
-    }.flowOn(Dispatchers.IO)
+    }.flowOn(dispatcher)
 
     override suspend fun getDrinksByAlcohol(alcohol: String) = flow {
         try {
@@ -172,7 +177,7 @@ class CocktailsRepositoryAPI @Inject constructor(
             Log.e("NetworkLayerDrinkByAlcohol", exception.message, exception)
             emit(Result.Error(exception))
         }
-    }.flowOn(Dispatchers.IO)
+    }.flowOn(dispatcher)
 
     override suspend fun getDrinksById(id: String) = flow {
         try {
@@ -187,7 +192,7 @@ class CocktailsRepositoryAPI @Inject constructor(
             Log.e("NetworkLayerDrinkById", exception.message, exception)
             emit(Result.Error(exception))
         }
-    }.flowOn(Dispatchers.IO)
+    }.flowOn(dispatcher)
 
     override suspend fun isFavorite(drinkId: String) = flow {
         val document = database.collection(DB_FAVORITES)
@@ -200,10 +205,10 @@ class CocktailsRepositoryAPI @Inject constructor(
             val drink: DrinkDetailsItem = document.documents[0].toObject(DrinkDetailsItem::class.java)!!
             emit(drink.isFavorite)
         }
-    }.flowOn(Dispatchers.IO)
+    }.flowOn(dispatcher)
 
     override suspend fun addToFavorites(drink: DrinkDetailsItem) {
-        return withContext(Dispatchers.IO) {
+        return withContext(dispatcher) {
             drink.isFavorite = true
             database.collection(DB_FAVORITES)
                 .document(drink.idDrink)
@@ -213,7 +218,7 @@ class CocktailsRepositoryAPI @Inject constructor(
     }
 
     override suspend fun removeFromFavorites(drinkId: String) {
-        return withContext(Dispatchers.IO) {
+        return withContext(dispatcher) {
             database.collection(DB_FAVORITES)
                 .document(drinkId)
                 .delete()
@@ -238,7 +243,7 @@ class CocktailsRepositoryAPI @Inject constructor(
         awaitClose {
             snapshotListener.remove()
         }
-    }.flowOn(Dispatchers.IO)
+    }.flowOn(dispatcher)
 
     override suspend fun searchDrinks(drink: String) = flow {
         try {
@@ -253,7 +258,7 @@ class CocktailsRepositoryAPI @Inject constructor(
             Log.e("NetworkLayerSearch", exception.message, exception)
             emit(Result.Error(exception))
         }
-    }.flowOn(Dispatchers.IO)
+    }.flowOn(dispatcher)
 
     override suspend fun isInShopping(drinkId: String, ingredientName: String) = flow {
         val document = database.collection(DB_SHOPPING)
@@ -267,10 +272,10 @@ class CocktailsRepositoryAPI @Inject constructor(
             val shopping: ShoppingItem = document.documents[0].toObject(ShoppingItem::class.java)!!
             emit(shopping.isAddedToShopping)
         }
-    }.flowOn(Dispatchers.IO)
+    }.flowOn(dispatcher)
 
     override suspend fun addToShopping(shoppingItem: ShoppingItem) {
-        return withContext(Dispatchers.IO) {
+        return withContext(dispatcher) {
             shoppingItem.isAddedToShopping = true
             database.collection(DB_SHOPPING)
                 .document()
@@ -280,7 +285,7 @@ class CocktailsRepositoryAPI @Inject constructor(
     }
 
     override suspend fun removeFromShopping(drinkId: String, ingredientName: String) {
-        return withContext(Dispatchers.IO) {
+        return withContext(dispatcher) {
             val doc = database.collection(DB_SHOPPING)
                 .whereEqualTo(DB_FIELD_DRINK_ID, drinkId)
                 .whereEqualTo(DB_FIELD_INGREDIENT_NAME, ingredientName)
@@ -308,5 +313,5 @@ class CocktailsRepositoryAPI @Inject constructor(
         awaitClose {
             snapshotListener.remove()
         }
-    }.flowOn(Dispatchers.IO)
+    }.flowOn(dispatcher)
 }

@@ -5,6 +5,9 @@ import com.example.cocktailsapp.shared.business.DrinkDetailsItem
 import com.example.cocktailsapp.shared.business.DrinkDetailsList
 import javax.inject.Inject
 
+/**
+ * Created by Mert on 2024
+ */
 class DrinkDetailsEntityToDrinkDetailsMapper @Inject constructor(
 ): Function1<DrinkDetailsListEntity, DrinkDetailsList> {
 
@@ -57,7 +60,7 @@ class DrinkDetailsEntityToDrinkDetailsMapper @Inject constructor(
                     it.strMeasure9 ?: "",
                     it.strTags ?: ""
                 )
-            } as ArrayList<DrinkDetailsItem> ?: arrayListOf()
+            } as ArrayList<DrinkDetailsItem>
         )
     }
 }

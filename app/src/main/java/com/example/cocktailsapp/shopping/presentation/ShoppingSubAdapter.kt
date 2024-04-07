@@ -11,6 +11,9 @@ import com.example.cocktailsapp.R
 import com.example.cocktailsapp.databinding.ItemSubShoppingBinding
 import com.example.cocktailsapp.shared.business.ShoppingItem
 
+/**
+ * Created by Mert on 2024
+ */
 class ShoppingSubAdapter(
     private val fragment: ShoppingFragment
 ): RecyclerView.Adapter<ShoppingSubAdapter.ViewHolder>() {

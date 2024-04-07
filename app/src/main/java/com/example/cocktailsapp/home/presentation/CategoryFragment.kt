@@ -15,6 +15,9 @@ import com.example.cocktailsapp.databinding.FragmentCategoryBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+/**
+ * Created by Mert on 2024
+ */
 @AndroidEntryPoint
 class CategoryFragment : Fragment() {
 
@@ -53,7 +56,9 @@ class CategoryFragment : Fragment() {
                         is HomeViewState.Loading -> {
                             binding.loader.visibility = View.VISIBLE
                         }
-                        else -> { }
+                        else -> {
+                            binding.loader.visibility = View.GONE
+                        }
                     }
                 }
             }

@@ -1,12 +1,15 @@
 package com.example.cocktailsapp.shared.business
 
+/**
+ * Created by Mert on 2024
+ */
 data class ShoppingItem(
     var drinkId: String = "",
     var drinkName: String = "",
-    val drinkCategory: String = "",
-    val drinkAlcoholic: String = "",
+    var drinkCategory: String = "",
+    var drinkAlcoholic: String = "",
     var ingredientName: String = "",
-    val ingredientMeasure: String = "",
-    val ingredientPosition: String = "",
+    var ingredientMeasure: String = "",
+    var ingredientPosition: String = "",
     var isAddedToShopping: Boolean = false
 )

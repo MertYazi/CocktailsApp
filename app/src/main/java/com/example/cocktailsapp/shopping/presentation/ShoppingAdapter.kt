@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,6 +13,9 @@ import com.example.cocktailsapp.R
 import com.example.cocktailsapp.databinding.ItemShoppingBinding
 import com.example.cocktailsapp.shopping.business.ShoppingListItem
 
+/**
+ * Created by Mert on 2024
+ */
 class ShoppingAdapter(
     private val fragment: ShoppingFragment
 ): RecyclerView.Adapter<ShoppingAdapter.ViewHolder>() {
@@ -81,9 +85,9 @@ class ShoppingAdapter(
         shoppingList.visibility = if (shoppingList.isShown) View.GONE else View.VISIBLE
         shoppingCount.visibility = if (shoppingList.isShown) View.GONE else View.VISIBLE
         if (shoppingList.isShown) {
-            shoppingPin.setImageDrawable(fragment.resources.getDrawable(R.drawable.ic_alcohol_red))
+            shoppingPin.setImageDrawable(ContextCompat.getDrawable(fragment.requireContext(), R.drawable.ic_alcohol_red))
         } else {
-            shoppingPin.setImageDrawable(fragment.resources.getDrawable(R.drawable.ic_alcohol))
+            shoppingPin.setImageDrawable(ContextCompat.getDrawable(fragment.requireContext(), R.drawable.ic_alcohol))
         }
     }
 }

@@ -6,6 +6,9 @@ import com.example.cocktailsapp.home.data.IngredientListEntity
 import retrofit2.http.GET
 import retrofit2.http.Query
 
+/**
+ * Created by Mert on 2024
+ */
 interface CocktailsService {
 
     @GET("list.php?i=list")

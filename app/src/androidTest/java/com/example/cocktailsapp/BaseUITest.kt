@@ -24,11 +24,14 @@ import org.junit.runner.RunWith
 import java.util.Locale
 import java.util.concurrent.TimeoutException
 
+/**
+ * Created by Mert on 2024
+ */
 @RunWith(AndroidJUnit4::class)
 abstract class BaseUITest {
 
     //Running count of the number of Android Not Responding dialogues to prevent endless dismissal.
-    private var AnrCount = 0
+    private var anrCount = 0
     //`RootViewWithoutFocusException` class is private, need to match the message (instead of using type matching).
     private val rootViewWithoutFocusExceptionMsg = java.lang.String.format(
         Locale.ROOT,
@@ -42,8 +45,8 @@ abstract class BaseUITest {
     fun setup() {
         IdlingRegistry.getInstance().register(idlingResource)
         Espresso.setFailureHandler { error, viewMatcher ->
-            if (error.message!!.contains(rootViewWithoutFocusExceptionMsg) && AnrCount < 3) {
-                AnrCount++
+            if (error.message!!.contains(rootViewWithoutFocusExceptionMsg) && anrCount < 3) {
+                anrCount++
                 handleAnrDialogue()
             } else { // chain all failures down to the default espresso handler
                 DefaultFailureHandler(InstrumentationRegistry.getInstrumentation().context).handle(error, viewMatcher)
