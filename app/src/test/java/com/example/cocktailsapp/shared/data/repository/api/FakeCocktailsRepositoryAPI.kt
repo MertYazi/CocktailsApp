@@ -110,9 +110,9 @@ open class FakeCocktailsRepositoryAPI: CocktailsRepository {
         return flowOf()
     }
 
-    override suspend fun addToFavorites(drink: DrinkDetailsItem) { }
+    override suspend fun addToFavorites(drink: DrinkDetailsItem) {}
 
-    override suspend fun removeFromFavorites(drinkId: String) { }
+    override suspend fun removeFromFavorites(drinkId: String) {}
 
     override fun getFavorites(): Flow<Result<DrinkDetailsList>> {
         return flowOf()
